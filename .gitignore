@@ -1,0 +1,23 @@
+# Runtime artifacts (per-task outputs)
+artifacts/*
+!artifacts/.gitkeep
+
+# Temporary files
+tmp/*
+!tmp/.gitkeep
+!tmp/ram/.gitkeep
+!tmp/artifacts/.gitkeep
+!tmp/conversations/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code runtime
+.claude/settings.local.json
