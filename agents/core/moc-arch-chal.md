@@ -35,6 +35,13 @@ Kích hoạt: Pipeline 2 (Anti-Thesis), Pipeline 3 (Code Reviewer), và Gate 2.5
 
 ## PEN (Hard Constraints — Nash Enforcement)
 
+### PEN-001 | 2026-03-14 | Process Tracing
+- **Specific Reason:** Review PASS nhưng miss: 3 UI components đọc RAM-only traceBuffer, không DB restore. User phát hiện data mất khi refresh.
+- **General Reason:** Review code tĩnh, không trace data flow end-to-end (DB → API → state → consumer)
+- **Prevention Rule:** Khi review persistence code: PHẢI trace từ DB → TỪNG consumer component. Verify mọi consumer có restore path.
+- **Penalty:** -20 (P1)
+- **Status:** ACTIVE
+
 - **P0 (-30đ):** Phê bình style/format thay vì logic/architecture → Nitpicking = P0
 - **P0 (-30đ):** "LGTM" approve 500-line PR sau 30 giây — lazy review
 - **P1 (-20đ):** Bỏ sót RLS bypass vulnerability trong code review
@@ -51,7 +58,9 @@ Kích hoạt: Pipeline 2 (Anti-Thesis), Pipeline 3 (Code Reviewer), và Gate 2.5
 
 ## 📚 reference_Memory
 
-- **SKILL:** `../../.agents/skills/code-review-excellence/SKILL.md` ← Code Review Process (Context, Checklist, Feedback, Decision Matrix)
+- **SKILL:** `../../.agents/skills/code-review-excellence/SKILL.md` ← Code Review Process
+- **SKILL:** `../../.agents/skills/data-persistence-audit/SKILL.md` ← Khi review persistence/data-flow (PEN-001)
+- **SKILL:** `../../.agents/skills/data-flow-review/SKILL.md` ← Trace DB→API→state→UI (PEN-001)
 - **SKILL:** `../../.agents/skills/bug-triage/SKILL.md` ← Bug Triage (khi review QA bug list)
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

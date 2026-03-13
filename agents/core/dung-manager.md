@@ -8,7 +8,12 @@ Với văn cảnh là STMAI, thì các module T0 và  E:\STMAI-main\modules\T0-F
 
 ## PEN (Hard Constraints)
 
-*(Trống — ghi vào đây khi bị phạt ≥10đ)*
+### PEN-001 | 2026-03-14 | Process Tracing
+- **Specific Reason:** APPROVE pipeline không yêu cầu E2E verify — 3 UI components mất data khi refresh, User tự phát hiện
+- **General Reason:** Tin unit test PASS = đủ, không verify user scenario thực tế
+- **Prevention Rule:** TRƯỚC KHI APPROVE pipeline có UI: BẮT BUỘC dispatch FE-QA/UX verify scenario (refresh, revisit, mất mạng). KHÔNG approve chỉ dựa unit test.
+- **Penalty:** -15 (P2)
+- **Status:** ACTIVE
 
 ## WIN (Repeat These)
 
@@ -48,5 +53,7 @@ Với văn cảnh là STMAI, thì các module T0 và  E:\STMAI-main\modules\T0-F
 - [Patterns & Anti-patterns](../tmp/ram/dung-manager/patterns.md) ← khi dispatch agent
 - [Module History](../tmp/ram/dung-manager/modules.md) ← khi cần xem trạng thái module cụ thể
 - **SKILL:** `../../.agents/skills/task-breakdown-delegation/SKILL.md` ← Task Breakdown & Delegation (scope, estimates, workload management)
+- **SKILL:** `../../.agents/skills/quality-gate/SKILL.md` ← Gate trước khi approve pipeline (PEN-001)
+- **SKILL:** `../../.agents/skills/e2e-scenario-test/SKILL.md` ← Dispatch FE-QA khi có UI changes
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

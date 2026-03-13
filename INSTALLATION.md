@@ -71,15 +71,109 @@ workspace/
 
 **Add gate scripts:** Place executable scripts in `gates/`. Gates run automatically between pipeline stages to enforce quality thresholds (test coverage, lint, type-check).
 
+## Skills (Claude Code Commands)
+
+SuperAgent ships with reusable skills that install as slash commands in any project.
+
+### Available Skills
+
+| Command | Skill | Description |
+|---------|-------|-------------|
+| `/task` | `nash-orchestrator` | Spawn Dũng PM — full NASH pipeline orchestration |
+| `/sum` | `session-sum` | Summarize session progress → `PROJECT_CONTEXT.md` |
+| `/tiep` | `session-tiep` | Continue from where last session left off |
+| `/arch` | `arch-diagram` | Auto-generate D2 architecture diagram from codebase |
+| `/quality-gate` | `quality-gate` | Pre-approve checklist before pipeline approval |
+| `/data-flow-review` | `data-flow-review` | Multi-perspective data flow audit |
+| `/data-persistence-audit` | `data-persistence-audit` | Resource lifecycle completeness audit |
+| `/e2e-scenario-test` | `e2e-scenario-test` | E2E user scenario test priority audit |
+
+### Install Skills into Your Project
+
+From your **project root** (not from inside SuperAgent):
+
+```bash
+bash SuperAgent/scripts/install-skills.sh
+```
+
+This creates thin wrapper files in `.claude/commands/` that point back to SuperAgent. Each wrapper is ~3 lines — the full logic stays in SuperAgent and updates when you `git pull`.
+
+**What it does:**
+1. Scans `.agents/skills/*/SKILL.md` for all available skills
+2. Extracts command name from each SKILL.md title (e.g., `` `/task` `` → `task.md`)
+3. Creates `.claude/commands/<name>.md` wrappers
+4. Skips any custom commands that aren't thin wrappers (safe to re-run)
+
+### Adding SuperAgent to a New Project
+
+**Option A: Git Submodule (recommended)**
+
+```bash
+cd your-project
+git submodule add https://github.com/mrdo19111911/SuperAgent.git
+bash SuperAgent/scripts/install-skills.sh
+```
+
+Future clones:
+
+```bash
+git clone --recurse-submodules https://github.com/you/your-project.git
+cd your-project
+bash SuperAgent/scripts/install-skills.sh
+```
+
+**Option B: Direct Clone (standalone)**
+
+```bash
+cd your-project
+git clone https://github.com/mrdo19111911/SuperAgent.git
+bash SuperAgent/scripts/install-skills.sh
+echo "SuperAgent/" >> .gitignore
+```
+
+### Creating New Skills
+
+1. Create directory: `.agents/skills/<skill-name>/`
+2. Add `SKILL.md`:
+   ```markdown
+   # Skill Title (`/command-name`)
+   > Agent: Agent Name | Trigger: when to use this skill
+
+   ## Steps
+   ...
+   ```
+3. Run `bash SuperAgent/scripts/install-skills.sh` from project root
+4. Command name is extracted from the backtick-wrapped `/name` in the title
+
+### Skill Architecture
+
+```
+.agents/skills/                  ← Source of truth (versioned in Git)
+├── nash-orchestrator/SKILL.md   ← /task
+├── session-sum/SKILL.md         ← /sum
+├── session-tiep/SKILL.md        ← /tiep
+├── arch-diagram/SKILL.md        ← /arch
+└── .../SKILL.md
+
+your-project/.claude/commands/   ← Auto-generated thin wrappers
+├── task.md                      → "Read and follow .../SKILL.md"
+├── sum.md
+└── ...
+```
+
+Skills use relative paths (`SuperAgent/agents/BRAIN.md`), so they work in any project where SuperAgent is at the root level.
+
 ## Directory Structure
 
 ```
 nash-agent-framework/
+├── .agents/
+│   └── skills/      # 8 reusable Claude Code skills
 ├── agents/          # 24 agent profiles (L2 Cache format)
 ├── system/          # Core theory, scoring rules, MoE routing
 ├── pipelines/       # 6 SDLC pipelines + FE design/impl flows
 ├── gates/           # Automated quality gate scripts
-├── scripts/         # Utility scripts
+├── scripts/         # Utility + install-skills.sh
 ├── artifacts/       # Runtime output (created per-task)
 ├── tmp/             # Temporary runtime data
 ├── main.md          # PM operating system
@@ -95,3 +189,5 @@ nash-agent-framework/
 - **Gate scripts fail silently** — Check that scripts in `gates/` have execute permissions (`chmod +x gates/*.sh`).
 - **Artifacts not appearing** — Verify `$ARTIFACTS_DIR` points to a writable directory. The framework does not create it automatically.
 - **Wrong pipeline selected** — Review `system/MIXTURE_OF_EXPERTS_ROUTER.md` routing rules. You can override by specifying the pipeline directly.
+- **Skills not showing** — Run `bash SuperAgent/scripts/install-skills.sh` from project root. Check `.claude/commands/` was created.
+- **`/task` not working** — Verify SuperAgent is at project root level. Skills use relative paths like `SuperAgent/agents/BRAIN.md`.

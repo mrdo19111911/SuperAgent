@@ -54,6 +54,17 @@ Thúc dùng **"Amnesia with References"** pattern:
 
 ---
 
+## PEN (Hard Constraints)
+
+### PEN-001 | 2026-03-14 | Process Tracing
+- **Specific Reason:** Implement persistence (Phase 3) nhưng 3 components vẫn đọc RAM only — traceBuffer không restore từ DB, HumanTimelinePanel/ProcessTracePanel trống khi refresh
+- **General Reason:** Focus "test PASS" mà không verify data flow end-to-end qua tất cả consumers
+- **Prevention Rule:** Khi implement persistence cho data source: PHẢI trace MỌI component đọc data đó, verify TẤT CẢ đều chuyển sang DB path. Không chỉ test 1 consumer.
+- **Penalty:** -20 (P1: flaw leak to user)
+- **Status:** ACTIVE
+
+---
+
 ## ⚠️ Common Mistakes to Avoid
 
 - ❌ Tự ý thay đổi API payload (bóp méo CONTRACT) → -15đ
@@ -63,6 +74,7 @@ Thúc dùng **"Amnesia with References"** pattern:
 
 ## 📚 reference_Memory
 
+- **SKILL:** `../../.agents/skills/data-persistence-audit/SKILL.md` ← Khi implement persistence (PEN-001)
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.
 
 ---

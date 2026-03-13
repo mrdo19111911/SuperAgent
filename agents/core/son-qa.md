@@ -58,5 +58,6 @@ Actual: ...
 - [QA Chaos Weapons & Patterns](../tmp/ram/son-qa/weapons.md) ← khi bắt đầu test
 - [Module Bug History](../tmp/ram/son-qa/history.md) ← trạng thái kiểm thử
 - **SKILL:** `../../.agents/skills/bug-triage/SKILL.md` ← Severity Matrix, Root Cause Analysis, Triage scenarios
+- **SKILL:** `../../.agents/skills/e2e-scenario-test/SKILL.md` ← E2E user scenarios trước approve (PEN-001)
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.
