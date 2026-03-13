@@ -45,7 +45,7 @@ for skill_dir in "$SKILLS_DIR"/*/; do
   desc=$(grep -m1 "^>" "$skill_dir/SKILL.md" | sed 's/^> *Agent: [^|]*| *Trigger: *//' | head -c 100)
   [ -z "$desc" ] && desc="SuperAgent skill: $skill_name"
 
-  # Extract command name from SKILL.md title (e.g., "# Session Summarizer (`/sum`)" → "sum")
+  # Extract command name from SKILL.md title (e.g., "# Session Summarizer (`/sum`)" -> "sum")
   cmd_name=$(grep -m1 '`/' "$skill_dir/SKILL.md" | sed 's/.*`\/\([^`]*\)`.*/\1/')
   [ -z "$cmd_name" ] && cmd_name="$skill_name"
 
@@ -80,6 +80,62 @@ done
 
 echo ""
 echo "Done: $INSTALLED installed, $SKIPPED skipped."
+
+# ── Optional Dependencies ──────────────────────────────────
+
+install_d2() {
+  echo ""
+  echo "D2 (diagramming tool) is needed by /arch."
+  case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*)
+      if command -v winget &>/dev/null; then
+        echo "  Installing D2 via winget..."
+        winget install Terrastruct.D2 --accept-source-agreements --accept-package-agreements 2>&1 | tail -3
+      elif command -v choco &>/dev/null; then
+        echo "  Installing D2 via chocolatey..."
+        choco install d2 -y 2>&1 | tail -3
+      else
+        echo "  WARNING: Cannot auto-install D2. Download: https://d2lang.com/releases"
+        return 1
+      fi ;;
+    Darwin*)
+      if command -v brew &>/dev/null; then
+        echo "  Installing D2 via Homebrew..."
+        brew install d2 2>&1 | tail -3
+      else
+        echo "  WARNING: Run: brew install d2"
+        return 1
+      fi ;;
+    Linux*)
+      if command -v curl &>/dev/null; then
+        echo "  Installing D2 via official script..."
+        curl -fsSL https://d2lang.com/install.sh | sh -s -- 2>&1 | tail -3
+      else
+        echo "  WARNING: See https://d2lang.com/releases"
+        return 1
+      fi ;;
+    *)
+      echo "  WARNING: Unknown OS. Download D2: https://d2lang.com/releases"
+      return 1 ;;
+  esac
+}
+
+D2_WIN="/c/Program Files/D2/d2.exe"
+if command -v d2 &>/dev/null; then
+  echo ""
+  echo "D2: $(d2 --version) ✓"
+elif [ -f "$D2_WIN" ]; then
+  echo ""
+  echo "D2: found at $D2_WIN ✓"
+else
+  install_d2
+  if command -v d2 &>/dev/null || [ -f "$D2_WIN" ]; then
+    echo "  ✓ D2 installed successfully"
+  else
+    echo "  WARNING: D2 not found — /arch will not render diagrams"
+  fi
+fi
+
 echo ""
 echo "Commands available:"
 for f in "$PROJECT_ROOT/.claude/commands"/*.md; do
