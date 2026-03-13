@@ -9,6 +9,10 @@ Read for context:
 - `SuperAgent/agents/BRAIN.md` — Rule 0
 - `SuperAgent/agents/arch/phuc-sa-techlead.md` — L2 Cache
 
+Read on-demand (when generating D2):
+- `SuperAgent/.agents/skills/arch-diagram/references/d2-style-guide.md` — rendering best practices, connection styles, CSS animations
+- `SuperAgent/.agents/skills/arch-diagram/references/icons.d2` — icon URL catalog (browse for relevant tech icons)
+
 ## Process
 
 ### 1. Scan Codebase (parallel)
@@ -60,11 +64,13 @@ Write `docs/architecture.d2` with layers:
 - Max 3 nesting levels. Flatten where possible.
 - Place the heaviest containers (Database, Engine) in the center column to minimize crossing lines.
 
-**D2 Style:**
-- Dark theme colors (dark backgrounds, bright accents per layer)
+**D2 Style** (see `references/d2-style-guide.md` for full details):
+- **No `style.fill`** — let D2 theme handle fills for light/dark compatibility. Only set `style.stroke`, `style.stroke-width`, `shape`.
+- **Icons** — add both `class:` and `icon:` URL to technology nodes (see `references/icons.d2`). Use `--bundle` flag when rendering to embed icons as data URIs.
 - Nested containers for grouping (e.g., `engine.iteration.improve`)
 - Quote strings with special chars: `"GET /api/sessions/{id}"`
 - `shape: cylinder` for databases/caches, `shape: diamond` for decisions
+- **Connection differentiation**: solid blue = sync API, dashed purple = async, green = data flow, red diamond-head = write ops (see style guide)
 - `style.stroke-dash: 5` for optional/async connections
 - Show iteration loop clearly (improve → critique → synthesize → back)
 - Label connections with data flow descriptions
@@ -82,18 +88,36 @@ Write `docs/architecture.d2` with layers:
 
 ### 3. Render
 
-Detect D2 binary location and render:
+Detect D2 binary location and render with `--bundle` (embeds icons as data URIs):
 ```bash
 # Try common locations
 D2=$(command -v d2 || echo "/c/Program Files/D2/d2.exe")
-"$D2" docs/architecture.d2 docs/architecture.svg --theme 200 --layout elk --pad 40
-"$D2" docs/architecture.d2 docs/architecture.png --theme 200 --layout elk --pad 40
+
+# Dark theme (primary) — theme 200 = Dark Mauve
+"$D2" --bundle docs/architecture.d2 docs/architecture-dark.svg --theme 200 --layout elk --pad 40
+
+# Light theme — theme 0 = Neutral Default
+"$D2" --bundle docs/architecture.d2 docs/architecture-light.svg --theme 0 --layout elk --pad 40
+
+# PNG export (for README embeds)
+"$D2" --bundle docs/architecture.d2 docs/architecture.png --theme 200 --layout elk --pad 40
 ```
 
-If compilation fails, fix syntax and retry. Common issues:
+If ELK fails, fallback to `--layout dagre`.
+
+If compilation fails, fix syntax and retry (max 3 attempts). Common issues:
 - Unquoted brackets `[]` → wrap in quotes
 - Duplicate node IDs → make unique
 - Missing closing braces
+- See `references/d2-style-guide.md` → "Common Errors & Recovery" for full table
+
+### 3b. Enhance SVG (optional)
+
+Inject CSS animations for traffic flow visualization. See `references/d2-style-guide.md` → "CSS Animations" section. This adds:
+- Animated dashed lines on connections (data traffic flow)
+- Subtle opacity pulse on database/cache shapes
+- Accessibility: respects `prefers-reduced-motion`
+- Text protection: animations never affect labels
 
 ### 4. Open & Report
 

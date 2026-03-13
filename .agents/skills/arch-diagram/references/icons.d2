@@ -1,0 +1,222 @@
+# D2 Icon Classes — App Architecture Reference
+# ================================================
+#
+# Curated icon set for application-level architecture diagrams.
+# Adapted from heathdutton/claude-d2-diagrams (MIT) + terrastruct icon library.
+#
+# USAGE: Add BOTH class + icon to each node (--bundle embeds icons as data URIs):
+#
+#   db: SQLite {
+#     class: sqlite
+#     icon: https://icons.terrastruct.com/dev%2Fsqlite.svg
+#   }
+#
+# Base URL: https://icons.terrastruct.com/
+# Browse all: https://icons.terrastruct.com
+
+classes: {
+  # ═══════════════════════════════════════════════════════════════
+  # FRONTEND & FRAMEWORKS
+  # ═══════════════════════════════════════════════════════════════
+
+  nextjs: {
+    icon: https://icons.terrastruct.com/dev%2Fnextjs.svg
+    style.stroke: "#000000"
+    style.stroke-width: 3
+  }
+  react: {
+    icon: https://icons.terrastruct.com/dev%2Freact.svg
+    style.stroke: "#61DAFB"
+    style.stroke-width: 3
+  }
+  typescript: {
+    icon: https://icons.terrastruct.com/dev%2Ftypescript.svg
+    style.stroke: "#3178C6"
+    style.stroke-width: 3
+  }
+  nodejs: {
+    icon: https://icons.terrastruct.com/dev%2Fnodejs.svg
+    style.stroke: "#339933"
+    style.stroke-width: 3
+  }
+  html: {
+    icon: https://icons.terrastruct.com/dev%2Fhtml5.svg
+    style.stroke: "#E34F26"
+    style.stroke-width: 3
+  }
+  css: {
+    icon: https://icons.terrastruct.com/dev%2Fcss3.svg
+    style.stroke: "#1572B6"
+    style.stroke-width: 3
+  }
+
+  # ═══════════════════════════════════════════════════════════════
+  # DATABASES
+  # ═══════════════════════════════════════════════════════════════
+
+  sqlite: {
+    style.stroke: "#003B57"
+    style.stroke-width: 3
+    shape: cylinder
+  }
+  postgresql: {
+    icon: https://icons.terrastruct.com/dev%2Fpostgresql.svg
+    style.stroke: "#4169E1"
+    style.stroke-width: 3
+    shape: cylinder
+  }
+  mysql: {
+    icon: https://icons.terrastruct.com/dev%2Fmysql.svg
+    style.stroke: "#4479A1"
+    style.stroke-width: 3
+    shape: cylinder
+  }
+  mongodb: {
+    icon: https://icons.terrastruct.com/dev%2Fmongodb.svg
+    style.stroke: "#47A248"
+    style.stroke-width: 3
+    shape: cylinder
+  }
+  redis: {
+    icon: https://icons.terrastruct.com/dev%2Fredis.svg
+    style.stroke: "#DC382D"
+    style.stroke-width: 3
+    shape: hexagon
+  }
+
+  # ═══════════════════════════════════════════════════════════════
+  # GENERIC SHAPES (theme-agnostic — no style.fill)
+  # ═══════════════════════════════════════════════════════════════
+
+  database: {
+    icon: https://icons.terrastruct.com/essentials%2F119-database.svg
+    shape: cylinder
+    style.stroke: "#6B7280"
+    style.stroke-width: 3
+  }
+  server: {
+    icon: https://icons.terrastruct.com/tech%2F022-server.svg
+    style.stroke: "#6B7280"
+    style.stroke-width: 3
+  }
+  user: {
+    icon: https://icons.terrastruct.com/essentials%2F359-users.svg
+    shape: person
+    style.stroke: "#6B7280"
+    style.stroke-width: 3
+  }
+  users: {
+    icon: https://icons.terrastruct.com/essentials%2F359-users.svg
+    style.stroke: "#6B7280"
+    style.stroke-width: 3
+  }
+  cloud: {
+    shape: cloud
+    style.stroke: "#6B7280"
+    style.stroke-width: 3
+  }
+  queue: {
+    shape: queue
+    style.stroke: "#6B7280"
+    style.stroke-width: 3
+  }
+  cache: {
+    shape: hexagon
+    style.stroke: "#6B7280"
+    style.stroke-width: 3
+  }
+  web: {
+    icon: https://icons.terrastruct.com/tech%2Fbrowser-2.svg
+    style.stroke: "#6B7280"
+    style.stroke-width: 3
+  }
+  mobile: {
+    icon: https://icons.terrastruct.com/tech%2F114-smartphone.svg
+    style.stroke: "#6B7280"
+    style.stroke-width: 3
+  }
+  email: {
+    icon: https://icons.terrastruct.com/essentials%2F062-email.svg
+    style.stroke: "#6B7280"
+    style.stroke-width: 3
+  }
+  lock: {
+    icon: https://icons.terrastruct.com/essentials%2F145-lock.svg
+    style.stroke: "#DC2626"
+    style.stroke-width: 3
+  }
+
+  # ═══════════════════════════════════════════════════════════════
+  # DEVOPS & TOOLS
+  # ═══════════════════════════════════════════════════════════════
+
+  docker: {
+    icon: https://icons.terrastruct.com/dev%2Fdocker.svg
+    style.stroke: "#2496ED"
+    style.stroke-width: 3
+  }
+  github: {
+    icon: https://icons.terrastruct.com/dev%2Fgithub.svg
+    style.stroke: "#181717"
+    style.stroke-width: 3
+  }
+  nginx: {
+    icon: https://icons.terrastruct.com/dev%2Fnginx.svg
+    style.stroke: "#009639"
+    style.stroke-width: 3
+  }
+
+  # ═══════════════════════════════════════════════════════════════
+  # BACKEND LANGUAGES
+  # ═══════════════════════════════════════════════════════════════
+
+  golang: {
+    icon: https://icons.terrastruct.com/dev%2Fgo.svg
+    style.stroke: "#00ADD8"
+    style.stroke-width: 3
+  }
+  python: {
+    icon: https://icons.terrastruct.com/dev%2Fpython.svg
+    style.stroke: "#3776AB"
+    style.stroke-width: 3
+  }
+  java: {
+    icon: https://icons.terrastruct.com/dev%2Fjava.svg
+    style.stroke: "#007396"
+    style.stroke-width: 3
+  }
+  rust: {
+    icon: https://icons.terrastruct.com/dev%2Frust.svg
+    style.stroke: "#000000"
+    style.stroke-width: 3
+  }
+
+  # ═══════════════════════════════════════════════════════════════
+  # ARCHITECTURE LAYERS (for container styling)
+  # ═══════════════════════════════════════════════════════════════
+
+  presentation: {
+    style.stroke: "#3949AB"
+    style.stroke-width: 2
+    style.border-radius: 12
+  }
+  application: {
+    style.stroke: "#00838F"
+    style.stroke-width: 2
+    style.border-radius: 8
+  }
+  domain: {
+    style.stroke: "#FF8F00"
+    style.stroke-width: 2
+    style.border-radius: 8
+  }
+  data-layer: {
+    style.stroke: "#5D4037"
+    style.stroke-width: 2
+  }
+  integration: {
+    style.stroke: "#AD1457"
+    style.stroke-width: 2
+    style.stroke-dash: 5
+  }
+}
