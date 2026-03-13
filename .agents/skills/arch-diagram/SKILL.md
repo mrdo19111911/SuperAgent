@@ -52,6 +52,14 @@ Write `docs/architecture.d2` with layers:
 7. Auth & Security — NextAuth, encryption
 8. External Services
 
+**Layout — optimized for 4K screens and web embedding:**
+- Use `direction: down` as primary direction — vertical layouts embed well in web pages and scroll naturally. Only use `direction: right` inside small sub-containers where horizontal flow reads better (e.g., iteration loop: improve → critique → synthesize).
+- Target max rendered width ~3500px. When the diagram exceeds this, prefer taller over wider — height scrolls, width doesn't embed.
+- Collapse minor nodes into parent containers. For example, list API routes as text labels inside one "API Routes" box rather than giving each route its own node with connections.
+- Use `style.font-size: 13` for leaf nodes to keep compact.
+- Max 3 nesting levels. Flatten where possible.
+- Place the heaviest containers (Database, Engine) in the center column to minimize crossing lines.
+
 **D2 Style:**
 - Dark theme colors (dark backgrounds, bright accents per layer)
 - Nested containers for grouping (e.g., `engine.iteration.improve`)
