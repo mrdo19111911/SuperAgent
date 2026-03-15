@@ -1,0 +1,177 @@
+{
+  "dashboard": {
+    "title": "Nash Framework - Token Usage",
+    "tags": ["nash", "tokens", "metrics"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "5s",
+    "time": {
+      "from": "now-24h",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "type": "stat",
+        "title": "Total Tokens Used",
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 6,
+          "h": 6
+        },
+        "targets": [
+          {
+            "expr": "sum(nash_tokens_used)",
+            "legendFormat": "Total Tokens",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "calcs": ["lastNotNull"]
+          },
+          "orientation": "auto",
+          "textMode": "value_and_name",
+          "graphMode": "area",
+          "colorMode": "value"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "decimals": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "value": 0, "color": "green" },
+                { "value": 100000, "color": "yellow" },
+                { "value": 500000, "color": "red" }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": "barchart",
+        "title": "Tokens by Agent",
+        "gridPos": {
+          "x": 6,
+          "y": 0,
+          "w": 18,
+          "h": 6
+        },
+        "targets": [
+          {
+            "expr": "sum by (agent_name) (nash_tokens_used)",
+            "legendFormat": "{{agent_name}}",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "orientation": "horizontal",
+          "xTickLabelRotation": 0,
+          "legend": {
+            "displayMode": "hidden"
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "decimals": 0
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": "graph",
+        "title": "Token Budget vs Actual",
+        "gridPos": {
+          "x": 0,
+          "y": 6,
+          "w": 24,
+          "h": 8
+        },
+        "targets": [
+          {
+            "expr": "rate(nash_tokens_used[5m])",
+            "legendFormat": "Actual Usage",
+            "refId": "A"
+          },
+          {
+            "expr": "nash_token_budget_limit",
+            "legendFormat": "Budget Limit",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {
+            "label": "Tokens/sec",
+            "format": "short"
+          },
+          {
+            "label": "Budget",
+            "format": "short"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short"
+          }
+        },
+        "seriesOverrides": [
+          {
+            "alias": "Budget Limit",
+            "yaxis": 2,
+            "color": "red",
+            "linewidth": 2,
+            "dashes": true
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "type": "gauge",
+        "title": "Token Efficiency (Output / Total)",
+        "gridPos": {
+          "x": 0,
+          "y": 14,
+          "w": 24,
+          "h": 6
+        },
+        "targets": [
+          {
+            "expr": "(sum(nash_tokens_used{type=\"output\"}) / sum(nash_tokens_used)) * 100",
+            "legendFormat": "Efficiency %",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "calcs": ["lastNotNull"]
+          },
+          "orientation": "horizontal",
+          "textMode": "value_and_name",
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "value": 0, "color": "red" },
+                { "value": 30, "color": "yellow" },
+                { "value": 50, "color": "green" }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

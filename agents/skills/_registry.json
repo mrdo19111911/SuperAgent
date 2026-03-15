@@ -1,0 +1,36 @@
+{
+  "registry_version": "2.0",
+  "last_updated": "2026-03-15T18:15:07.433Z",
+  "skills": [
+    {
+      "id": "code-review-excellence",
+      "name": "Code Review Excellence",
+      "version": "1.0.0",
+      "author": "gstack (migrated to Nash)",
+      "description": "Two-pass code review (CRITICAL → INFORMATIONAL) with suppression lists. Analyzes diff against main for SQL safety, LLM trust boundary violations, conditional side effects, and other structural issues.",
+      "tags": [
+        "review",
+        "qa",
+        "backend",
+        "frontend",
+        "security"
+      ],
+      "archetype_fit": [
+        "Critic",
+        "Builder"
+      ],
+      "path": "agents/skills/code-review-excellence/",
+      "dependencies": [],
+      "used_by": [
+        "phuc-sa",
+        "moc",
+        "xuan",
+        "son-qa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/code-review-excellence/README.md"
+    }
+  ]
+}

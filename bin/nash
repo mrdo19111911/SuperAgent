@@ -1,0 +1,504 @@
+#!/usr/bin/env node
+
+/**
+ * Nash CLI — Skill Registry Manager
+ *
+ * Commands:
+ *   nash list-skills                           List all available skills
+ *   nash search-skills --tag <tag>             Search skills by tag
+ *   nash install-skill <skill-id> --agent <name>   Install skill to agent
+ *   nash uninstall-skill <skill-id> --agent <name> Remove skill from agent
+ *   nash create-skill --name <name> --id <id>     Create new skill scaffold
+ *   nash register-skill <skill-id>                Add skill to registry
+ *   nash update-skill <skill-id> --version <ver>  Update skill version
+ *   nash skill-stats <skill-id>                   Show usage statistics
+ *   nash recommend-skill --problem <description>  Get skill recommendations
+ *   nash recommend-skill --archetype <type>       Get skills for archetype
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+// Root directory detection
+const ROOT = process.cwd();
+const AGENTS_DIR = path.join(ROOT, 'agents');
+const SKILLS_DIR = path.join(AGENTS_DIR, 'skills');
+const REGISTRY_FILE = path.join(SKILLS_DIR, '_registry.json');
+
+// Colors for terminal output
+const colors = {
+  reset: '\x1b[0m',
+  bright: '\x1b[1m',
+  dim: '\x1b[2m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[34m',
+  magenta: '\x1b[35m',
+  cyan: '\x1b[36m',
+};
+
+function log(message, color = 'reset') {
+  console.log(`${colors[color]}${message}${colors.reset}`);
+}
+
+function error(message) {
+  log(`❌ ${message}`, 'red');
+  process.exit(1);
+}
+
+function success(message) {
+  log(`✅ ${message}`, 'green');
+}
+
+function loadRegistry() {
+  if (!fs.existsSync(REGISTRY_FILE)) {
+    return {
+      registry_version: "2.0",
+      last_updated: new Date().toISOString(),
+      skills: []
+    };
+  }
+  return JSON.parse(fs.readFileSync(REGISTRY_FILE, 'utf8'));
+}
+
+function saveRegistry(registry) {
+  registry.last_updated = new Date().toISOString();
+  fs.writeFileSync(REGISTRY_FILE, JSON.stringify(registry, null, 2));
+}
+
+// ============================================================================
+// COMMAND: nash list-skills
+// ============================================================================
+function listSkills() {
+  const registry = loadRegistry();
+
+  if (registry.skills.length === 0) {
+    log('No skills registered yet.', 'yellow');
+    return;
+  }
+
+  log('\n📚 Nash Skill Registry\n', 'bright');
+
+  // Table header
+  const headers = ['ID', 'Name', 'Ver', 'Tags', 'Used By'];
+  const widths = [30, 30, 8, 25, 20];
+
+  const header = headers.map((h, i) => h.padEnd(widths[i])).join(' | ');
+  log(header, 'cyan');
+  log('-'.repeat(header.length), 'dim');
+
+  // Table rows
+  registry.skills.forEach(skill => {
+    const row = [
+      skill.id.substring(0, widths[0]),
+      skill.name.substring(0, widths[1]),
+      skill.version,
+      skill.tags.slice(0, 3).join(', ').substring(0, widths[3]),
+      skill.used_by.slice(0, 2).join(', ').substring(0, widths[4])
+    ];
+    log(row.map((v, i) => v.padEnd(widths[i])).join(' | '));
+  });
+
+  log(`\n${registry.skills.length} skill(s) registered\n`, 'dim');
+}
+
+// ============================================================================
+// COMMAND: nash search-skills --tag <tag>
+// ============================================================================
+function searchSkills(tag) {
+  const registry = loadRegistry();
+  const matches = registry.skills.filter(s => s.tags.includes(tag));
+
+  if (matches.length === 0) {
+    log(`No skills found with tag '${tag}'`, 'yellow');
+    return;
+  }
+
+  log(`\n🔍 Found ${matches.length} skill(s) with tag '${tag}':\n`, 'bright');
+  matches.forEach(skill => {
+    log(`  - ${skill.name} (${skill.version})`, 'green');
+    log(`    ${skill.description}`, 'dim');
+  });
+  console.log();
+}
+
+// ============================================================================
+// COMMAND: nash install-skill <skill-id> --agent <agent-name>
+// ============================================================================
+function installSkill(skillId, agentName) {
+  const registry = loadRegistry();
+  const skill = registry.skills.find(s => s.id === skillId);
+
+  if (!skill) {
+    error(`Skill '${skillId}' not found in registry. Run 'nash list-skills' to see available skills.`);
+  }
+
+  // Find agent file
+  const agentPath = path.join(AGENTS_DIR, 'core', `${agentName}.md`);
+  const agentPathDev = path.join(AGENTS_DIR, 'dev', `${agentName}.md`);
+
+  let targetPath;
+  if (fs.existsSync(agentPath)) {
+    targetPath = agentPath;
+  } else if (fs.existsSync(agentPathDev)) {
+    targetPath = agentPathDev;
+  } else {
+    error(`Agent '${agentName}' not found. Checked:\n  - ${agentPath}\n  - ${agentPathDev}`);
+  }
+
+  // Read agent file
+  let agentContent = fs.readFileSync(targetPath, 'utf8');
+
+  // Check if skill already installed
+  const skillRef = `**SKILL:** \`../../agents/skills/${skillId}/SKILL.md\``;
+  if (agentContent.includes(skillRef)) {
+    log(`Skill '${skillId}' is already installed on agent '${agentName}'`, 'yellow');
+    return;
+  }
+
+  // Find SKILLS section
+  const skillsSectionMatch = agentContent.match(/## ⚙️ SKILLS/);
+  if (!skillsSectionMatch) {
+    error(`Agent file '${targetPath}' does not have a '## ⚙️ SKILLS' section. Is it using AGENT_TEMPLATE_V2?`);
+  }
+
+  // Insert skill reference after SKILLS section header
+  const insertPos = skillsSectionMatch.index + skillsSectionMatch[0].length;
+  const beforeSkills = agentContent.substring(0, insertPos);
+  const afterSkills = agentContent.substring(insertPos);
+
+  agentContent = beforeSkills + `\n\n${skillRef}` + afterSkills;
+
+  fs.writeFileSync(targetPath, agentContent);
+
+  // Update registry used_by
+  if (!skill.used_by.includes(agentName)) {
+    skill.used_by.push(agentName);
+    saveRegistry(registry);
+  }
+
+  success(`Installed skill '${skillId}' to agent '${agentName}'`);
+  log(`  Agent file: ${targetPath}`, 'dim');
+}
+
+// ============================================================================
+// COMMAND: nash create-skill --name <name> --id <id>
+// ============================================================================
+function createSkill(name, id) {
+  const skillDir = path.join(SKILLS_DIR, id);
+
+  if (fs.existsSync(skillDir)) {
+    error(`Skill directory already exists: ${skillDir}`);
+  }
+
+  fs.mkdirSync(skillDir, { recursive: true });
+  fs.mkdirSync(path.join(skillDir, 'tests'));
+
+  // Create SKILL.md
+  const skillMd = `---
+name: ${id}
+version: 1.0.0
+description: |
+  ${name} — [Add description here]
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+---
+
+# ${name}
+
+You are running the \`/${id}\` workflow.
+
+---
+
+## Step 1: [First Step]
+
+1. Check: [Precondition]? If NO → **STOP** - "[Error message]"
+2. Run: [Command or action]
+
+---
+
+## Step 2: [Second Step]
+
+[Add workflow steps here]
+
+---
+
+## Important Rules
+
+- **[Rule 1]:** [Description]
+- **[Rule 2]:** [Description]
+`;
+
+  fs.writeFileSync(path.join(skillDir, 'SKILL.md'), skillMd);
+
+  // Create metadata.json
+  const metadata = {
+    skill_id: id,
+    version: "1.0.0",
+    semantic_version: { major: 1, minor: 0, patch: 0 },
+    author: {
+      name: "Nash Framework",
+      created_by_agent: "unknown",
+      created_date: new Date().toISOString().split('T')[0]
+    },
+    description: {
+      short: name,
+      long: `${name} — [Add detailed description here]`
+    },
+    tags: [],
+    archetype_fit: [],
+    triggers: [
+      "When user asks for [describe trigger]"
+    ],
+    dependencies: {
+      tools: [],
+      mcp_servers: [],
+      other_skills: []
+    },
+    compatible_agents: [],
+    test_suite: {
+      path: "tests/evals.json",
+      test_count: 0,
+      coverage: "0%",
+      last_run: null,
+      pass_rate: null
+    },
+    performance: {
+      avg_tokens: null,
+      avg_duration_seconds: null,
+      complexity: "medium"
+    },
+    maintenance: {
+      status: "draft",
+      last_updated: new Date().toISOString().split('T')[0],
+      changelog: "tests/CHANGELOG.md",
+      known_issues: []
+    }
+  };
+
+  fs.writeFileSync(path.join(skillDir, 'metadata.json'), JSON.stringify(metadata, null, 2));
+
+  // Create README.md
+  const readme = `# ${name}
+
+**Skill ID:** \`${id}\`
+**Version:** 1.0.0
+**Status:** draft
+
+## Overview
+
+[Add overview here]
+
+## Usage
+
+\`\`\`bash
+/skill-name
+\`\`\`
+
+## Triggers
+
+- When user asks for [describe trigger]
+
+## Workflow
+
+See [SKILL.md](./SKILL.md) for detailed workflow.
+
+## Testing
+
+See [tests/evals.json](./tests/evals.json) for test cases.
+
+## Changelog
+
+See [tests/CHANGELOG.md](./tests/CHANGELOG.md) for version history.
+`;
+
+  fs.writeFileSync(path.join(skillDir, 'README.md'), readme);
+
+  // Create empty evals.json
+  fs.writeFileSync(path.join(skillDir, 'tests', 'evals.json'), JSON.stringify({ test_cases: [] }, null, 2));
+
+  // Create CHANGELOG.md
+  const changelog = `# Changelog
+
+All notable changes to this skill will be documented in this file.
+
+## [1.0.0] - ${new Date().toISOString().split('T')[0]}
+
+### Added
+- Initial scaffold created
+`;
+
+  fs.writeFileSync(path.join(skillDir, 'tests', 'CHANGELOG.md'), changelog);
+
+  success(`Created skill scaffold: ${skillDir}`);
+  log('  Next steps:', 'bright');
+  log(`    1. Edit ${id}/SKILL.md to define workflow`);
+  log(`    2. Edit ${id}/metadata.json to set tags, archetype_fit, etc.`);
+  log(`    3. Add test cases to ${id}/tests/evals.json`);
+  log(`    4. Run 'nash register-skill ${id}' when ready`);
+}
+
+// ============================================================================
+// COMMAND: nash register-skill <skill-id>
+// ============================================================================
+function registerSkill(skillId) {
+  const skillDir = path.join(SKILLS_DIR, skillId);
+
+  if (!fs.existsSync(skillDir)) {
+    error(`Skill directory not found: ${skillDir}`);
+  }
+
+  const metadataPath = path.join(skillDir, 'metadata.json');
+  if (!fs.existsSync(metadataPath)) {
+    error(`metadata.json not found in ${skillDir}`);
+  }
+
+  const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+
+  // Validate metadata
+  if (metadata.maintenance.status === 'draft') {
+    log('⚠️  Skill is in draft status. Continue? (Ctrl+C to abort)', 'yellow');
+  }
+
+  const registry = loadRegistry();
+
+  // Check if already registered
+  const existing = registry.skills.find(s => s.id === skillId);
+  if (existing) {
+    log(`Skill '${skillId}' is already registered. Updating metadata...`, 'yellow');
+    Object.assign(existing, {
+      name: metadata.description.short,
+      version: metadata.version,
+      description: metadata.description.long,
+      tags: metadata.tags,
+      archetype_fit: metadata.archetype_fit,
+      path: `agents/skills/${skillId}/`,
+      dependencies: metadata.dependencies.other_skills,
+      maintenance_status: metadata.maintenance.status,
+      last_modified: metadata.maintenance.last_updated,
+      test_coverage: metadata.test_suite.coverage,
+      documentation_url: `agents/skills/${skillId}/README.md`
+    });
+  } else {
+    registry.skills.push({
+      id: skillId,
+      name: metadata.description.short,
+      version: metadata.version,
+      author: metadata.author.name,
+      description: metadata.description.long,
+      tags: metadata.tags,
+      archetype_fit: metadata.archetype_fit,
+      path: `agents/skills/${skillId}/`,
+      dependencies: metadata.dependencies.other_skills,
+      used_by: metadata.compatible_agents,
+      maintenance_status: metadata.maintenance.status,
+      last_modified: metadata.maintenance.last_updated,
+      test_coverage: metadata.test_suite.coverage,
+      documentation_url: `agents/skills/${skillId}/README.md`
+    });
+  }
+
+  saveRegistry(registry);
+  success(`Registered skill '${skillId}' in registry`);
+}
+
+// ============================================================================
+// COMMAND: nash recommend-skill --archetype <type>
+// ============================================================================
+function recommendByArchetype(archetype) {
+  const registry = loadRegistry();
+  const matches = registry.skills.filter(s => s.archetype_fit.includes(archetype));
+
+  if (matches.length === 0) {
+    log(`No skills found for archetype '${archetype}'`, 'yellow');
+    return;
+  }
+
+  log(`\n💡 Skills for ${archetype} archetype:\n`, 'bright');
+  matches.forEach(skill => {
+    const fit = skill.archetype_fit[0] === archetype ? '✅ (perfect fit)' : '⚠️  (acceptable)';
+    log(`  - ${skill.name} ${fit}`, 'green');
+    log(`    ${skill.description}`, 'dim');
+  });
+  console.log();
+}
+
+// ============================================================================
+// MAIN CLI ROUTER
+// ============================================================================
+const args = process.argv.slice(2);
+const command = args[0];
+
+if (!command) {
+  log('Nash CLI — Skill Registry Manager\n', 'bright');
+  log('Commands:', 'cyan');
+  log('  nash list-skills');
+  log('  nash search-skills --tag <tag>');
+  log('  nash install-skill <skill-id> --agent <name>');
+  log('  nash create-skill --name <name> --id <id>');
+  log('  nash register-skill <skill-id>');
+  log('  nash recommend-skill --archetype <type>');
+  process.exit(0);
+}
+
+switch (command) {
+  case 'list-skills':
+    listSkills();
+    break;
+
+  case 'search-skills': {
+    const tagIndex = args.indexOf('--tag');
+    if (tagIndex === -1 || !args[tagIndex + 1]) {
+      error('Usage: nash search-skills --tag <tag>');
+    }
+    searchSkills(args[tagIndex + 1]);
+    break;
+  }
+
+  case 'install-skill': {
+    const skillId = args[1];
+    const agentIndex = args.indexOf('--agent');
+    if (!skillId || agentIndex === -1 || !args[agentIndex + 1]) {
+      error('Usage: nash install-skill <skill-id> --agent <agent-name>');
+    }
+    installSkill(skillId, args[agentIndex + 1]);
+    break;
+  }
+
+  case 'create-skill': {
+    const nameIndex = args.indexOf('--name');
+    const idIndex = args.indexOf('--id');
+    if (nameIndex === -1 || !args[nameIndex + 1] || idIndex === -1 || !args[idIndex + 1]) {
+      error('Usage: nash create-skill --name <name> --id <id>');
+    }
+    createSkill(args[nameIndex + 1], args[idIndex + 1]);
+    break;
+  }
+
+  case 'register-skill': {
+    const skillId = args[1];
+    if (!skillId) {
+      error('Usage: nash register-skill <skill-id>');
+    }
+    registerSkill(skillId);
+    break;
+  }
+
+  case 'recommend-skill': {
+    const archetypeIndex = args.indexOf('--archetype');
+    if (archetypeIndex === -1 || !args[archetypeIndex + 1]) {
+      error('Usage: nash recommend-skill --archetype <type>');
+    }
+    recommendByArchetype(args[archetypeIndex + 1]);
+    break;
+  }
+
+  default:
+    error(`Unknown command: ${command}\n\nRun 'nash' to see available commands.`);
+}

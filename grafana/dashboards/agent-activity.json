@@ -1,0 +1,200 @@
+{
+  "dashboard": {
+    "title": "Nash Framework - Agent Activity",
+    "tags": ["nash", "agents"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "5s",
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "type": "stat",
+        "title": "Active Agents",
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 6,
+          "h": 6
+        },
+        "targets": [
+          {
+            "expr": "nash_agents_active",
+            "legendFormat": "Active",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "calcs": ["lastNotNull"]
+          },
+          "orientation": "auto",
+          "textMode": "value_and_name",
+          "graphMode": "area",
+          "colorMode": "value"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "value": 0, "color": "blue" },
+                { "value": 5, "color": "green" },
+                { "value": 15, "color": "yellow" },
+                { "value": 25, "color": "red" }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": "barchart",
+        "title": "Agent Utilization (Tasks per Agent)",
+        "gridPos": {
+          "x": 6,
+          "y": 0,
+          "w": 18,
+          "h": 6
+        },
+        "targets": [
+          {
+            "expr": "sum by (agent_name) (rate(nash_tasks_total[5m]))",
+            "legendFormat": "{{agent_name}}",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "orientation": "horizontal",
+          "xTickLabelRotation": 0,
+          "legend": {
+            "displayMode": "hidden"
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "ops"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": "timeseries",
+        "title": "Agent States Timeline",
+        "gridPos": {
+          "x": 0,
+          "y": 6,
+          "w": 24,
+          "h": 8
+        },
+        "targets": [
+          {
+            "expr": "nash_agent_state{state=\"idle\"}",
+            "legendFormat": "Idle - {{agent_name}}",
+            "refId": "A"
+          },
+          {
+            "expr": "nash_agent_state{state=\"running\"}",
+            "legendFormat": "Running - {{agent_name}}",
+            "refId": "B"
+          },
+          {
+            "expr": "nash_agent_state{state=\"waiting\"}",
+            "legendFormat": "Waiting - {{agent_name}}",
+            "refId": "C"
+          }
+        ],
+        "options": {
+          "legend": {
+            "displayMode": "table",
+            "placement": "right"
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "stepAfter",
+              "fillOpacity": 50
+            }
+          }
+        }
+      },
+      {
+        "id": 4,
+        "type": "table",
+        "title": "Agent Errors (Last 50)",
+        "gridPos": {
+          "x": 0,
+          "y": 14,
+          "w": 24,
+          "h": 8
+        },
+        "targets": [
+          {
+            "expr": "topk(50, nash_agent_errors_total)",
+            "legendFormat": "",
+            "refId": "A",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "options": {
+          "showHeader": true,
+          "sortBy": [
+            {
+              "displayName": "Time",
+              "desc": true
+            }
+          ]
+        },
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "agent_name"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Agent"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "error_type"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Error Type"
+                }
+              ]
+            }
+          ]
+        },
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "__name__": true,
+                "job": true,
+                "instance": true
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

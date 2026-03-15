@@ -1,0 +1,21 @@
+{
+  "name": "skill-name",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "skill-name": "./dist/skill-name"
+  },
+  "scripts": {
+    "build": "bun build --compile src/cli.ts --outfile dist/skill-name",
+    "dev": "bun run src/cli.ts",
+    "test": "bun test",
+    "test:watch": "bun test --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+}

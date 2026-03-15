@@ -21,3 +21,10 @@ Thumbs.db
 
 # Claude Code runtime
 .claude/settings.local.json
+
+# Nash Framework audit logs
+.claude/bash-audit.log
+bash-audit.log
+
+# Local config overrides
+.claude/config/local-*.json

@@ -1,0 +1,403 @@
+{
+  "dashboard": {
+    "title": "Nash Framework - Token Quota Tracking",
+    "tags": ["nash", "tokens", "quota", "claude-pro"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "10s",
+    "time": {
+      "from": "now-48h",
+      "to": "now"
+    },
+    "annotations": {
+      "list": [
+        {
+          "datasource": "Prometheus",
+          "enable": true,
+          "expr": "changes(nash_quota_5h_window_resets_total[1m]) > 0",
+          "iconColor": "green",
+          "name": "Quota Reset",
+          "tagKeys": "reset",
+          "textFormat": "5h Window Reset"
+        }
+      ]
+    },
+    "panels": [
+      {
+        "id": 1,
+        "type": "stat",
+        "title": "Tokens Used in Current 5h Window",
+        "description": "Tracks token usage in rolling 5-hour window. Claude Pro limit: ~45 messages (proxy for token quota)",
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 8,
+          "h": 6
+        },
+        "targets": [
+          {
+            "expr": "sum(increase(nash_tokens_used[5h]))",
+            "legendFormat": "Tokens Used",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "calcs": ["lastNotNull"]
+          },
+          "orientation": "auto",
+          "textMode": "value_and_name",
+          "graphMode": "area",
+          "colorMode": "background"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "decimals": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "value": 0, "color": "green" },
+                { "value": 400000, "color": "yellow" },
+                { "value": 475000, "color": "red" }
+              ]
+            },
+            "mappings": []
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": "gauge",
+        "title": "Estimated Messages Remaining",
+        "description": "Based on average tokens per message. Claude Pro limit: 45 messages per 5h",
+        "gridPos": {
+          "x": 8,
+          "y": 0,
+          "w": 8,
+          "h": 6
+        },
+        "targets": [
+          {
+            "expr": "45 - (sum(increase(nash_messages_sent[5h])) OR vector(0))",
+            "legendFormat": "Messages Left",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "calcs": ["lastNotNull"]
+          },
+          "orientation": "auto",
+          "textMode": "value_and_name",
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "min": 0,
+            "max": 45,
+            "decimals": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "value": 0, "color": "red" },
+                { "value": 5, "color": "orange" },
+                { "value": 10, "color": "yellow" },
+                { "value": 20, "color": "green" }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": "stat",
+        "title": "5-Hour Window Reset Timer",
+        "description": "Time until quota resets (approximate)",
+        "gridPos": {
+          "x": 16,
+          "y": 0,
+          "w": 8,
+          "h": 6
+        },
+        "targets": [
+          {
+            "expr": "18000 - (time() - (nash_quota_5h_window_start_timestamp OR (time() - 18000)))",
+            "legendFormat": "Seconds Until Reset",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "calcs": ["lastNotNull"]
+          },
+          "orientation": "auto",
+          "textMode": "value_and_name",
+          "graphMode": "none",
+          "colorMode": "value"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "decimals": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                { "value": 0, "color": "red" },
+                { "value": 1800, "color": "yellow" },
+                { "value": 7200, "color": "green" }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 4,
+        "type": "timeseries",
+        "title": "Historical Quota Usage (Rolling 5h Windows)",
+        "description": "Shows token usage across multiple 5-hour cycles. Red line = 80% threshold, Orange = 95% threshold",
+        "gridPos": {
+          "x": 0,
+          "y": 6,
+          "w": 24,
+          "h": 8
+        },
+        "targets": [
+          {
+            "expr": "sum(increase(nash_tokens_used[5h]))",
+            "legendFormat": "5h Token Usage",
+            "refId": "A"
+          },
+          {
+            "expr": "vector(400000)",
+            "legendFormat": "80% Threshold (Warning)",
+            "refId": "B"
+          },
+          {
+            "expr": "vector(475000)",
+            "legendFormat": "95% Threshold (Critical)",
+            "refId": "C"
+          }
+        ],
+        "options": {
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom"
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "fillOpacity": 20,
+              "lineWidth": 2
+            },
+            "unit": "short",
+            "decimals": 0
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "80% Threshold (Warning)"
+              },
+              "properties": [
+                {
+                  "id": "custom.lineStyle",
+                  "value": {
+                    "fill": "dash"
+                  }
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "fixed",
+                    "fixedColor": "yellow"
+                  }
+                },
+                {
+                  "id": "custom.fillOpacity",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "95% Threshold (Critical)"
+              },
+              "properties": [
+                {
+                  "id": "custom.lineStyle",
+                  "value": {
+                    "fill": "dash"
+                  }
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "fixed",
+                    "fixedColor": "red"
+                  }
+                },
+                {
+                  "id": "custom.fillOpacity",
+                  "value": 0
+                }
+              ]
+            }
+          ]
+        },
+        "alert": {
+          "name": "Token Quota Critical",
+          "conditions": [
+            {
+              "evaluator": {
+                "params": [475000],
+                "type": "gt"
+              },
+              "operator": {
+                "type": "and"
+              },
+              "query": {
+                "params": ["A", "5m", "now"]
+              },
+              "reducer": {
+                "params": [],
+                "type": "last"
+              },
+              "type": "query"
+            }
+          ],
+          "executionErrorState": "alerting",
+          "frequency": "1m",
+          "handler": 1,
+          "noDataState": "no_data",
+          "notifications": []
+        }
+      },
+      {
+        "id": 5,
+        "type": "table",
+        "title": "Task Queue (When Quota Exhausted)",
+        "description": "Shows pending tasks waiting for quota reset",
+        "gridPos": {
+          "x": 0,
+          "y": 14,
+          "w": 24,
+          "h": 8
+        },
+        "targets": [
+          {
+            "expr": "nash_task_queue_pending{reason=\"quota_exhausted\"}",
+            "legendFormat": "",
+            "refId": "A",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "options": {
+          "showHeader": true,
+          "sortBy": [
+            {
+              "displayName": "Priority",
+              "desc": true
+            }
+          ]
+        },
+        "fieldConfig": {
+          "defaults": {},
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "task_id"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Task ID"
+                },
+                {
+                  "id": "custom.width",
+                  "value": 200
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "task_name"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Task Name"
+                },
+                {
+                  "id": "custom.width",
+                  "value": 300
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "priority"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Priority"
+                },
+                {
+                  "id": "custom.width",
+                  "value": 100
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "queued_since"
+              },
+              "properties": [
+                {
+                  "id": "displayName",
+                  "value": "Queued Since"
+                },
+                {
+                  "id": "unit",
+                  "value": "dateTimeFromNow"
+                }
+              ]
+            }
+          ]
+        },
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "__name__": true,
+                "job": true,
+                "instance": true,
+                "reason": true
+              },
+              "indexByName": {
+                "task_id": 0,
+                "task_name": 1,
+                "priority": 2,
+                "queued_since": 3
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "name": "nash-agent-framework",
+  "version": "3.0.0",
+  "description": "Nash Agent Framework - MoE Router + Nash Triad + 3-tier memory with SQLite, Vector DB, and observability",
+  "main": "observability/server.js",
+  "type": "module",
+  "scripts": {
+    "backup": "bash scripts/backup.sh",
+    "install:embeddings": "node -e \"require('@xenova/transformers').pipeline('feature-extraction', 'Snowflake/snowflake-arctic-embed-xs')\"",
+    "lint": "eslint system/*.js observability/*.js",
+    "qa": "bash gates/qa.sh .",
+    "start": "node observability/server.js",
+    "test": "jest --coverage",
+    "test:e2e": "jest tests/e2e",
+    "test:integration": "jest tests/integration",
+    "test:unit": "jest tests/unit",
+    "validate": "bash gates/validate.sh ."
+  },
+  "keywords": [
+    "nash-equilibrium",
+    "multi-agent",
+    "moe-router",
+    "sqlite",
+    "vector-db",
+    "observability",
+    "llm"
+  ],
+  "author": "Nash Agent Framework Team",
+  "license": "MIT",
+  "dependencies": {
+    "@qdrant/js-client-rest": "^1.7.0",
+    "@xenova/transformers": "^2.10.0",
+    "better-sqlite3": "^9.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "lru-cache": "^10.1.0",
+    "prom-client": "^15.1.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.8",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
