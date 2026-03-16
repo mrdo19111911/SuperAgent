@@ -280,7 +280,7 @@ def main():
 
         for filepath, tokens in results.items():
             status = "OK" if not args.limit or tokens <= args.limit else "FAIL"
-            print(f"{status} {filepath}: {tokens} tokens", encoding='utf-8')
+            print(f"{status} {filepath}: {tokens} tokens")
 
             total_tokens += tokens
 
