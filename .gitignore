@@ -28,3 +28,6 @@ bash-audit.log
 
 # Local config overrides
 .claude/config/local-*.json
+
+# Token counting cache (Decision 18A - persistent memoization)
+.token_cache.json
