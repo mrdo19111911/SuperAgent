@@ -279,8 +279,8 @@ def main():
         violations = []
 
         for filepath, tokens in results.items():
-            status = "✓" if not args.limit or tokens <= args.limit else "❌"
-            print(f"{status} {filepath}: {tokens} tokens")
+            status = "OK" if not args.limit or tokens <= args.limit else "FAIL"
+            print(f"{status} {filepath}: {tokens} tokens", encoding='utf-8')
 
             total_tokens += tokens
 
@@ -292,7 +292,7 @@ def main():
         if args.limit:
             print(f"Limit: {args.limit} tokens/file")
             if violations:
-                print(f"\n❌ {len(violations)} violations:")
+                print(f"\nFAIL: {len(violations)} violations:")
                 for filepath, tokens in violations[:10]:
                     print(f"  {filepath}: {tokens} > {args.limit}")
                 return 1
