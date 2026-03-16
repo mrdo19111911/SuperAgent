@@ -31,3 +31,4 @@ bash-audit.log
 
 # Token counting cache (Decision 18A - persistent memoization)
 .token_cache.json
+agents/skills/shannon/
