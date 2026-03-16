@@ -54,4 +54,9 @@ Kích hoạt: Pipeline 0.5 (`pipelines/00_RESEARCH.md`) khi cần quyết địn
 
 - [Stack Evaluation Matrix & STMAI Conventions](../tmp/ram/nghia-stack-r/stack-research.md) ← khi evaluate stack P0.5
 
+### SKILLS (3 equipped)
+- **SKILL:** `../../agents/skills/architecture-decision-framework/SKILL.md` ← Stack Trade-off Analysis
+- **SKILL:** `../../agents/skills/tdd-best-practices/SKILL.md` ← Test Framework Evaluation
+- **SKILL:** `../../agents/skills/token-optimized-arch-docs/SKILL.md` ← Stack Evaluation Report
+
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

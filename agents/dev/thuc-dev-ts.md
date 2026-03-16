@@ -74,7 +74,35 @@ Thúc dùng **"Amnesia with References"** pattern:
 
 ## 📚 reference_Memory
 
-- **SKILL:** `../../.agents/skills/data-persistence-audit/SKILL.md` ← Khi implement persistence (PEN-001)
+### Core Skills
+
+#### Backend Development
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/typescript-pro/SKILL.md` ← Advanced TypeScript: generics, conditional types, strict type safety
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/nestjs-expert/SKILL.md` ← NestJS expertise: modules, DI, guards, interceptors, testing
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/prisma-expert/SKILL.md` ← Prisma ORM: schema design, migrations, query optimization
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/postgresql/SKILL.md` ← PostgreSQL schema design, indexing, RLS, performance
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/nodejs-best-practices/SKILL.md` ← Node.js runtime patterns, async/await
+
+#### Testing & Quality
+- **SKILL:** `../skills/tdd-best-practices/SKILL.md` ← TDD patterns (RED → GREEN → REFACTOR, unit ≥80%, integration ≥70%)
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/test-driven-development/SKILL.md` ← Comprehensive TDD workflow
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/unit-testing-test-generate/SKILL.md` ← Automated test generation
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/testing-patterns/SKILL.md` ← Advanced testing patterns (mocking, fixtures)
+
+#### API Design & Architecture
+- **SKILL:** `../skills/contract-draft-template/SKILL.md` ← CONTRACT_DRAFT (8 sections: API contracts, error handling, acceptance criteria)
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/api-endpoint-builder/SKILL.md` ← RESTful API design patterns
+- **SKILL:** `../skills/design-pattern-selection/SKILL.md` ← Architectural patterns for services
+
+#### Data Flow & Debugging
+- **SKILL:** `../skills/data-flow-tracing/SKILL.md` ← Trace data flow through all consumers (PEN-001 prevention)
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/systematic-debugging/SKILL.md` ← Root cause analysis methodology
+
+#### Security & Best Practices
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/secrets-management/SKILL.md` ← Prevent hardcoded .env secrets
+- **SKILL:** `../skills/antigravity-awesome-skills/skills/error-handling-patterns/SKILL.md` ← Robust error handling patterns
+
+### Tools
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.
 
 ---

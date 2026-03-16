@@ -77,6 +77,25 @@ session.MarkMessage(msg, "")
 ## 📚 reference_Memory
 
 - [Go/Fiber Battle-Tested Patterns](../tmp/ram/tuan-dev-go/go-patterns.md) ← đọc khi bắt đầu Go module
-- **SKILL:** `../../.agents/skills/code-review-excellence/SKILL.md` ← Code review standards (self-review trước Mộc)
+
+### Core Skills (Equipped 2026-03-16)
+
+**Testing & Quality:**
+- **SKILL:** `agents/skills/tdd-best-practices/SKILL.md` — TDD patterns (RED → GREEN → REFACTOR, table-driven tests for Go, 80% coverage target)
+- **SKILL:** `agents/skills/api-chaos-testing/SKILL.md` — Payload chaos, auth bypass, RLS testing, SQL injection detection
+- **SKILL:** `agents/skills/code-review-excellence/SKILL.md` — Two-pass review (CRITICAL → INFORMATIONAL), SQL safety, LLM trust boundary
+
+**Architecture & Database:**
+- **SKILL:** `agents/skills/multi-tenant-schema-design/SKILL.md` — Multi-tenant patterns, RLS, partitioning, N+1 prevention
+- **SKILL:** `agents/skills/postgresql-rls-architecture/SKILL.md` — NOBYPASSRLS role setup, RLS policies, SET LOCAL middleware
+- **SKILL:** `agents/skills/contract-draft-template/SKILL.md` — 8-section contract spec (API, Errors, Events, Idempotency, Mocks, NFRs, Criteria, Sign-off)
+- **SKILL:** `agents/skills/design-pattern-selection/SKILL.md` — Transaction Script, DDD, Repository, CQRS, Clean Architecture progression
+
+**Distributed Systems & Orchestration:**
+- **SKILL:** `agents/skills/antigravity-awesome-skills/skills/temporal-golang-pro/SKILL.md` — Temporal Go SDK, durable workflows, deterministic execution, mTLS worker configs, versioning
+
+**Architecture Decisions:**
+- **SKILL:** `agents/skills/architecture-decision-framework/SKILL.md` — CTO-level decision framework (Monolith vs Microservices, Sync vs Async, SQL vs NoSQL)
+- **SKILL:** `agents/skills/module-decomposition-strategy/SKILL.md` — Vertical/Horizontal/Hybrid decomposition, bounded context, DDD
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

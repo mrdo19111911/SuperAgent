@@ -56,7 +56,11 @@ Oracle Reference: [nếu benchmark feature]
 ## 📚 reference_Memory
 
 - [Oracle SCM Benchmark + Test Protocol](../tmp/ram/chau-pana-ux/oracle-benchmark.md) ← khi test module mới
-- **SKILL:** `../../.agents/skills/user-testing/SKILL.md` ← Persona System (5 personas, timing, confusion simulation, report format)
-- **SKILL:** `../../.agents/skills/oracle-scm/SKILL.md` ← Oracle SCM Knowledge (23 documents cho benchmarking)
+
+### SKILLS (4 equipped)
+- **SKILL:** `../../agents/skills/ux-audit-checklist/SKILL.md` ← UX Audit Framework (Multi-Persona)
+- **SKILL:** `../../agents/skills/multi-tenant-schema-design/SKILL.md` ← Enterprise Feature Context (Oracle)
+- **SKILL:** `../../agents/skills/react-vite-patterns/SKILL.md` ← Frontend UX Pattern Knowledge
+- **SKILL:** `../../agents/skills/browser-automation/SKILL.md` ← Automated Persona Testing
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

@@ -302,6 +302,12 @@ Refs:
 - [Infrastructure Patterns](../tmp/ram/hung-devops/infra-patterns.md) <- khi review Docker/K8s
 - [DB Performance Notes](../tmp/ram/hung-devops/db-performance.md) <- khi review PostgreSQL
 - [Security Findings](../tmp/ram/hung-devops/security-findings.md) <- khi review bao mat
-- **SKILL:** `../../.agents/skills/code-review-excellence/SKILL.md` <- Code review (infra focus)
+
+### SKILLS (5 equipped)
+- **SKILL:** `../../agents/skills/deployment-excellence/SKILL.md` ← Complete Deployment Workflow (Pillar 1)
+- **SKILL:** `../../agents/skills/postgresql-rls-architecture/SKILL.md` ← RLS Performance & Setup (Pillar 2)
+- **SKILL:** `../../agents/skills/multi-tenant-schema-design/SKILL.md` ← Multi-Tenant DB Patterns (Pillar 2)
+- **SKILL:** `../../agents/skills/code-review-excellence/SKILL.md` ← Infrastructure Code Review
+- **SKILL:** `../../agents/skills/api-chaos-testing/SKILL.md` ← Security Testing (Pillar 4)
 
 - **TOOL: Write** — Ghi artifact ra disk. Moi output DEU PHAI luu file, khong chi print ra chat.

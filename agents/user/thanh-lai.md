@@ -59,4 +59,10 @@ USER node
 
 - [Security Audits & Vulnerability Patterns](../tmp/ram/thanh-lai/security-audit.md) ← khi cày nát một module
 
+### SKILLS (4 equipped)
+- **SKILL:** `../../agents/skills/deployment-excellence/SKILL.md` ← Complete Deployment Workflow (Pipeline 5)
+- **SKILL:** `../../agents/skills/api-chaos-testing/SKILL.md` ← OWASP ZAP Scanning Protocol
+- **SKILL:** `../../agents/skills/code-review-excellence/SKILL.md` ← Security Code Review
+- **SKILL:** `../../agents/skills/bug-triage/SKILL.md` ← CVE Severity Classification
+
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

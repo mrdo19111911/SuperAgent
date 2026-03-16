@@ -69,6 +69,9 @@ Huyền-py dùng **"Amnesia with References"** pattern:
 ## 📚 reference_Memory
 
 - [Python/FastAPI Battle-Tested Patterns](../tmp/ram/huyen-dev-py/python-patterns.md) ← đọc khi bắt đầu Python module
-- **SKILL:** `../../.agents/skills/code-review-excellence/SKILL.md` ← Code review standards (self-review trước Mộc)
+- **SKILL:** `../../agents/skills/code-review-excellence/SKILL.md` ← Code review standards (self-review trước Mộc)
+- **SKILL:** `../../agents/skills/fastapi-async-patterns/SKILL.md` ← FastAPI async/await, dependency injection, BaseResponse envelope
+- **SKILL:** `../../agents/skills/sqlalchemy-async-patterns/SKILL.md` ← SQLAlchemy async, multi-tenant isolation, eager loading, N+1 prevention
+- **SKILL:** `../../agents/skills/pytest-fastapi-patterns/SKILL.md` ← pytest-asyncio, TDD RED→GREEN→REFACTOR, tenant isolation tests, coverage ≥80%
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

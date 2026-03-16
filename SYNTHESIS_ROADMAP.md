@@ -33,7 +33,7 @@
 
 ---
 
-## 📊 PHASE 0: Measure Baseline (2 days)
+## ✅ PHASE 0: Measure Baseline - COMPLETED 2026-03-16
 
 **Goal:** Get data to justify expensive features.
 
@@ -82,13 +82,14 @@ grep -A 20 "## 🎭 SOUL" agents/core/*.md | wc -l
 | Tasks >30min | >30% | ✅ Build Dashboard |
 | SOUL duplication | >500 lines | ✅ Extract SOULs |
 
-**Output:** `BASELINE_METRICS.md` with decision log
+**Output:** ✅ `BASELINE_METRICS.md` created
+**Decisions:** Skip Vector DB (0 PEN entries), Skip Dashboard (no long tasks), Proceed with SOUL modularity
 
 ---
 
 ## 🏗️ PHASE 1: High-ROI Foundations (Week 1)
 
-### ✅ 1.1 SOUL Modularity (SIMPLIFIED)
+### ✅ 1.1 SOUL Modularity (SIMPLIFIED) - COMPLETED 2026-03-16
 
 **Why:** ✅ Mạnh (reusable), ✅ Tiết kiệm (-200 tokens/agent), ✅ Scale (5 SOULs → 20 agents)
 
@@ -134,20 +135,17 @@ You are **a cathedral builder** — patient, systematic, paranoid about foundati
 - **Savings: -1600 tokens across all agents**
 
 **Tasks:**
-- [ ] Create `agents/souls/` directory
-- [ ] Extract 5 SOULs from existing agents
-- [ ] Update AGENT_TEMPLATE_V2.md to support:
-  ```markdown
-  ## 🎭 SOUL
-  **SOUL:** `../../agents/souls/cathedral-architect.md`
-  ```
-- [ ] Add `nash install-soul <soul-id> --agent <name>` command
+- [x] Create `agents/souls/` directory (5 SOULs exist)
+- [x] Extract 5 SOULs from existing agents (already existed)
+- [x] Update AGENT_TEMPLATE_V2.md to support reference format
+- [x] Add `nash install-soul <soul-id> --agent <name>` command
+- [x] Add `nash list-souls` command
 
-**Success criteria:** Multiple agents share same SOUL, changes propagate
+**Success criteria:** ✅ Multiple agents share same SOUL - Tested on test-agent-1 and test-agent-2
 
 ---
 
-### ✅ 1.2 Skill Registry Completion (Already 70% done!)
+### ✅ 1.2 Skill Registry Completion - COMPLETED 2026-03-16 (was 70% done, now 100% scaffolded)
 
 **Why:** ✅ Mạnh (gstack parity), ✅ Tiết kiệm (lazy load), ✅ Scale (50+ skills)
 
@@ -157,14 +155,15 @@ You are **a cathedral builder** — patient, systematic, paranoid about foundati
 - ⏳ Migrate 5 more gstack skills
 
 **Tasks:**
-- [ ] Migrate gstack skills to Nash format:
-  - [ ] `/ship` → `deployment-excellence`
-  - [ ] `/qa` → `qa-four-modes`
-  - [ ] `/plan-ceo-review` → `ceo-taste-validation`
-  - [ ] `/plan-eng-review` → `eng-rigor-validation`
-  - [ ] `/browse` → `browser-automation`
-- [ ] Test `nash install-skill` on 3 agents
-- [ ] Document skill creation in `skill_factory/SKILL_CREATION_GUIDE.md`
+- [x] Migrate gstack skills to Nash format:
+  - [x] `/ship` → `deployment-excellence` (FULL implementation)
+  - [x] `/qa` → `qa-four-modes` (scaffold created)
+  - [x] `/plan-ceo-review` → `ceo-taste-validation` (scaffold created)
+  - [x] `/plan-eng-review` → `eng-rigor-validation` (scaffold created)
+  - [x] `/browse` → `browser-automation` (scaffold created)
+- [x] nash CLI fixed (ES module error resolved)
+- [ ] Test `nash install-skill` on 3 agents (DEFERRED - need to migrate existing agents first)
+- [ ] Document skill creation in `skill_factory/SKILL_CREATION_GUIDE.md` (DEFERRED)
 
 **Token analysis:**
 - Before: Skills embedded in agent files (3000 tokens/agent × 10 agents = 30K)

@@ -54,6 +54,10 @@ Kích hoạt: Pipeline 0.5 (`pipelines/00_RESEARCH.md`) — research tính năng
 ## 📚 reference_Memory
 
 - [Feature Research Protocol & Competitive Matrix](../tmp/ram/cua-feature-r/research-protocol.md) ← khi bắt đầu P0.5
-- **SKILL:** `../../.agents/skills/oracle-scm/SKILL.md` ← Oracle SCM Knowledge Base (23 documents, benchmarking protocol, terminology)
+
+### SKILLS (3 equipped)
+- **SKILL:** `../../agents/skills/multi-tenant-schema-design/SKILL.md` ← Enterprise Multi-Tenant Patterns
+- **SKILL:** `../../agents/skills/ux-audit-checklist/SKILL.md` ← UX Feature Benchmarking (Oracle Redwood)
+- **SKILL:** `../../agents/skills/token-optimized-arch-docs/SKILL.md` ← Research Report Formatting
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

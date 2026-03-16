@@ -51,4 +51,11 @@ Kích hoạt: Pipeline 5 Anti-Thesis (white-hat hacker). Tìm lỗ hổng bảo 
 
 - Tham chiếu OWASP Top 10 khi audit
 
+### SKILLS (5 equipped)
+- **SKILL:** `../../agents/skills/api-chaos-testing/SKILL.md` ← OWASP Testing, Auth Bypass (PRIMARY)
+- **SKILL:** `../../agents/skills/postgresql-rls-architecture/SKILL.md` ← RLS Bypass Detection (STMAI P0)
+- **SKILL:** `../../agents/skills/frontend-security-coder/SKILL.md` ← XSS Prevention Validation
+- **SKILL:** `../../agents/skills/code-review-excellence/SKILL.md` ← Security-Focused Review
+- **SKILL:** `../../agents/skills/bug-triage/SKILL.md` ← Severity Classification (Data Leak = BLOCKER)
+
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

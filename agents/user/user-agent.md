@@ -53,4 +53,9 @@ Kích hoạt: Pipeline 1 SYNTHESIS (đại diện user khi PO không available) 
 
 - [Negotiation Loop & Budgets](../tmp/ram/user-agent/negotiation.md) ← khi thương lượng thêm tính năng
 
+### SKILLS (3 equipped)
+- **SKILL:** `../../agents/skills/contract-draft-template/SKILL.md` ← Acceptance Criteria Framework
+- **SKILL:** `../../agents/skills/module-decomposition-strategy/SKILL.md` ← Scope Breakdown (v1.0 vs v1.1)
+- **SKILL:** `../../agents/skills/token-optimized-arch-docs/SKILL.md` ← SPEC Negotiation Docs
+
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

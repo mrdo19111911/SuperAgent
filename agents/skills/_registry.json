@@ -1,6 +1,6 @@
 {
   "registry_version": "2.0",
-  "last_updated": "2026-03-15T18:15:07.433Z",
+  "last_updated": "2026-03-16T12:00:00.000Z",
   "skills": [
     {
       "id": "code-review-excellence",
@@ -31,6 +31,1376 @@
       "last_modified": "2026-03-16",
       "test_coverage": "0%",
       "documentation_url": "agents/skills/code-review-excellence/README.md"
+    },
+    {
+      "id": "deployment-excellence",
+      "name": "Deployment Excellence",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Deployment Excellence — [Add detailed description here]",
+      "tags": [
+        "deployment",
+        "ci-cd",
+        "testing",
+        "git"
+      ],
+      "archetype_fit": [
+        "Operator",
+        "Builder"
+      ],
+      "path": "agents/skills/deployment-excellence/",
+      "dependencies": [],
+      "used_by": [],
+      "maintenance_status": "draft",
+      "last_modified": "2026-03-15",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/deployment-excellence/README.md"
+    },
+    {
+      "id": "postgresql-rls-architecture",
+      "name": "PostgreSQL RLS Security Setup",
+      "version": "2.0.0",
+      "author": "Nash Framework",
+      "description": "NOBYPASSRLS role setup, RLS policies, SET LOCAL middleware. 112 lines. Prevents PEN-002.",
+      "tags": [
+        "rls",
+        "nobypassrls",
+        "set-local",
+        "connection-pool",
+        "security"
+      ],
+      "archetype_fit": [
+        "Strategist",
+        "Builder"
+      ],
+      "path": "agents/skills/postgresql-rls-architecture/",
+      "dependencies": [
+        "pg-aiguide (MCP)"
+      ],
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/postgresql-rls-architecture/README.md"
+    },
+    {
+      "id": "contract-draft-template",
+      "name": "CONTRACT_DRAFT 8-Section Template",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Complete interface contract specification for Pipeline 2. Ensures CONTRACT_DRAFT.md contains all 8 mandatory sections (API, Errors, Events, Idempotency, Mocks, NFRs, Criteria, Sign-off) required by Gates 1.6, 1.6.5, and 2.",
+      "tags": [
+        "architecture",
+        "contract",
+        "api-design",
+        "documentation",
+        "pipeline-2"
+      ],
+      "archetype_fit": [
+        "Strategist",
+        "Analyst"
+      ],
+      "path": "agents/skills/contract-draft-template/",
+      "dependencies": [],
+      "used_by": [
+        "phuc-sa",
+        "xuan-spec-rev",
+        "moc-arch-chal"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/contract-draft-template/README.md"
+    },
+    {
+      "id": "multi-tenant-schema-design",
+      "name": "Multi-Tenant Schema Design Pattern Catalog",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Comprehensive patterns for multi-tenant SaaS database schemas: standard entities, time-series partitioning, hierarchical tenancy, shared reference data, soft delete cascade. Includes index strategy, N+1 prevention, and GDPR compliance.",
+      "tags": [
+        "database",
+        "schema-design",
+        "multi-tenant",
+        "prisma",
+        "postgresql",
+        "architecture"
+      ],
+      "archetype_fit": [
+        "Strategist",
+        "Builder",
+        "Critic"
+      ],
+      "path": "agents/skills/multi-tenant-schema-design/",
+      "dependencies": [
+        "postgresql-rls-architecture"
+      ],
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/multi-tenant-schema-design/README.md"
+    },
+    {
+      "id": "arch-challenge-response",
+      "name": "Architecture Challenge Response Protocol",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Nash Triad response workflow for Phúc SA when Mộc challenges architecture. Defines protocol for ARCH_RESPONSE.md with evidence-based decisions, Phanbien workflow for contested HIGH issues, and PEN-001 violation prevention.",
+      "tags": [
+        "architecture",
+        "nash-triad",
+        "review",
+        "challenge-response",
+        "pipeline-2"
+      ],
+      "archetype_fit": [
+        "Strategist",
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/arch-challenge-response/",
+      "dependencies": [],
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal",
+        "dung-manager"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/arch-challenge-response/README.md"
+    },
+    {
+      "id": "token-optimized-arch-docs",
+      "name": "Token-Optimized Architecture Documentation",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Create ARCHITECTURE_ABSTRACT.md (~150 lines) to complement full ARCHITECTURE.md. Implements WIN-001 pattern with 85%+ token reduction via tables, bullets, acronyms, and file references. Enables fast gate reviews.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "token-optimization",
+        "pipeline-2",
+        "best-practice"
+      ],
+      "archetype_fit": [
+        "Strategist",
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/token-optimized-arch-docs/",
+      "dependencies": [],
+      "used_by": [
+        "phuc-sa",
+        "xuan-spec-rev",
+        "dung-manager",
+        "moc-arch-chal"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/token-optimized-arch-docs/README.md"
+    },
+    {
+      "id": "architecture-decision-framework",
+      "name": "Architecture Decision Framework",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "CTO-level decision framework with trade-off analysis. Decision trees for Monolith vs Microservices, Sync vs Async, SQL vs NoSQL. Includes ADR template and anti-pattern warnings.",
+      "tags": [
+        "architecture",
+        "decision-making",
+        "adr",
+        "trade-offs",
+        "cto"
+      ],
+      "archetype_fit": [
+        "Strategist",
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/architecture-decision-framework/",
+      "dependencies": [],
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/architecture-decision-framework/README.md"
+    },
+    {
+      "id": "module-decomposition-strategy",
+      "name": "Module Decomposition Strategy",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Break complex systems into manageable modules. 3 approaches: Vertical (domain), Horizontal (layer), Hybrid (feature). Includes naming anti-patterns, dependency rules, and refactoring guides.",
+      "tags": [
+        "architecture",
+        "module-design",
+        "decomposition",
+        "bounded-context",
+        "ddd"
+      ],
+      "archetype_fit": [
+        "Strategist",
+        "Builder",
+        "Critic"
+      ],
+      "path": "agents/skills/module-decomposition-strategy/",
+      "dependencies": [],
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/module-decomposition-strategy/README.md"
+    },
+    {
+      "id": "design-pattern-selection",
+      "name": "Design Pattern Selection",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Tactical design patterns with selection criteria and progression path. Covers Transaction Script, DDD, Repository, CQRS, Event Sourcing, Clean Architecture. Includes pattern progression guide (Year 1→4) and anti-pattern warnings.",
+      "tags": [
+        "design-patterns",
+        "ddd",
+        "cqrs",
+        "repository",
+        "clean-architecture"
+      ],
+      "archetype_fit": [
+        "Strategist",
+        "Builder",
+        "Critic"
+      ],
+      "path": "agents/skills/design-pattern-selection/",
+      "dependencies": [],
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/design-pattern-selection/README.md"
+    },
+    {
+      "id": "react-vite-patterns",
+      "name": "React 18 + Vite Best Practices",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Type-safe React patterns with TanStack Query, Zustand, and STMAI API envelope integration. Includes patterns for data fetching, state management, error boundaries, XSS prevention, and component size limits.",
+      "tags": [
+        "react",
+        "vite",
+        "tanstack-query",
+        "zustand",
+        "frontend",
+        "typescript"
+      ],
+      "archetype_fit": [
+        "Builder"
+      ],
+      "path": "agents/skills/react-vite-patterns/",
+      "dependencies": [],
+      "used_by": [
+        "lan-dev-fe",
+        "huyen-fe-qa",
+        "trinh-fe-tester"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/react-vite-patterns/README.md"
+    },
+    {
+      "id": "tdd-best-practices",
+      "name": "TDD Best Practices",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Test-Driven Development patterns for RED → GREEN → REFACTOR cycles. Includes unit and integration test patterns for TypeScript/Jest and Go/Testing with coverage targets (Unit ≥80%, Integration ≥70%).",
+      "tags": [
+        "tdd",
+        "testing",
+        "jest",
+        "go-testing",
+        "unit-tests",
+        "integration-tests"
+      ],
+      "archetype_fit": [
+        "Builder",
+        "Analyst"
+      ],
+      "path": "agents/skills/tdd-best-practices/",
+      "dependencies": [],
+      "used_by": [
+        "thuc-dev-ts",
+        "tuan-dev-go",
+        "hoang-dev-net"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/tdd-best-practices/README.md"
+    },
+    {
+      "id": "api-chaos-testing",
+      "name": "API Chaos Testing",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Systematic chaos testing for APIs, auth, RLS, and edge cases. Includes payload chaos (empty, 10MB, malformed), auth bypass testing, SQL injection detection, and severity classification (BLOCKER/CRITICAL/MAJOR/MINOR).",
+      "tags": [
+        "testing",
+        "qa",
+        "chaos-testing",
+        "security",
+        "api-testing",
+        "rls"
+      ],
+      "archetype_fit": [
+        "Critic",
+        "Analyst"
+      ],
+      "path": "agents/skills/api-chaos-testing/",
+      "dependencies": [],
+      "used_by": [
+        "son-qa",
+        "huyen-fe-qa",
+        "moc-arch-chal"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/api-chaos-testing/README.md"
+    },
+    {
+      "id": "data-flow-tracing",
+      "name": "Data Flow Tracing",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "End-to-end data flow verification for code reviews (DB → API → State → UI). Prevents PEN-001 violations by ensuring ALL consumers are updated when persistence changes. Includes trace checklists and review scripts.",
+      "tags": [
+        "code-review",
+        "data-flow",
+        "persistence",
+        "architecture",
+        "tracing"
+      ],
+      "archetype_fit": [
+        "Critic",
+        "Analyst"
+      ],
+      "path": "agents/skills/data-flow-tracing/",
+      "dependencies": [],
+      "used_by": [
+        "moc-arch-chal",
+        "phuc-sa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/data-flow-tracing/README.md"
+    },
+    {
+      "id": "ux-audit-checklist",
+      "name": "UX Audit Checklist",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Structured UX audit for Visual Hierarchy, Visual Style, and Accessibility. Includes 6 audit pillars (3 core + 3 contextual), WCAG AA compliance checks (contrast ≥4.5:1), and audit report template.",
+      "tags": [
+        "ux",
+        "design",
+        "accessibility",
+        "wcag",
+        "audit",
+        "ui-review"
+      ],
+      "archetype_fit": [
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/ux-audit-checklist/",
+      "dependencies": [],
+      "used_by": [
+        "quang-designer"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/ux-audit-checklist/README.md"
+    },
+    {
+      "id": "frontend-security-coder",
+      "name": "Frontend Security Coder",
+      "version": "1.0.0",
+      "author": "Antigravity (migrated to Nash)",
+      "description": "Expert frontend security coding. XSS prevention, CSP configuration, DOMPurify integration, secure DOM manipulation, Content Security Policy implementation, and safe user interaction patterns.",
+      "tags": [
+        "frontend",
+        "security",
+        "xss",
+        "csp",
+        "dom-security",
+        "sanitization"
+      ],
+      "archetype_fit": [
+        "Builder"
+      ],
+      "path": "agents/skills/frontend-security-coder/",
+      "dependencies": [],
+      "used_by": [
+        "lan-dev-fe"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/frontend-security-coder/SKILL.md"
+    },
+    {
+      "id": "react-best-practices-vercel",
+      "name": "React Best Practices (Vercel)",
+      "version": "1.0.0",
+      "author": "Vercel Engineering (migrated to Nash)",
+      "description": "Vercel's 45 performance optimization rules for React and Next.js. Covers waterfalls, bundle size, re-renders, server-side performance, and advanced patterns. Prioritized by impact (CRITICAL → LOW).",
+      "tags": [
+        "react",
+        "nextjs",
+        "performance",
+        "optimization",
+        "vercel",
+        "bundle-size"
+      ],
+      "archetype_fit": [
+        "Builder"
+      ],
+      "path": "agents/skills/react-best-practices-vercel/",
+      "dependencies": [],
+      "used_by": [
+        "lan-dev-fe"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/react-best-practices-vercel/SKILL.md"
+    },
+    {
+      "id": "systematic-debugging",
+      "name": "Systematic Debugging",
+      "version": "1.0.0",
+      "author": "Antigravity (migrated to Nash)",
+      "description": "4-phase root cause investigation protocol (Root Cause → Pattern Analysis → Hypothesis → Implementation). Includes multi-layer diagnosis, backward tracing, and architectural questioning after 3+ failed fixes. Prevents random fixes and symptom masking.",
+      "tags": [
+        "debugging",
+        "root-cause-analysis",
+        "testing",
+        "qa",
+        "systematic-approach"
+      ],
+      "archetype_fit": [
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/systematic-debugging/",
+      "dependencies": [],
+      "used_by": [
+        "son-qa",
+        "moc-arch-chal"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/antigravity-awesome-skills/skills/systematic-debugging/SKILL.md"
+    },
+    {
+      "id": "e2e-testing",
+      "name": "E2E Testing Workflow",
+      "version": "1.0.0",
+      "author": "Antigravity (migrated to Nash)",
+      "description": "End-to-end testing workflow with Playwright for browser automation, visual regression, cross-browser testing, and CI/CD integration. Covers test setup, design, implementation, and quality gates.",
+      "tags": [
+        "testing",
+        "e2e",
+        "playwright",
+        "visual-regression",
+        "cross-browser"
+      ],
+      "archetype_fit": [
+        "Builder",
+        "Critic"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/e2e-testing/",
+      "dependencies": [],
+      "used_by": [
+        "son-qa",
+        "huyen-fe-qa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/antigravity-awesome-skills/skills/e2e-testing/SKILL.md"
+    },
+    {
+      "id": "api-security-testing",
+      "name": "API Security Testing Workflow",
+      "version": "1.0.0",
+      "author": "Antigravity (migrated to Nash)",
+      "description": "API security testing workflow for REST and GraphQL APIs covering authentication, authorization, rate limiting, input validation, and security best practices. Includes IDOR testing, JWT manipulation, and GraphQL-specific attacks.",
+      "tags": [
+        "security",
+        "api-testing",
+        "auth-testing",
+        "idor",
+        "jwt",
+        "graphql"
+      ],
+      "archetype_fit": [
+        "Critic",
+        "Analyst"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/api-security-testing/",
+      "dependencies": [],
+      "used_by": [
+        "son-qa",
+        "ngu-security"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/antigravity-awesome-skills/skills/api-security-testing/SKILL.md"
+    },
+    {
+      "id": "testing-patterns",
+      "name": "Testing Patterns and Utilities",
+      "version": "1.0.0",
+      "author": "Antigravity (migrated to Nash)",
+      "description": "Jest testing patterns, factory functions, mocking strategies, and TDD workflow. Includes custom render functions, component props factories, data factories, and anti-patterns to avoid.",
+      "tags": [
+        "testing",
+        "jest",
+        "tdd",
+        "mocking",
+        "factory-pattern"
+      ],
+      "archetype_fit": [
+        "Builder"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/testing-patterns/",
+      "dependencies": [],
+      "used_by": [
+        "son-qa",
+        "thuc-dev-ts",
+        "lan-dev-fe"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/antigravity-awesome-skills/skills/testing-patterns/SKILL.md"
+    },
+    {
+      "id": "testing-qa-bundle",
+      "name": "Testing/QA Workflow Bundle",
+      "version": "1.0.0",
+      "author": "Antigravity (migrated to Nash)",
+      "description": "Comprehensive testing and quality assurance workflow covering unit testing, integration testing, E2E testing, browser automation, and quality assurance. Includes 8-phase workflow from test strategy to quality gates.",
+      "tags": [
+        "testing",
+        "qa",
+        "workflow-bundle",
+        "unit-testing",
+        "integration-testing",
+        "e2e"
+      ],
+      "archetype_fit": [
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/testing-qa/",
+      "dependencies": [],
+      "used_by": [
+        "son-qa",
+        "huyen-fe-qa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/antigravity-awesome-skills/skills/testing-qa/SKILL.md"
+    },
+    {
+      "id": "test-automator",
+      "name": "Test Automation Excellence",
+      "version": "1.0.0",
+      "author": "Antigravity (migrated to Nash)",
+      "description": "Master AI-powered test automation with modern frameworks, self-healing tests, and comprehensive quality engineering. Build scalable testing strategies with advanced CI/CD integration, TDD excellence, and quality metrics.",
+      "tags": [
+        "testing",
+        "automation",
+        "tdd",
+        "ai-testing",
+        "ci-cd",
+        "quality-engineering"
+      ],
+      "archetype_fit": [
+        "Builder",
+        "Analyst"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/test-automator/",
+      "dependencies": [],
+      "used_by": [
+        "son-qa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/antigravity-awesome-skills/skills/test-automator/SKILL.md"
+    },
+    {
+      "id": "ln-522-manual-tester",
+      "name": "Manual Tester (L3 Worker)",
+      "version": "1.0.0",
+      "author": "Claude Code Skills (migrated to Nash)",
+      "description": "Performs manual testing of Story AC via executable bash scripts saved to tests/manual/. Creates reusable test suites per Story with fail-fast principles, expected/ golden files, and test harness integration.",
+      "tags": [
+        "testing",
+        "manual-testing",
+        "bash-scripts",
+        "qa",
+        "test-harness"
+      ],
+      "archetype_fit": [
+        "Builder",
+        "Critic"
+      ],
+      "path": "agents/skills/claude-code-skills/ln-522-manual-tester/",
+      "dependencies": [],
+      "used_by": [
+        "son-qa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/claude-code-skills/ln-522-manual-tester/SKILL.md"
+    },
+    {
+      "id": "ln-630-test-auditor",
+      "name": "Test Suite Auditor (L2 Coordinator)",
+      "version": "4.0.0",
+      "author": "Claude Code Skills (migrated to Nash)",
+      "description": "Coordinates comprehensive test suite audit across 8 quality categories using 7 specialized workers. Discovers both automated and manual tests, calculates Usefulness Score, identifies missing tests for critical business logic, and detects anti-patterns.",
+      "tags": [
+        "testing",
+        "test-audit",
+        "coordinator",
+        "usefulness-score",
+        "domain-aware"
+      ],
+      "archetype_fit": [
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/claude-code-skills/ln-630-test-auditor/",
+      "dependencies": [
+        "ln-631-test-business-logic-auditor",
+        "ln-632-test-e2e-priority-auditor",
+        "ln-633-test-value-auditor",
+        "ln-634-test-coverage-auditor",
+        "ln-635-test-isolation-auditor",
+        "ln-636-manual-test-auditor",
+        "ln-637-test-structure-auditor"
+      ],
+      "used_by": [
+        "son-qa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/claude-code-skills/ln-630-test-auditor/SKILL.md"
+    },
+    {
+      "id": "ln-631-test-business-logic-auditor",
+      "name": "Business Logic Focus Auditor (L3 Worker)",
+      "version": "3.0.0",
+      "author": "Claude Code Skills (migrated to Nash)",
+      "description": "Detects tests that validate framework/library behavior (Prisma, Express, bcrypt, JWT, axios, React hooks) instead of OUR code. Returns findings with REMOVE decisions for framework tests.",
+      "tags": [
+        "testing",
+        "test-audit",
+        "framework-testing",
+        "worker"
+      ],
+      "archetype_fit": [
+        "Critic",
+        "Analyst"
+      ],
+      "path": "agents/skills/claude-code-skills/ln-631-test-business-logic-auditor/",
+      "dependencies": [],
+      "used_by": [
+        "son-qa",
+        "ln-630-test-auditor"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/claude-code-skills/ln-631-test-business-logic-auditor/SKILL.md"
+    },
+    {
+      "id": "ln-633-test-value-auditor",
+      "name": "Risk-Based Value Auditor (L3 Worker)",
+      "version": "3.0.0",
+      "author": "Claude Code Skills (migrated to Nash)",
+      "description": "Calculates Usefulness Score = Impact (1-5) × Probability (1-5) for each test. Returns KEEP/REVIEW/REMOVE decisions based on thresholds (≥15 KEEP, 10-14 REVIEW, <10 REMOVE).",
+      "tags": [
+        "testing",
+        "test-audit",
+        "usefulness-score",
+        "impact-probability",
+        "worker"
+      ],
+      "archetype_fit": [
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/claude-code-skills/ln-633-test-value-auditor/",
+      "dependencies": [],
+      "used_by": [
+        "son-qa",
+        "ln-630-test-auditor"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/claude-code-skills/ln-633-test-value-auditor/SKILL.md"
+    },
+    {
+      "id": "fastapi-async-patterns",
+      "name": "FastAPI Async Patterns & Best Practices",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Production-ready FastAPI patterns with async/await, dependency injection, Pydantic validation, and STMAI API envelope integration. Prevents event loop blocking, enforces type safety, and implements BaseResponse envelope pattern.",
+      "tags": [
+        "python",
+        "fastapi",
+        "async",
+        "pydantic",
+        "backend",
+        "api",
+        "dependency-injection"
+      ],
+      "archetype_fit": [
+        "Builder"
+      ],
+      "path": "agents/skills/fastapi-async-patterns/",
+      "dependencies": [],
+      "used_by": [
+        "huyen-dev-py"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/fastapi-async-patterns/SKILL.md"
+    },
+    {
+      "id": "sqlalchemy-async-patterns",
+      "name": "SQLAlchemy Async Patterns & Multi-Tenancy",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Production-ready SQLAlchemy 2.0 async patterns with multi-tenant isolation, eager loading, and N+1 prevention. Enforces tenant_id filtering, soft deletes, UTC timestamps, and AsyncSession best practices.",
+      "tags": [
+        "python",
+        "sqlalchemy",
+        "async",
+        "multi-tenancy",
+        "database",
+        "orm",
+        "postgresql"
+      ],
+      "archetype_fit": [
+        "Builder"
+      ],
+      "path": "agents/skills/sqlalchemy-async-patterns/",
+      "dependencies": [],
+      "used_by": [
+        "huyen-dev-py"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/sqlalchemy-async-patterns/SKILL.md"
+    },
+    {
+      "id": "pytest-fastapi-patterns",
+      "name": "Pytest FastAPI Testing Patterns",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "TDD patterns for FastAPI with pytest, pytest-asyncio, async fixtures, and coverage targets (≥80%). Implements RED→GREEN→REFACTOR cycle, tenant isolation testing, and prevents hollow tests.",
+      "tags": [
+        "python",
+        "pytest",
+        "fastapi",
+        "testing",
+        "tdd",
+        "async",
+        "coverage"
+      ],
+      "archetype_fit": [
+        "Builder",
+        "Critic"
+      ],
+      "path": "agents/skills/pytest-fastapi-patterns/",
+      "dependencies": [],
+      "used_by": [
+        "huyen-dev-py"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/pytest-fastapi-patterns/SKILL.md"
+    },
+    {
+      "id": "performance-load-testing",
+      "name": "Performance & Load Testing",
+      "version": "1.0.0",
+      "author": "Nash Framework (GSTACK v1.0)",
+      "description": "Load testing with k6/Gatling for production readiness validation. Simulates Black Friday traffic with TWO_PASS workflow (CRITICAL: DB pool exhausted, OOM, error rate >1% blocks deploy; INFORMATIONAL: N+1 queries, cache misses documented). Includes ramp-up, spike, soak test patterns, multi-tenant isolation testing, performance budgets (P95 <500ms), CI/CD integration, and bottleneck analysis with real production bug examples.",
+      "tags": [
+        "performance",
+        "load-testing",
+        "k6",
+        "gatling",
+        "jmeter",
+        "locust",
+        "artillery",
+        "testing",
+        "qa",
+        "performance-budget",
+        "bottleneck-analysis",
+        "soak-test",
+        "spike-test",
+        "multi-tenant"
+      ],
+      "archetype_fit": [
+        "Critic",
+        "Operator",
+        "Analyst"
+      ],
+      "path": "agents/skills/performance-load-testing/",
+      "dependencies": [
+        "observability-monitoring"
+      ],
+      "used_by": [
+        "son-qa",
+        "huyen-fe-qa",
+        "hung",
+        "phuc-sa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/performance-load-testing/README.md"
+    },
+    {
+      "id": "requirements-engineering",
+      "name": "Requirements Engineering",
+      "version": "2.0.0",
+      "author": "Nash Framework (GSTACK v2.0)",
+      "description": "Systematic requirements elicitation with SMART criteria, acceptance tests, MoSCoW prioritization. Two-pass workflow (CRITICAL: missing acceptance criteria, vague constraints → INFORMATIONAL: UX polish). Includes 5 elicitation techniques (5 Whys, prototyping, workshops, observation, BDD), production bug prevention table, NFR templates, and scope creep detection. Transforms vague requests ('fast', 'secure') into testable metrics (p95 < 500ms, RLS enforced).",
+      "tags": [
+        "requirements",
+        "user-stories",
+        "bdd",
+        "gherkin",
+        "acceptance-criteria",
+        "moscow-prioritization",
+        "5-whys",
+        "elicitation",
+        "nfr",
+        "scope-creep",
+        "pm",
+        "specification",
+        "smart-criteria"
+      ],
+      "archetype_fit": [
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/requirements-engineering/",
+      "dependencies": [],
+      "used_by": [
+        "conan-req-aud",
+        "dung-manager",
+        "chau-pana-ux",
+        "xuan-spec-rev"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/requirements-engineering/README.md"
+    },
+    {
+      "id": "database-migration",
+      "name": "Database Migration (GSTACK v2.0)",
+      "version": "2.0.0",
+      "author": "Nash Framework (GSTACK v2.0)",
+      "description": "Zero-downtime schema migrations with Expand-Contract pattern, rollback plans, and multi-tenant RLS safety. GSTACK-compliant with Philosophy (surgeon on beating heart), 7 Prime Directives, Migration Strategies table, Rollback Decision Matrix, Pre-Migration Checklist, and Real Production Disaster example. Two-pass review (CRITICAL: data safety → INFORMATIONAL: performance). Prevents P0 violations: missing backups, no lock timeout, missing RLS policies.",
+      "tags": [
+        "database",
+        "migration",
+        "expand-contract",
+        "prisma",
+        "typeorm",
+        "postgresql",
+        "zero-downtime",
+        "rls",
+        "rollback",
+        "lock-timeout",
+        "shadow-table",
+        "backfill",
+        "gstack"
+      ],
+      "archetype_fit": [
+        "Builder",
+        "Strategist",
+        "Critic"
+      ],
+      "path": "agents/skills/database-migration/",
+      "dependencies": [
+        "postgresql-rls-architecture"
+      ],
+      "used_by": [
+        "phuc-sa",
+        "thuc-dev-ts",
+        "tuan-dev-go",
+        "huyen-dev-py",
+        "hoang-dev-net"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/database-migration/README.md"
+    },
+    {
+      "id": "test-data-management",
+      "name": "Test Data Management",
+      "version": "2.0.0",
+      "author": "Nash Framework (GSTACK v2.0)",
+      "description": "Hermetic test data factories with multi-tenant isolation and deterministic faker seeding. GSTACK-compliant with Philosophy (data gardener), 7 Prime Directives, Data Generation Strategies table, 3 Cleanup Strategies, Multi-Tenant Isolation patterns (PEN-003 prevention), Two-Pass workflow (CRITICAL: tenant pollution, non-deterministic data → INFORMATIONAL: data realism), and Stopping Policy (setup > 30% runtime → refactor). Prevents flaky tests from shared tenants, hardcoded IDs, and missing cleanup. Includes factory patterns for TS/Prisma, Python/SQLAlchemy, fixtures, seeders, anonymization (GDPR), and Testcontainers.",
+      "tags": [
+        "testing",
+        "test-data",
+        "factory-pattern",
+        "faker",
+        "multi-tenant-isolation",
+        "hermetic-tests",
+        "deterministic",
+        "cleanup-strategies",
+        "fixtures",
+        "anonymization",
+        "gdpr",
+        "testcontainers",
+        "seeders",
+        "pen-003-prevention",
+        "gstack"
+      ],
+      "archetype_fit": [
+        "Builder",
+        "Critic"
+      ],
+      "path": "agents/skills/test-data-management/",
+      "dependencies": [
+        "tdd-best-practices"
+      ],
+      "used_by": [
+        "son-qa",
+        "thuc-dev-ts",
+        "lan-dev-fe",
+        "tuan-dev-go",
+        "huyen-dev-py",
+        "hoang-dev-net",
+        "huyen-fe-qa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/test-data-management/README.md"
+    },
+    {
+      "id": "secrets-config-management",
+      "name": "Secrets & Config Management",
+      "version": "2.0.0",
+      "author": "Nash Framework (GSTACK v2.0)",
+      "description": "Security-first secrets management with AWS Secrets Manager, rotation, and leak prevention. Two-pass workflow (CRITICAL: hardcoded secrets, secrets in logs/git → INFORMATIONAL: rotation frequency, caching). Enforces vault keeper axiom: 'If it's sensitive, it's in a vault. If it's in code or logs, it's a P0 incident.' Includes pre-commit hooks, truffleHog SAST, Lambda auto-rotation (90-day DB passwords), log redaction (Pino), multi-tenant isolation, and incident response runbook. Real breach examples: GitHub AWS key → $47K bill. Prevents P0 violations with gates/security.sh.",
+      "tags": [
+        "secrets",
+        "aws-secrets-manager",
+        "vault",
+        "rotation",
+        "leak-prevention",
+        "pre-commit-hook",
+        "trufflehog",
+        "sast",
+        "log-redaction",
+        "multi-tenant",
+        "security",
+        "incident-response",
+        "p0-prevention"
+      ],
+      "archetype_fit": [
+        "Operator",
+        "Builder",
+        "Critic"
+      ],
+      "path": "agents/skills/secrets-config-management/",
+      "dependencies": [],
+      "used_by": [
+        "thanh-lai",
+        "hung",
+        "thuc-dev-ts",
+        "tuan-dev-go",
+        "huyen-dev-py",
+        "hoang-dev-net"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/secrets-config-management/README.md"
+    },
+    {
+      "id": "infrastructure-as-code",
+      "name": "Infrastructure as Code (Terraform/Pulumi)",
+      "version": "2.0.0",
+      "author": "Nash Framework",
+      "description": "Security-first IaC with Terraform/Pulumi. Two-pass review (CRITICAL: state/secrets/IAM → INFORMATIONAL: optimization). Enforces remote state, state locking, secrets in Vault/Secrets Manager, module design, input validation, CI/CD integration with plan artifacts. Prevents hardcoded secrets (P0), missing encryption (P1), and IAM wildcard permissions (P1).",
+      "tags": [
+        "infrastructure",
+        "terraform",
+        "pulumi",
+        "iac",
+        "aws",
+        "state-management",
+        "security",
+        "ci-cd",
+        "module-design"
+      ],
+      "archetype_fit": [
+        "Operator",
+        "Strategist",
+        "Builder"
+      ],
+      "path": "agents/skills/infrastructure-as-code/",
+      "dependencies": [],
+      "used_by": [
+        "hung",
+        "phuc-sa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/infrastructure-as-code/SKILL.md"
+    },
+    {
+      "id": "container-orchestration",
+      "name": "Container Orchestration (Kubernetes & Docker)",
+      "version": "2.0.0",
+      "author": "Nash Framework (GSTACK v2.0)",
+      "description": "Security-first container & Kubernetes engineering. Multi-stage builds, resource limits, Pod Security Standards, HPA, Helm charts. Two-pass audit (CRITICAL: security/resources → INFORMATIONAL: optimization). Enforces non-root users, readOnlyRootFilesystem, no :latest tags, health checks mandatory. Includes production-grade Deployment templates and real bug examples.",
+      "tags": [
+        "docker",
+        "kubernetes",
+        "k8s",
+        "helm",
+        "containers",
+        "security",
+        "hpa",
+        "pod-security",
+        "devops",
+        "infrastructure"
+      ],
+      "archetype_fit": [
+        "Operator",
+        "Builder",
+        "Critic"
+      ],
+      "path": "agents/skills/container-orchestration/",
+      "dependencies": [],
+      "used_by": [
+        "hung",
+        "thanh-lai",
+        "phuc-sa"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/container-orchestration/SKILL.md"
+    },
+    {
+      "id": "observability-monitoring",
+      "name": "Observability & Monitoring",
+      "version": "1.0.0",
+      "author": "Nash Framework (GSTACK v1.0)",
+      "description": "Enterprise observability stack with Prometheus, Grafana, OpenTelemetry, Loki. Implements Golden Signals (Latency, Traffic, Errors, Saturation), SLO-based alerting, distributed tracing with trace propagation (API → Kafka → Worker), and structured JSON logging. Two-pass workflow: CRITICAL alerts (error rate, latency, lag, health) block deploy; INFORMATIONAL dashboards for debugging. Every alert requires runbook URL. Multi-tenant isolation via tenant_id labels.",
+      "tags": [
+        "observability",
+        "monitoring",
+        "prometheus",
+        "grafana",
+        "opentelemetry",
+        "loki",
+        "tracing",
+        "logging",
+        "alerting",
+        "slo",
+        "sli",
+        "golden-signals",
+        "sre",
+        "production"
+      ],
+      "archetype_fit": [
+        "Operator",
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/observability-monitoring/",
+      "dependencies": [],
+      "used_by": [
+        "nam-observability",
+        "hung",
+        "thanh-lai",
+        "tung-diag"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/observability-monitoring/README.md"
+    },
+    {
+      "id": "regression-test-suite",
+      "name": "Regression Test Suite Management",
+      "version": "1.0.0",
+      "author": "Nash Framework (GSTACK v2.0)",
+      "description": "Regression test management with risk-based selection, flaky test detection, and test retirement strategies. Every production bug becomes a regression test. Implements 3 test selection strategies (risk-based, change-based, priority-based), flaky test quarantine (< 2% flaky rate), and test lifecycle management. Two-pass workflow: CRITICAL (flaky rate > 5%, missing critical path tests, suite timeout > 30 min) blocks deploy; INFORMATIONAL (duration optimization, snapshot updates) documented for future work. Includes 5 flaky test root cause categories with fix strategies and real production bug examples.",
+      "tags": [
+        "regression-testing",
+        "flaky-tests",
+        "test-selection",
+        "smoke-tests",
+        "test-maintenance",
+        "quarantine",
+        "test-lifecycle",
+        "risk-based-testing",
+        "test-impact-analysis",
+        "ci-cd",
+        "qa",
+        "testing"
+      ],
+      "archetype_fit": [
+        "Critic",
+        "Builder",
+        "Analyst"
+      ],
+      "path": "agents/skills/regression-test-suite/",
+      "dependencies": [
+        "tdd-best-practices",
+        "test-data-management"
+      ],
+      "used_by": [
+        "son-qa",
+        "huyen-fe-qa",
+        "thuc-dev-ts",
+        "lan-dev-fe",
+        "tuan-dev-go",
+        "huyen-dev-py",
+        "hoang-dev-net",
+        "trinh-fe-tester"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/regression-test-suite/README.md"
+    },
+    {
+      "id": "high-level-design",
+      "name": "High-Level Design (HLD)",
+      "version": "2.0.0",
+      "author": "Nash Framework (GSTACK v2.0)",
+      "description": "System architecture design with C4 model, ADRs, and scalability patterns. GSTACK-compliant with Philosophy (city architect for 10M inhabitants), 7 Prime Directives (C4 model, ADRs with evidence, SPOF mitigation, scalability, NFRs, 3-stakeholder review, anti-patterns), Design Patterns table (3-Tier, Microservices, Event-Driven, CQRS, Serverless, BFF), Multi-Path Design (Requirements → Context → Containers → Components → ADR), TWO_PASS workflow (CRITICAL: scalability/SPOF/NFRs/ADRs → INFORMATIONAL: aesthetics/naming), Escape Hatches (skip if <3 components), and Real Production Failures ($50K Black Friday outage, $200K database migration, 20% churn from missing NFRs). Requires C1/C2/C3 diagrams, ≥3 ADRs, NFRs (P95 <500ms, 99.9% uptime, RLS enforced), and SPOF mitigation plan.",
+      "tags": [
+        "hld",
+        "architecture",
+        "c4-model",
+        "adr",
+        "system-design",
+        "scalability",
+        "nfr",
+        "system-context",
+        "container-diagram",
+        "component-diagram",
+        "spof",
+        "redundancy",
+        "design-patterns",
+        "two-pass",
+        "gstack"
+      ],
+      "archetype_fit": [
+        "Strategist",
+        "Analyst"
+      ],
+      "path": "agents/skills/high-level-design/",
+      "dependencies": [
+        "requirements-engineering"
+      ],
+      "used_by": [
+        "phuc-sa",
+        "hieu-arch-r",
+        "moc-arch-chal",
+        "nghia-stack-r"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/high-level-design/README.md"
+    },
+    {
+      "id": "technical-debt-management",
+      "name": "Technical Debt Management",
+      "version": "2.0.0",
+      "author": "Nash Framework (GSTACK v1.0)",
+      "description": "Technical debt tracking with compound interest calculation (P0=10%/day, P1=5%/day, P2=2%/day) and repayment strategies. Every TODO is a loan with exponential compounding—a 2-day P0 fix becomes 34 days after 30 days. Implements 5-phase lifecycle (Incur → Track → Prioritize → Repay → Prevent), debt severity matrix (P0-P4 with max age and SLAs), two-pass workflow (CRITICAL: P0 > 14 days, coverage < 70%, TODO without ticket blocks deploy; INFORMATIONAL: P2/P3 debt documented), stopping policy (> 100 items = freeze features), pre-commit hooks (no TODO without ticket ID), and debt ceiling checks. Includes 5 debt types (Code, Architecture, Test, Documentation, Infrastructure), automated extraction scripts, and 3 real production disasters with interest calculations.",
+      "tags": [
+        "technical-debt",
+        "compound-interest",
+        "debt-tracking",
+        "todo-management",
+        "refactoring",
+        "code-quality",
+        "test-coverage",
+        "architecture-debt",
+        "pre-commit-hooks",
+        "debt-lifecycle",
+        "repayment-strategies",
+        "stopping-policy",
+        "debt-ceiling",
+        "gstack"
+      ],
+      "archetype_fit": [
+        "Strategist",
+        "Analyst",
+        "Critic"
+      ],
+      "path": "agents/skills/technical-debt-management/",
+      "dependencies": [],
+      "used_by": [
+        "phuc-sa",
+        "dung-manager",
+        "moc-arch-chal",
+        "hieu-arch-r"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/technical-debt-management/README.md"
+    },
+    {
+      "id": "git-workflow-branching",
+      "name": "Git Workflow & Branching",
+      "version": "2.0.0",
+      "author": "Nash Framework (GSTACK v2.0)",
+      "description": "Version control architect skill for maintaining sacred git history—clean, deployable, and auditable. GSTACK v2.0 compliant with Philosophy (3 mental models: CRITICAL/INFORMATIONAL/COLLABORATION), 7 Prime Directives, Two-Pass review workflow, Branching Strategies table (Trunk-Based, GitHub Flow, GitFlow, Feature Branches), 7-phase Branch Lifecycle, Conventional Commits Types table, Merge Strategies decision matrix, GitFlow workflow for releases, Pre-Push Checklist, Meta-Instructions with Stopping Policy, and Real Production Bugs table. Prevents P0 violations: force push to main (24 engineer-hours recovery), secrets committed ($47K AWS bill), merge conflicts ignored (2-hour outage). Primary use: Hưng (DevOps) for release tagging and deployment workflows, all dev agents for daily commit/branching.",
+      "tags": [
+        "git",
+        "branching",
+        "workflow",
+        "conventional-commits",
+        "trunk-based",
+        "github-flow",
+        "gitflow",
+        "merge-strategy",
+        "squash-merge",
+        "rebase",
+        "force-with-lease",
+        "branch-naming",
+        "pull-request",
+        "version-control",
+        "ci-cd",
+        "deployment",
+        "devops",
+        "gstack"
+      ],
+      "archetype_fit": [
+        "Operator",
+        "Builder",
+        "Analyst"
+      ],
+      "path": "agents/skills/git-workflow-branching/",
+      "dependencies": [],
+      "used_by": [
+        "hung",
+        "thuc-dev-ts",
+        "lan-dev-fe",
+        "tuan-dev-go",
+        "huyen-dev-py",
+        "hoang-dev-net",
+        "trinh-fe-tester"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/git-workflow-branching/README.md"
+    },
+    {
+      "id": "project-planning-estimation",
+      "name": "Project Planning & Estimation",
+      "version": "2.0.0",
+      "author": "Nash Framework (GSTACK v2.0)",
+      "description": "Chess grandmaster planning 10 moves ahead. Agile planning with story points, dependency mapping, PERT estimation, and risk-adjusted buffers. Implements Fibonacci story points (1-13), 2x multiplier for unknowns, dependency mapping with critical path analysis, and buffer allocation (20% known risks, 50% unknowns). Two-pass workflow: CRITICAL (missing dependencies, no estimates, unclear criteria, no buffer) blocks sprint start; INFORMATIONAL (velocity tracking, retrospectives) improves accuracy. Includes real production disaster examples (MongoDB → PostgreSQL migration: 2 weeks → 8 weeks overrun) and stopping policies (story > 13 points = break down, 3+ re-estimates = spike task).",
+      "tags": [
+        "planning",
+        "estimation",
+        "story-points",
+        "sprint-planning",
+        "dependency-mapping",
+        "critical-path",
+        "pert",
+        "fibonacci",
+        "agile",
+        "velocity-tracking",
+        "burndown-charts",
+        "buffer-allocation",
+        "planning-poker",
+        "t-shirt-sizing",
+        "moscow-prioritization",
+        "risk-management",
+        "pm",
+        "gstack"
+      ],
+      "archetype_fit": [
+        "Analyst",
+        "Strategist",
+        "Critic"
+      ],
+      "path": "agents/skills/project-planning-estimation/",
+      "dependencies": [
+        "requirements-engineering"
+      ],
+      "used_by": [
+        "dung-manager",
+        "conan-req-aud",
+        "phuc-sa",
+        "chau-pana-ux"
+      ],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-16",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/project-planning-estimation/README.md"
     }
   ]
 }

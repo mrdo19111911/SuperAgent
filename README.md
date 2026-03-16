@@ -36,6 +36,7 @@ npm start
 - [Overview](#overview)
 - [Key Features](#key-features)
 - [Architecture](#architecture)
+- [Agent Creation & Upgrade](#agent-creation--upgrade)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
@@ -218,6 +219,171 @@ Qdrant Vector DB ────────┬───────▶ Semantic Se
 | **Critic** | Adversarial review, edge cases | Verification phases | Moc, Son QA, Ngu |
 | **Strategist** | Architecture, trade-offs, system design | Design and cross-cutting | Phuc SA, Hieu |
 | **Operator** | Infrastructure, deployment, runtime | Non-functional verification | Hung, Thanh Lai |
+
+---
+
+## 🛠️ Agent Creation & Upgrade
+
+Nash Agent Framework includes comprehensive infrastructure for creating, upgrading, and optimizing AI agents. This production-ready toolkit enables rapid agent development while maintaining high quality standards.
+
+### Agent Templates
+
+**Production-Ready Scaffolding:**
+
+- **[agents/AGENT_TEMPLATE_V2.md](agents/AGENT_TEMPLATE_V2.md)** (370 lines) - Complete 9-section template for new agents:
+  - SOUL (identity & philosophy)
+  - SKILLS (workflows & checklists)
+  - MEMORY (PEN/WIN entries)
+  - TOOLS (available capabilities)
+  - DOMAIN KNOWLEDGE (project standards)
+  - STATISTICS (performance tracking)
+  - SHARPENING LOG (improvement history)
+  - REFERENCE MEMORY (on-demand RAM)
+  - BOOT PROTOCOL (initialization sequence)
+
+- **[system/templates/NASH_SUBAGENT_PROMPTS.md](system/templates/NASH_SUBAGENT_PROMPTS.md)** (v6.2) - Universal dispatch template used by Main Agent to spawn all sub-agents:
+  - 6 pipeline types (Trivial/Simple/Complex/Critical/NASH/Urgent)
+  - Phase labels (A-F) with cross-check chains
+  - 10 dispatch rules (plan.md updates, verify flow, split strategy)
+  - Multi-task DAG orchestration
+  - Scoring system (P0-P4, M1/M2/M3 multipliers)
+
+### Cognitive Modes ✅ IMPLEMENTED
+
+**Adaptive Token Budgets Based on Task Complexity:**
+
+Nash automatically adjusts token budgets using 3 cognitive modes. See **[system/COGNITIVE_MODES.md](system/COGNITIVE_MODES.md)** (394 lines) for full specification.
+
+| Mode | Budget | Use Case | Token Savings |
+|------|--------|----------|---------------|
+| **EXPANSION** | 15K-30K | New domains, unclear requirements, exploration | Baseline |
+| **HOLD** | 10K-15K | Critical architecture, integration, refactoring | 20-33% |
+| **REDUCTION** | 5K-10K | Simple implementations with clear specs | 50-67% |
+
+**Features:**
+- Decision tree for automatic mode selection
+- Integration with Nash Triad validation
+- Grafana metrics for mode distribution
+- PEN/WIN learning for mode tuning
+- Agent boot protocol templates
+
+**Savings:** 40-60% token reduction on routine tasks while preserving deep thinking for complex problems.
+
+### Agent Sharpening (2 Complete Systems)
+
+Nash includes two complementary agent upgrade systems:
+
+#### 1. Reactive Sharpening (PEN/WIN-Based)
+
+**[skill_factory/agent_skill_sharpener/SKILL.md](skill_factory/agent_skill_sharpener/SKILL.md)** (939 lines) - Learns from production failures:
+
+- **Phase 1:** Extract agent profile (PEN/WIN analysis)
+- **Phase 2:** Auto-generate evals from PEN entries (reproduction tests + synthetic variations)
+- **Phase 3:** Baseline test (run agent vs known failures)
+- **Phase 4:** Apply 5 enhancement strategies (Prime Directive, Escape Hatch, Table, Suppression, Philosophy)
+- **Phase 5:** Cross-validation + merge to agent file
+
+**When to use:** After production incidents, to prevent regression of known bugs.
+
+**Supporting files:**
+- `references/pen_to_eval_patterns.md` - Templates for PEN → eval conversion
+- `references/enhancement_strategies.md` - When to use which strategy
+
+#### 2. Proactive Sharpening (Industry Standards)
+
+**[skill_factory/agent_sharpening_2026/SKILL.md](skill_factory/agent_sharpening_2026/SKILL.md)** (500+ lines) - Applies 2026 best practices:
+
+- **Phase 1:** Audit against 5 core principles (Context, Single Responsibility, Adversarial Validation, Memory Hierarchy, Clear Boundaries)
+- **Phase 2:** Workflow pattern analysis (9 proven patterns: ReAct, Plan-and-Execute, Critic/Reflection, etc.)
+- **Phase 3:** Token optimization assessment (6-layer defense)
+- **Phase 4:** Apply targeted improvements (ROI-based prioritization)
+- **Phase 5:** Validation + documentation
+
+**When to use:** During agent design/refactor, to adopt industry best practices from OpenAI Agents SDK, LangGraph, CrewAI, AutoGen.
+
+**Target:** 60-80% token reduction through architectural improvements.
+
+**Supporting files:**
+- `references/workflow_patterns_catalog.md` - 9 workflow patterns
+- `references/5_core_principles_checklist.md` - Audit checklist
+
+### Token Optimization (6-Layer Defense)
+
+**[system/TOKEN_OPTIMIZATION_ARCHITECTURE.md](system/TOKEN_OPTIMIZATION_ARCHITECTURE.md)** - Complete optimization strategy:
+
+| Layer | Technique | Savings | Implementation |
+|-------|-----------|---------|----------------|
+| **1. RAG** | Selective Retrieval (vector search + grep fallback) | 70% | Qdrant + better-sqlite3 |
+| **2. Compression** | Hierarchical (recent verbatim, medium compressed, old ultra) | 74% | Conversation compression |
+| **3. Structured Prompting** | XML/Markdown sections with conditional loading | 30% | Template-based |
+| **4. Modular Sub-agents** | Bounded context delegation | 76% | Nash Triad pipelines |
+| **5. Shared Memory** | External PEN/WIN storage (SQLite) | 85% | 3-tier memory system |
+| **6. Progressive Disclosure** | Lazy loading with triggers | 91% | On-demand RAM loading |
+
+**Overall target:** 82.5% reduction (20K → 3.5K tokens/task)
+
+**Related:**
+- [system/MEMORY_EVICTION_PROTOCOL.md](system/MEMORY_EVICTION_PROTOCOL.md) - L2/RAM/HDD eviction rules (P0-P4 priority)
+- `scripts/measure-baseline.sh` - Baseline metrics + decision triggers for when to apply optimizations
+
+### Best Practices & References
+
+**Industry Standards Synthesis (2026):**
+
+- **[system/BEST_PRACTICE_AGENT.md](system/BEST_PRACTICE_AGENT.md)** - 5 core principles from OpenAI, LangGraph, CrewAI, AutoGen, Beam.ai:
+  1. Context is Fuel, Not Cargo (60-80% token reduction)
+  2. Single Responsibility per Agent (70% savings)
+  3. Adversarial Validation (Nash Triad = zero-sum scoring)
+  4. Memory Hierarchy (3-Tier: L2/RAM/HDD, 85% savings)
+  5. Clear Boundaries & Interfaces (immutable contracts)
+
+- **[skill_factory/GSTACK_WRITING_STYLE.md](skill_factory/GSTACK_WRITING_STYLE.md)** - 12 principles for high-quality agent skills (30 min read)
+
+- **[skill_factory/GSTACK_ADVANCED_PATTERNS.md](skill_factory/GSTACK_ADVANCED_PATTERNS.md)** - 6 advanced patterns for complex skills (45 min read)
+
+- **[skill_factory/QUALITY_CHECKLIST.md](skill_factory/QUALITY_CHECKLIST.md)** - 80+ item pre-launch checklist (Self-review → Peer review → Nash Triad review)
+
+- **[skill_factory/SKILL_BUILDING_MASTER_GUIDE.md](skill_factory/SKILL_BUILDING_MASTER_GUIDE.md)** - Complete curriculum from beginner to master (5 levels)
+
+### Skill Creation Tools
+
+**Automated Skill Builder:**
+
+- **[skill_factory/smartlog_skill_creator/SKILL.md](skill_factory/smartlog_skill_creator/SKILL.md)** - Automated skill builder with testing:
+  - Phase 1: Capture Intent
+  - Phase 2: Write Draft (applies 12 gstack principles)
+  - Phase 3: Automated Testing
+  - Phase 4: Iterative Improvement
+  - Phase 5: Package + Optimize Triggering
+  - **Teaching mode:** Explains quality patterns while building
+
+- **[skill_factory/SKILL_TEMPLATE/](skill_factory/SKILL_TEMPLATE/)** - Copy-paste scaffold for new skills:
+  ```bash
+  cp -r skill_factory/SKILL_TEMPLATE ~/.claude/skills/my-new-skill
+  ```
+
+### Quality Gates (Polyglot Validators)
+
+5 automated validators supporting TypeScript, Go, .NET, and Python:
+
+```bash
+# 1. Validate: Build + tsc + tests + no TODO/FIXME
+bash gates/validate.sh module_dir
+
+# 2. Integrity: Detect mocks/placeholders in integration tests
+bash gates/integrity.sh module_dir
+
+# 3. QA: SAST + test distribution + smoke test
+bash gates/qa.sh module_dir [url]
+
+# 4. Security: Secrets scan + dependency audit
+bash gates/security.sh module_dir
+
+# 5. Safe commit: Pre-validate → exclude secrets → targeted git add
+bash gates/commit.sh module_name "commit message"
+```
+
+**Auto-detection:** Gates automatically detect project language and run appropriate toolchain (npm/go/dotnet/pytest).
 
 ---
 
@@ -563,6 +729,19 @@ npm run test:e2e
 - [system/NASH.md](system/NASH.md) - Nash Equilibrium rules
 - [system/SCORING_RULES.md](system/SCORING_RULES.md) - P0-P4 scoring tables
 - [system/COGNITIVE_MODES.md](system/COGNITIVE_MODES.md) - Mode selection guide
+- [system/BEST_PRACTICE_AGENT.md](system/BEST_PRACTICE_AGENT.md) - 2026 industry standards (5 core principles)
+- [system/TOKEN_OPTIMIZATION_ARCHITECTURE.md](system/TOKEN_OPTIMIZATION_ARCHITECTURE.md) - 6-layer token optimization
+- [system/MEMORY_EVICTION_PROTOCOL.md](system/MEMORY_EVICTION_PROTOCOL.md) - Memory eviction rules
+
+### Agent Infrastructure
+
+- [agents/AGENT_TEMPLATE_V2.md](agents/AGENT_TEMPLATE_V2.md) - Agent creation template (9 sections)
+- [agents/BRAIN.md](agents/BRAIN.md) - Agent memory architecture
+- [skill_factory/agent_skill_sharpener/SKILL.md](skill_factory/agent_skill_sharpener/SKILL.md) - PEN/WIN-based sharpening
+- [skill_factory/agent_sharpening_2026/SKILL.md](skill_factory/agent_sharpening_2026/SKILL.md) - Industry standards sharpening
+- [skill_factory/SKILL_BUILDING_MASTER_GUIDE.md](skill_factory/SKILL_BUILDING_MASTER_GUIDE.md) - Complete skill creation curriculum
+- [skill_factory/GSTACK_WRITING_STYLE.md](skill_factory/GSTACK_WRITING_STYLE.md) - 12 writing principles
+- [skill_factory/QUALITY_CHECKLIST.md](skill_factory/QUALITY_CHECKLIST.md) - 80+ item quality checklist
 
 ### Pipeline Documentation
 

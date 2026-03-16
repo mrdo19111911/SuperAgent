@@ -356,7 +356,7 @@ cat SKILL_EXPLAINED.md   # Read basics
 
 ---
 
-### Tool 2: agent_skill_sharpener 🔪🆕
+### Tool 2: agent_skill_sharpener 🔪🆕 (MOVED)
 **Purpose:** FIX existing agent failures (auto-sharpen from PEN entries)
 
 **Workflow:**
@@ -372,13 +372,15 @@ cat SKILL_EXPLAINED.md   # Read basics
 
 **Key insight:** Each PEN = documented production failure → becomes permanent test case
 
-[Read more →](agent_skill_sharpener/README.md)
+**Note:** This tool moved to [../agent_factory/3_AGENT_SHARPENING/sharpener_reactive/](../agent_factory/3_AGENT_SHARPENING/sharpener_reactive/)
+
+[Read more →](../agent_factory/3_AGENT_SHARPENING/sharpener_reactive/README.md)
 
 ---
 
 ## 🆚 Tool Comparison
 
-| Feature | smartlog_skill_creator | agent_skill_sharpener |
+| Feature | smartlog_skill_creator | agent_skill_sharpener (MOVED) |
 |---------|----------------------|----------------------|
 | **Input** | User intent / conversation | Agent file (PEN/WIN) |
 | **Output** | New standalone skill | Enhanced agent |
@@ -390,8 +392,38 @@ cat SKILL_EXPLAINED.md   # Read basics
 
 **Both tools complement each other:**
 - smartlog_skill_creator → CREATE skills
-- agent_skill_sharpener → IMPROVE agents
+- Agent sharpeners (see Agent Factory) → IMPROVE agents
+
+**Note:** Agent sharpening tools moved to [../agent_factory/3_AGENT_SHARPENING/](../agent_factory/3_AGENT_SHARPENING/)
+
+---
+
+## 🏭 RELATED FACTORIES
+
+### Agent Factory (`../agent_factory/`)
+**Purpose:** Create and sharpen AGENTS (personalities + workflows)
+
+**What's there:**
+- **1_SOUL_CREATION/** - Create agent personalities (WHO you are)
+- **2_AGENT_CREATION/** - Build complete agents (SOUL + Skills + Modes)
+- **3_AGENT_SHARPENING/** - Fix/upgrade agents
+  - **sharpener_reactive/** - PEN/WIN-based bug fixing (moved from here)
+  - **sharpener_proactive/** - 2026 industry standards upgrade (moved from here)
+- **4_COGNITIVE_MODE_OPTIMIZATION/** - EXPANSION/HOLD/REDUCTION modes
+
+**When to use:**
+- Create new agent → Agent Factory
+- Create new skill → Skill Factory (this directory)
+- Fix failing agent → Agent Factory (sharpener_reactive)
+- Upgrade agent → Agent Factory (sharpener_proactive)
+
+**Relationship:**
+- **Agents USE skills** (agents reference skills from `~/.claude/skills/`)
+- **Skills are standalone** (workflows only, no personality)
+- **Example:** Phúc SA agent (personality + workflows) uses architecture-design skill (workflow only)
 
 ---
 
 **🎉 Welcome to the Skill Factory! Start with [SKILL_BUILDING_MASTER_GUIDE.md](SKILL_BUILDING_MASTER_GUIDE.md) to understand the system, then jump into [SKILL_EXPLAINED.md](SKILL_EXPLAINED.md) to build your first skill.**
+
+**For agent creation:** See [../agent_factory/README.md](../agent_factory/README.md)

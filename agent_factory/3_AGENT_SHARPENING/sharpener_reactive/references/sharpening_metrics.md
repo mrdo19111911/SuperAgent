@@ -69,6 +69,127 @@ PEN-002: Fixed in iteration 2 (Table + Example strategy)
 PEN-003: Still failing at iteration 4 → try different strategy
 ```
 
+### 5. Token Efficiency (NEW - v3.0) 🆕
+
+**Formula:** `(tokens_after / tokens_before) × 100%`
+
+**Purpose:** Measure token savings from sharpening enhancements.
+
+**Tracking:**
+```javascript
+{
+  "baseline_tokens": {
+    "avg_per_task": 12000,
+    "total_for_5_evals": 60000,
+    "breakdown": {
+      "context_loading": 5000,
+      "skill_loading": 3000,
+      "execution": 4000
+    }
+  },
+  "enhanced_tokens": {
+    "avg_per_task": 7000,
+    "total_for_5_evals": 35000,
+    "breakdown": {
+      "context_loading": 2000,  // RAG optimization
+      "skill_loading": 1500,    // Progressive loading
+      "execution": 3500         // Fewer iterations
+    }
+  },
+  "savings": {
+    "per_task": 5000,
+    "percent": 41.7,
+    "monthly_projected": 2500000,  // 500 tasks × 5000 tokens
+    "cost_savings_usd": 7.50       // at $3/M tokens
+  }
+}
+```
+
+**Why Token Savings Matter:**
+
+1. **Direct Savings**: Fewer wasted iterations (PEN-001: 2 iterations → 1 iteration = -50% tokens)
+2. **Indirect Savings**: Better context management (WIN-001: ABSTRACT.md saves 60% tokens)
+3. **Compound Effect**: Over 500 tasks/month, small per-task savings = large monthly impact
+
+**Example (WIN-001 validation):**
+```
+Before: Xuân reads full ARCHITECTURE.md (450 lines = ~2K tokens)
+After:  Xuân reads ARCHITECTURE_ABSTRACT.md (150 lines = ~700 tokens)
+Savings: 1.3K tokens per review (65% reduction)
+
+If Xuân reviews 50 tasks/month:
+  Monthly savings: 65K tokens
+  Cost savings: $0.20/month (small but adds up across all agents)
+```
+
+**Example (PEN-001 fix - fewer iterations):**
+```
+Before sharpening:
+  Iteration 1: Phúc SA calls Mộc without files → 9 false issues → 15K tokens wasted
+  Iteration 2: Fix false issues → 12K tokens
+  Total: 27K tokens
+
+After sharpening (escape hatch prevents incomplete call):
+  Iteration 1: Phúc SA checks files BEFORE calling Mộc → correct review → 12K tokens
+  Total: 12K tokens
+
+Savings: 15K tokens (55% reduction)
+```
+
+**Measurement Process:**
+
+1. **Baseline Run** (before sharpening):
+   ```bash
+   # Run evals, capture token usage
+   tokens_baseline = run_evals_with_tracking(agent_baseline, eval_suite)
+   ```
+
+2. **Enhanced Run** (after sharpening):
+   ```bash
+   # Run same evals with enhanced agent
+   tokens_enhanced = run_evals_with_tracking(agent_enhanced, eval_suite)
+   ```
+
+3. **Calculate Savings**:
+   ```javascript
+   savings = {
+     per_task: tokens_baseline.avg - tokens_enhanced.avg,
+     percent: ((tokens_baseline.avg - tokens_enhanced.avg) / tokens_baseline.avg) * 100,
+     monthly: (tokens_baseline.avg - tokens_enhanced.avg) * tasks_per_month
+   };
+   ```
+
+**Target Benchmarks:**
+
+| Enhancement Type | Expected Token Savings |
+|-----------------|----------------------|
+| **Escape Hatch** (prevent wasted iterations) | 30-50% |
+| **Prime Directive** (clearer instructions) | 10-20% |
+| **Table/Checklist** (structured thinking) | 15-25% |
+| **Concrete Example** (reduce confusion) | 20-30% |
+| **Progressive Loading** (lazy skill loading) | 40-60% |
+| **WIN Pattern** (optimize workflow) | 40-80% |
+
+**Red Flags:**
+
+- Token usage INCREASED after sharpening → Enhancement too verbose
+- Savings <5% → Enhancement not effective, try different strategy
+- Savings >90% but pass rate dropped → Agent is skipping steps
+
+**Integration with Grafana:**
+
+Add to `grafana/dashboards/token-usage.json`:
+```json
+{
+  "panel": {
+    "title": "Sharpening Impact - Token Savings",
+    "targets": [{
+      "expr": "sum(nash_tokens_baseline - nash_tokens_enhanced) by (agent)"
+    }]
+  }
+}
+```
+
 ---
 
 ## Eval Types & Their Purposes

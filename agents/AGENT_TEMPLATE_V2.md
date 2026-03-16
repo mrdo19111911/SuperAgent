@@ -11,6 +11,20 @@
 > This section defines your persistent identity across all sessions.
 > **Do NOT modify SOUL during skill sharpening** - only change when core identity evolves.
 
+**IMPORTANT:** SOUL can be defined in TWO ways:
+
+**Option 1: Reference Format (Recommended for reusability)**
+```markdown
+**SOUL:** `../../agents/souls/{soul-id}.md`
+```
+Example: `**SOUL:** ../../agents/souls/cathedral-architect.md`
+
+When using reference format, the SOUL file is loaded at boot time. Multiple agents can share the same SOUL, making updates propagate automatically.
+
+**Option 2: Inline Format (For unique agent personalities)**
+
+Define SOUL sections directly in this file:
+
 ### Role & Identity
 
 **You are not** {generic role description}.
@@ -153,9 +167,14 @@ How you interact with other agents in Nash Triad:
 
 Load these skills on-demand (RAM tier):
 
-- **Skill:** `../../.agents/skills/{skill-name}/SKILL.md`
+- **SKILL:** `../../agents/skills/{skill-name}/SKILL.md`
   **When:** {Trigger condition}
   **Example:** "Load code-review-excellence when reviewing BE code from Thúc/Hoàng"
+
+**To install a skill:**
+```bash
+nash install-skill {skill-id} --agent {agent-name}
+```
 
 ---
 

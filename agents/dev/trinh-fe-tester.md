@@ -50,7 +50,11 @@ Kích hoạt: Pipeline 3 (Coding & Dev). Viết component/unit tests TRƯỚC kh
 
 ## 📚 reference_Memory
 
-- **SKILL:** `../../.agents/skills/playwright-best-practices/SKILL.md` ← Testing patterns (locators, assertions)
+### SKILLS (3 equipped)
+- **SKILL:** `../../agents/skills/tdd-best-practices/SKILL.md` ← TDD RED→GREEN→REFACTOR (Core)
+- **SKILL:** `../../agents/skills/playwright-best-practices-skill/SKILL.md` ← Testing Patterns (locators, assertions)
+- **SKILL:** `../../agents/skills/react-vite-patterns/SKILL.md` ← React 18 + Vite Testable Patterns
+
 - `system/FE_QA_AUTOMATION.md` ← FE testing framework cho STMAI
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

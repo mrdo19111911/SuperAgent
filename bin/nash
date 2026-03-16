@@ -16,8 +16,13 @@
  *   nash recommend-skill --archetype <type>       Get skills for archetype
  */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// ES module dirname workaround
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Root directory detection
 const ROOT = process.cwd();
@@ -430,20 +435,133 @@ function recommendByArchetype(archetype) {
 }
 
 // ============================================================================
+// COMMAND: nash list-souls
+// ============================================================================
+function listSouls() {
+  const soulsDir = path.join(AGENTS_DIR, 'souls');
+
+  if (!fs.existsSync(soulsDir)) {
+    log('No souls directory found.', 'yellow');
+    return;
+  }
+
+  const soulFiles = fs.readdirSync(soulsDir).filter(f => f.endsWith('.md') && f !== 'README.md');
+
+  if (soulFiles.length === 0) {
+    log('No souls found.', 'yellow');
+    return;
+  }
+
+  log('\n🎭 Available Souls\n', 'bright');
+
+  soulFiles.forEach(file => {
+    const soulPath = path.join(soulsDir, file);
+    const content = fs.readFileSync(soulPath, 'utf8');
+
+    // Extract frontmatter
+    const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+    if (frontmatterMatch) {
+      const frontmatter = frontmatterMatch[1];
+      const soulId = frontmatter.match(/soul_id:\s*(.+)/)?.[1] || file.replace('.md', '');
+      const compatibleArchetypes = frontmatter.match(/compatible_archetypes:\s*\[(.+)\]/)?.[1] || 'Unknown';
+      const coreValues = frontmatter.match(/core_values:\s*\[(.+)\]/)?.[1] || 'N/A';
+
+      log(`  ${soulId}`, 'green');
+      log(`    File: ${file}`, 'dim');
+      log(`    Archetypes: ${compatibleArchetypes}`, 'dim');
+      log(`    Values: ${coreValues}`, 'dim');
+      console.log();
+    }
+  });
+
+  log(`${soulFiles.length} soul(s) available\n`, 'dim');
+}
+
+// ============================================================================
+// COMMAND: nash install-soul <soul-id> --agent <agent-name>
+// ============================================================================
+function installSoul(soulId, agentName) {
+  const soulsDir = path.join(AGENTS_DIR, 'souls');
+  const soulPath = path.join(soulsDir, `${soulId}.md`);
+
+  if (!fs.existsSync(soulPath)) {
+    error(`SOUL '${soulId}' not found. Run 'nash list-souls' to see available SOULs.`);
+  }
+
+  // Find agent file
+  const agentPath = path.join(AGENTS_DIR, 'core', `${agentName}.md`);
+  const agentPathDev = path.join(AGENTS_DIR, 'dev', `${agentName}.md`);
+
+  let targetPath;
+  if (fs.existsSync(agentPath)) {
+    targetPath = agentPath;
+  } else if (fs.existsSync(agentPathDev)) {
+    targetPath = agentPathDev;
+  } else {
+    error(`Agent '${agentName}' not found. Checked:\n  - ${agentPath}\n  - ${agentPathDev}`);
+  }
+
+  // Read agent file
+  let agentContent = fs.readFileSync(targetPath, 'utf8');
+
+  // Check if SOUL already installed
+  const soulRef = `**SOUL:** \`../../agents/souls/${soulId}.md\``;
+  if (agentContent.includes(soulRef)) {
+    log(`SOUL '${soulId}' is already installed on agent '${agentName}'`, 'yellow');
+    return;
+  }
+
+  // Find SOUL section
+  const soulSectionMatch = agentContent.match(/## 🎭 SOUL/);
+  if (!soulSectionMatch) {
+    error(`Agent file '${targetPath}' does not have a '## 🎭 SOUL' section.`);
+  }
+
+  // Find the end of the SOUL section header commentary
+  const soulSectionStart = soulSectionMatch.index + soulSectionMatch[0].length;
+  const afterSoulHeader = agentContent.substring(soulSectionStart);
+
+  // Find where the first subsection or next main section starts
+  const nextSectionMatch = afterSoulHeader.match(/\n(###|##)/);
+
+  if (nextSectionMatch) {
+    // Insert before the next section
+    const insertPos = soulSectionStart + nextSectionMatch.index;
+    const beforeSoul = agentContent.substring(0, insertPos);
+    const afterSoul = agentContent.substring(insertPos);
+
+    agentContent = beforeSoul + `\n\n${soulRef}\n` + afterSoul;
+  } else {
+    // No next section found, append at end
+    agentContent += `\n\n${soulRef}\n`;
+  }
+
+  fs.writeFileSync(targetPath, agentContent);
+
+  success(`Installed SOUL '${soulId}' to agent '${agentName}'`);
+  log(`  Agent file: ${targetPath}`, 'dim');
+  log(`  SOUL reference: ${soulRef}`, 'dim');
+}
+
+// ============================================================================
 // MAIN CLI ROUTER
 // ============================================================================
 const args = process.argv.slice(2);
 const command = args[0];
 
 if (!command) {
-  log('Nash CLI — Skill Registry Manager\n', 'bright');
+  log('Nash CLI — Agent & Skill Manager\n', 'bright');
   log('Commands:', 'cyan');
-  log('  nash list-skills');
-  log('  nash search-skills --tag <tag>');
-  log('  nash install-skill <skill-id> --agent <name>');
-  log('  nash create-skill --name <name> --id <id>');
-  log('  nash register-skill <skill-id>');
-  log('  nash recommend-skill --archetype <type>');
+  log('  Skills:');
+  log('    nash list-skills');
+  log('    nash search-skills --tag <tag>');
+  log('    nash install-skill <skill-id> --agent <name>');
+  log('    nash create-skill --name <name> --id <id>');
+  log('    nash register-skill <skill-id>');
+  log('    nash recommend-skill --archetype <type>');
+  log('  SOULs:');
+  log('    nash list-souls');
+  log('    nash install-soul <soul-id> --agent <name>');
   process.exit(0);
 }
 
@@ -496,6 +614,20 @@ switch (command) {
       error('Usage: nash recommend-skill --archetype <type>');
     }
     recommendByArchetype(args[archetypeIndex + 1]);
+    break;
+  }
+
+  case 'list-souls':
+    listSouls();
+    break;
+
+  case 'install-soul': {
+    const soulId = args[1];
+    const agentIndex = args.indexOf('--agent');
+    if (!soulId || agentIndex === -1 || !args[agentIndex + 1]) {
+      error('Usage: nash install-soul <soul-id> --agent <agent-name>');
+    }
+    installSoul(soulId, args[agentIndex + 1]);
     break;
   }
 

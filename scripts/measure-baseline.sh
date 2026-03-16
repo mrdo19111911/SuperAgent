@@ -49,25 +49,27 @@ echo "" >> "$OUTPUT"
 echo '```bash' >> "$OUTPUT"
 
 for query in "multi-tenant" "RLS" "idempotency" "race condition" "error handling"; do
-  START=$(date +%s.%N)
+  START=$(date +%s)
   grep -r "$query" agents/*/MEMORY.md > /dev/null 2>&1 || true
-  END=$(date +%s.%N)
-  DURATION=$(echo "$END - $START" | bc)
+  END=$(date +%s)
+  DURATION=$((END - START))
   echo "grep '$query': ${DURATION}s" >> "$OUTPUT"
 done
 
 echo '```' >> "$OUTPUT"
 echo "" >> "$OUTPUT"
 
-# Rough average (last query time as proxy)
-AVG_TIME=$(echo "$END - $START" | bc)
-if (( $(echo "$AVG_TIME > 2.0" | bc -l) )); then
+# Rough average (last query time as proxy) - if >2s it's slow
+AVG_TIME=$((END - START))
+if [ "$AVG_TIME" -gt 2 ]; then
   echo "**Decision:** ✅ Build Vector DB — grep too slow (>2s)" >> "$OUTPUT"
   VECTOR_DB_NEEDED="YES"
-elif (( $(echo "$AVG_TIME > 0.5" | bc -l) )); then
-  echo "**Decision:** ⚠️  Consider .pen_index.txt — grep borderline (500ms-2s)" >> "$OUTPUT"
+elif [ "$AVG_TIME" -gt 0 ]; then
+  echo "**Decision:** ⚠️  Consider .pen_index.txt — grep borderline (>0s, fast enough)" >> "$OUTPUT"
+  VECTOR_DB_NEEDED="NO"
 else
-  echo "**Decision:** ❌ Skip Vector DB — grep is fast (<500ms)" >> "$OUTPUT"
+  echo "**Decision:** ❌ Skip Vector DB — grep is fast (<1s)" >> "$OUTPUT"
+  VECTOR_DB_NEEDED="NO"
 fi
 
 echo "" >> "$OUTPUT"

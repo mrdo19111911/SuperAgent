@@ -52,6 +52,11 @@ Kích hoạt: Pipeline 0.5 (`pipelines/00_RESEARCH.md`) khi domain có architect
 ## 📚 reference_Memory
 
 - [Architecture Research Patterns & Trade-offs](../tmp/ram/hieu-arch-r/arch-research.md) ← khi research P0.5
-- **SKILL:** `../../.agents/skills/oracle-scm/SKILL.md` ← Oracle architecture patterns (trong các Oracle Cloud whitepapers)
+
+### SKILLS (4 equipped)
+- **SKILL:** `../../agents/skills/architecture-decision-framework/SKILL.md` ← CTO Decision Framework (Trade-offs)
+- **SKILL:** `../../agents/skills/module-decomposition-strategy/SKILL.md` ← System Decomposition Patterns
+- **SKILL:** `../../agents/skills/design-pattern-selection/SKILL.md` ← DDD/CQRS/Event Sourcing Patterns
+- **SKILL:** `../../agents/skills/token-optimized-arch-docs/SKILL.md` ← Research Report Formatting
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

@@ -57,10 +57,13 @@ const order = await apiClient.get('/orders/123');
 
 ## 📚 reference_Memory
 
-- [React/Vite Battle-Tested Patterns](../tmp/ram/lan-dev-fe/patterns.md) ← phải đọc MỌI LẦN bắt đầu code React
-- [Skills & Testing Mindset](../tmp/ram/lan-dev-fe/mindset.md) ← guidelines test DTO/Contract
-- **SKILL:** `../../.agents/skills/playwright-best-practices/SKILL.md` ← Playwright E2E test patterns (POM, locators, assertions)
-- **SKILL:** `../../.agents/skills/ui-ux-pro-max/SKILL.md` ← UI UX Pro Max (khi cần implement colors/fonts từ Quang's design, tra cứu React-specific stack: `--stack react`)
-
+### Core Skills (Lazy-Load)
+- **SKILL:** `../skills/react-vite-patterns/SKILL_COMPRESSED.md` ← React 18 + Vite best practices (250 lines) | Prevents: P0 (fake API), P1 (XSS), P2 (hardcode URL, envelope drift), P3 (aria-label) | Enables: W1 (build pass), W2 (type-safe)
+- **SKILL:** `../skills/playwright-best-practices-skill/SKILL_COMPRESSED.md` ← E2E testing with POM pattern (250 lines) | Enables: W1 (E2E pass first time) | Covers: locators, assertions, fixtures
+- **SKILL:** `../skills/frontend-security-coder/SKILL.md` ← Deep XSS prevention, CSP, DOMPurify (169 lines) | Prevents: P1 (XSS, safe DOM manipulation)
+- **SKILL:** `../skills/react-best-practices-vercel/SKILL.md` ← Vercel 45 performance rules (128 lines) | Enables: W1 (build pass) | Covers: waterfalls, bundle size, re-renders
+- **SKILL:** `../skills/ux-audit-checklist/SKILL_COMPRESSED.md` ← WCAG AA accessibility audit (220 lines) | Prevents: P3 (missing aria-labels, contrast <4.5:1) | Covers: visual hierarchy, a11y
+- **SKILL:** `../skills/data-flow-tracing/SKILL_COMPRESSED.md` ← DB→API→State→UI verification (200 lines) | Prevents: P2 (API envelope drift) | Covers: trace all consumers
+- **SKILL:** `../skills/code-review-excellence/SKILL.md` ← Two-pass review protocol (112 lines) | Supports: W1 (quality pass first time) | Covers: CRITICAL vs INFORMATIONAL
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

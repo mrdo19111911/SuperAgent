@@ -60,6 +60,10 @@ Date: YYYY-MM-DD
 ## 📚 reference_Memory
 
 - [Synthesis Protocol & Output Format](../tmp/ram/don-synth/synthesis-protocol.md) ← khi tổng hợp kết quả P0.5
-- **SKILL:** `../../.agents/skills/oracle-scm/SKILL.md` ← Oracle knowledge để verify Cừa's research
+
+### SKILLS (3 equipped)
+- **SKILL:** `../../agents/skills/architecture-decision-framework/SKILL.md` ← Conflict Resolution (Hiếu vs Nghĩa)
+- **SKILL:** `../../agents/skills/token-optimized-arch-docs/SKILL.md` ← RESEARCH_SYNTHESIS.md Formatting
+- **SKILL:** `../../agents/skills/code-review-excellence/SKILL.md` ← Two-Pass Synthesis Quality
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.

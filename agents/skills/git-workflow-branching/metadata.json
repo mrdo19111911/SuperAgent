@@ -1,0 +1,50 @@
+{
+  "skill_id": "git-workflow-branching",
+  "version": "1.0.0",
+  "semantic_version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "author": {
+    "name": "Nash Framework",
+    "created_by_agent": "dung-manager",
+    "created_date": "2026-03-16"
+  },
+  "description": {
+    "short": "Git Workflow & Branching Strategy",
+    "long": "Trunk-based development, Git Flow, PR templates, and Conventional Commits. Ensures consistent branch naming, merge strategies, and commit conventions for team collaboration."
+  },
+  "tags": ["git", "workflow", "branching", "conventional-commits", "pr-template", "collaboration"],
+  "archetype_fit": ["Builder", "Analyst", "Strategist"],
+  "triggers": [
+    "Setting up repository workflow",
+    "Standardizing commit conventions",
+    "Choosing merge strategies",
+    "Creating PR templates"
+  ],
+  "dependencies": {
+    "tools": ["Bash"],
+    "mcp_servers": [],
+    "other_skills": []
+  },
+  "compatible_agents": ["dung-manager", "phuc-sa", "thuc-dev-ts", "tuan-dev-go", "hoang-dev-net"],
+  "test_suite": {
+    "path": "tests/evals.json",
+    "test_count": 0,
+    "coverage": "0%",
+    "last_run": null,
+    "pass_rate": null
+  },
+  "performance": {
+    "avg_tokens": 1800,
+    "avg_duration_seconds": 5,
+    "complexity": "low"
+  },
+  "maintenance": {
+    "status": "active",
+    "last_updated": "2026-03-16",
+    "changelog": "README.md",
+    "known_issues": []
+  }
+}
