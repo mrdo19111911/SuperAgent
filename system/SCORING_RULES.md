@@ -64,6 +64,30 @@ Nguyên tắc cốt lõi: **Kẻ phát hiện được cộng điểm (+), kẻ 
 | **[v6.8] Force-push to main/master** | **P1** (High) |
 | **[v6.8] Non-conventional commit format** | **P3** (Low) |
 | **[v6.8] Repeat corrected behavior (ignore user prefs)** | **P2** (Medium) |
+| **[v6.9] Violate framework conventions after profile loaded** | **P2** (Medium) |
+| **[v6.9] Implement UI without approved design (Critical)** | **P1** (High) |
+| **[v6.9] Skip mock data step in full-stack task** | **P3** (Low) |
+| **[v6.9] Use >5 tool calls in Trivial pipeline** | **P3** (Low) |
+| **[v6.9] Miss required schema field causing rework** | **P2** (Medium) |
+| **[v6.9] Tool rejection due to schema violation** | **P3** (Low) |
+| **[v6.9] Frontend-backend integration fails (missing Section 9)** | **P2** (Medium) |
+| **[v6.9] Claim bug without citation** | **P1** (High) |
+| **[v6.9] Use wrong template for repo type** | **P2** (Medium) |
+| **[v6.9] Use FLEXIBLE tech when STANDARD available** | **P2** (Medium) |
+| **[v6.9] Respond in wrong language after detection** | **P3** (Low) |
+| **[v6.9] Violate user instruction (lower-priority source)** | **P1** (High) |
+| **[v6.9] Ship UI with visual regression (user-detected)** | **P2** (Medium) |
+| **[v6.9] Skip visual QA in UI-heavy task** | **P3** (Low) |
+| **[v6.9] Unnecessary dev server restart** | **P4** (Trivial) |
+| **[v6.9] Manual deploy when adapter available** | **P3** (Low) |
+| **[v6.9] Plain text file:line without clickable link** | **P4** (Trivial) |
+| **[v6.9] Ship with agent narration comments** | **P3** (Low) |
+| **[v6.9] Parse PR manually when gh available** | **P3** (Low) |
+| **[v6.9] Malformed code block in LEDGER/output** | **P4** (Trivial) |
+| **[v6.9] >3 narration comments in deliverable** | **P3** (Low) |
+| **[v6.9] Ignore runtime warnings causing production issues** | **P2** (Medium) |
+| **[v6.9] Modify protected artifact without specialist approval** | **P1** (High) |
+| **[v6.9] Reinvent integration when specialist exists** | **P2** (Medium) |
 
 ## Quick Resolution Rules
 

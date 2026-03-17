@@ -1,4 +1,4 @@
-# Nash SubAgent Dispatch — v6.8
+# Nash SubAgent Dispatch — v6.9
 
 > **Roles:** THESIS = primary executor. AT (Anti-Thesis) = reviewer/auditor (#1/#2/#3 = parallel). Main = orchestrator (dispatches, scores, writes LEDGER). Letters A-F are phase labels — each pipeline uses a subset.
 > **Structure:** Standard pipelines (Simple, Complex, Critical) have two tiers: Tier 1 defines acceptance criteria, Tier 2 builds and verifies. Trivial collapses both tiers. NASH/Urgent have their own flow.
@@ -70,6 +70,30 @@ NASH agent selection: maximize DISAGREEMENT — never two agents of same primary
 30. **Branch Hygiene** (v6.8): Before git operations, check: (a) current branch not main/master, (b) no uncommitted changes blocking checkout, (c) remote tracking configured. Auto-create feature branch from main if on main. P1 if force-push to main/master.
 31. **Commit Message Templates** (v6.8): Use conventional commits format: `type(scope): description` where type = feat|fix|docs|refactor|test|chore. Max 72 chars subject. Body explains "why" not "what". Include breaking changes as `BREAKING CHANGE:` footer. P3 if non-conventional format.
 32. **User Preference Memory** (v6.8): Track user corrections/preferences in `agents/knowledge/operational/user_preferences.md`: coding style, frameworks, approval patterns, communication style. Apply automatically in future tasks. Update after 3+ similar corrections. P2 if repeat corrected behavior.
+33. **Framework Profiles** (v6.9): Load framework-specific conventions from `system/frameworks/{name}.md` (React, Vue, Django, Rails). Includes: banned patterns, auto-imports, file structure, naming conventions. Apply automatically when detected. P2 if violate framework conventions after profile loaded.
+34. **Design-First Pipeline** (v6.9): For UI-heavy tasks, run Pipeline 0.5 (Design) before Pipeline 1 (Requirements). Generate design system → user approval → implementation. Use `pipelines/00_DESIGN.md`. Prevents design drift. P1 if implement UI without approved design in Critical pipeline.
+35. **Frontend-First with Mock Data** (v6.9): For full-stack tasks, build UI with mock.js first → screenshot validation → extract contracts.md → implement backend. Enables rapid prototyping. Use `pipelines/07_FRONTEND_FIRST.md`. P3 if skip mock data step.
+36. **Declarative Artifact Mode** (v6.9): In Trivial/Simple pipelines, produce single comprehensive output with ALL file changes in ONE response (not iterative tool calls). Encourages holistic thinking. P3 if use >5 tool calls in Trivial pipeline.
+37. **Task Schema Layer** (v6.9): For common operations, use formal schemas from `system/schemas/*.json`: backend_service.json, frontend_component.json, db_migration.json. Validates required fields. P2 if miss required schema field causing rework.
+38. **Structured Tool Schemas** (v6.9): Enforce tool parameter schemas. Example: Edit() requires old_string verification, Write() requires Read() check first. Auto-validate before execution. P3 if tool rejection due to schema violation.
+39. **contracts.md Enhancement** (v6.9): Add Section 9 to CONTRACT_DRAFT.md: Frontend Integration Plan, Mock Data Mapping, Rollback Plan. Required for full-stack tasks. P2 if frontend-backend integration fails due to missing Section 9.
+40. **Enhanced Citations** (v6.9): Multi-source citations format: `file:line[^ref]` with footnote. Example: "Bug in auth.ts:42[^1]" + "[^1]: Null check missing for edge case". Strengthen Rule 1 penalty to P1. P1 if claim bug without citation.
+41. **Repository Type Detection** (v6.9): Auto-detect repo type at Pipeline 1 start: Frontend/Backend/Full-Stack/Library/CLI/Mobile/Desktop. Adjust documentation templates accordingly. Store in `$ARTIFACTS_DIR/{task}/repo_type.txt`. P2 if use wrong template for repo type.
+42. **Capability Tiers** (v6.9): Classify tech choices in 3 tiers in `agents/core/capability_matrix.md`: LOCKED (framework mandated), STANDARD (prefer built-in), FLEXIBLE (agent decides). Prevents framework chaos. P2 if use FLEXIBLE tech when STANDARD available.
+43. **Language Localization** (v6.9): Detect input language, respond in same. Status updates in user language (VN/EN/JP), technical details always EN. Update `agents/BRAIN.md` with language detection. P3 if respond in wrong language after detection.
+44. **Context Hierarchy** (v6.9): Explicit priority order for conflicts: User > Spec > Contracts > SOT > PEN/WIN > Code. Add to `system/MIXTURE_OF_EXPERTS_ROUTER.md`. When conflict → cite hierarchy. P1 if violate user instruction due to lower-priority source.
+45. **Screenshot Validation** (v6.9): For UI changes, capture screenshot after implementation. Check: padding consistency, alignment, contrast ratios, responsive breakpoints. Use `system/screenshot_validator.js`. P2 if ship UI with visual regression (detected by user).
+46. **Visual QA Protocol** (v6.9): screenshot_compare(baseline, current) → highlight diff areas. Check layout shifts (CLS), color contrast (WCAG AA), responsive breakpoints (mobile/tablet/desktop). Add `agents/qa/visual_qa.md`. P3 if skip visual QA in UI-heavy task.
+47. **Hot Reload Optimization** (v6.9): Only restart dev server when package.json/.env/.config changes. Skip restart for code-only changes (use HMR). Saves ~30s per validation cycle. Enhance `gates/validate.sh`. P4 if unnecessary restart.
+48. **Deployment Integration** (v6.9): deploy_web_app(framework, projectPath) with status checking. Supported: Vercel, Netlify, Railway, Render. Use `system/deployment_adapter.js`. Return deployment URL. P3 if manual deploy when adapter available.
+49. **Fluent Markdown Links** (v6.9): Clickable file references: [extractAPIToken](file:///e:/SuperAgent/auth.js#L158) with URL encoding. Enhance Rule 1. Enables IDE navigation. P4 if plain text file:line without link.
+50. **Inline Comment Removal** (v6.9): Remove all agent-added inline comments before final commit. Check via `git diff --cached | grep "^+ *//"`. Self-documenting code preferred. Add to `gates/commit.sh`. P3 if ship with agent narration comments.
+51. **PR Integration** (v6.9): Use `gh pr view 123 --json diff,comments,reviews` instead of parsing git log. Structured context for review tasks. Add Tool: pr_fetch(). P3 if parse PR manually when gh available.
+52. **Code Block Formatting** (v6.9): Triple backticks always at column 0 (never indented). Newline before fence. Fixes markdown rendering issues. P4 if malformed code block in LEDGER/output.
+53. **Avoid Narration Comments** (v6.9): Never add process comments: "// Step 1: Initialize", "// TODO: Implement later". Code should be self-explanatory. P3 if >3 narration comments in deliverable.
+54. **Runtime Log Verification** (v6.9): After code changes, check runtime logs (stderr/stdout) for warnings even if tests pass. Flag: deprecation warnings, unhandled promises, memory leaks. Enhance Rule 6. P2 if ignore runtime warnings that cause production issues.
+55. **Specialized Agent Handoffs** (v6.9): For complex domains, delegate to specialist agents with protected artifacts: Database Agent (schema/*.sql), Auth Agent (auth/*), Payment Agent (billing/*). Create `agents/specialists/*.md`. P1 if modify protected artifact without specialist approval.
+56. **Agent Specialization Modules** (v6.9): Integration agents (Auth, Payment, Email), Platform agents (AWS, GCP, K8s), Domain agents (eCommerce, CRM, Analytics). Load from `agents/specialists/{category}/{name}.md`. P2 if reinvent integration when specialist module exists.
 
 
 ## Multi-Task Dispatch
@@ -183,8 +207,16 @@ You are **$TRIAD_ROLE**. $CROSS_CHECK_AGENT reviews same output independently.
 $TASK_DESCRIPTION
 ### Input
 $INPUT_ARTIFACTS
-### Knowledge (v6.6+)
-agents/knowledge/{relevant_domain}/*.md (read if task relates to known domains: auth, payment, user, etc.)
+### Knowledge (v6.7+)
+**Tier 1 (Business Logic, always load):**
+agents/knowledge/{relevant_domain}/*.md (500-800 tokens)
+
+**Tier 2 (Code Relationships, Complex/Critical only):**
+agents/knowledge/.git_analysis.json (500-800 tokens)
+- Co-change patterns (files that change together)
+- Module ownership (who commits where)
+- Hotspots (high-risk areas with frequent changes)
+
 ### Output → `$ARTIFACTS_DIR/{task}/S{n}_{role}_output.md`
 ### Verify → $VERIFY_CMD and/or $VERIFY_PEER
 ```
