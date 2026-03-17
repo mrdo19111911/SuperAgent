@@ -24,9 +24,7 @@
     "Priority Fixes List",
     "Compliance Score"
   ],
-  "dependencies": {
-    "reference_doc": "Smartlog_UX_Guiding_Principles_v2.3.md"
-  },
+  "dependencies": {},
   "workflow_phases": 3,
   "estimated_time": "15-30 minutes",
   "skill_type": "Pure Markdown",
