@@ -28,12 +28,18 @@ Nguyên tắc cốt lõi: **Kẻ phát hiện được cộng điểm (+), kẻ 
 | Phá vỡ Hợp đồng API (BREAKING Contract drift) | **P2** (Medium) |
 | Lọt lỗi hở SPEC / Gap giữa Contract và Yêu cầu | **P2** (Medium) |
 | Tùng Diag chẩn đoán sai Root Cause | **P2** (Medium) |
+| **[v6.4] Claim code bug không có citation (file:line)** | **P2** (Medium) |
+| **[v6.4] Citation sai (line không tồn tại)** | **P2** (Medium) |
+| **[v6.4] LEDGER entry thiếu evidence (location/snippet)** | **P2** (Medium) → M3 (-30đ) |
+| **[v6.4] Tool summary sai lệch với action thực tế** | **P2** (Medium) |
 | Code có chứa stub, TODO, mock variables khi lên Gate 5 | **P3** (Low) |
 | Dev thiếu Unit Test / Hollow test thiếu độ phủ | **P3** (Low) |
 | Vi phạm SLO/Budget trong WORKFLOW.md | **P3** (Low) |
 | Fail P4/P5/P6 do lỗi Code Logic cơ bản / TSC error | **P3** (Low) |
 | Báo động giả mức độ thông thường (False Positive bởi QA) | **P3** (Low) |
+| **[v6.4] Thiếu tool summary ≥3 lần trong 1 task** | **P3** (Low) |
 | Bắt lỗi thiết kế/bug ở mức MEDIUM/LOW | **P4** (Trivial) |
+| **[v6.4] Thiếu tool summary (lần đầu tiên trong task)** | **P4** (Trivial) |
 
 ## Quick Resolution Rules
 

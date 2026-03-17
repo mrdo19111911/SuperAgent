@@ -1,4 +1,4 @@
-# Nash SubAgent Dispatch — v6.3
+# Nash SubAgent Dispatch — v6.4
 
 > **Roles:** THESIS = primary executor. AT (Anti-Thesis) = reviewer/auditor (#1/#2/#3 = parallel). Main = orchestrator (dispatches, scores, writes LEDGER). Letters A-F are phase labels — each pipeline uses a subset.
 > **Structure:** Standard pipelines (Simple, Complex, Critical) have two tiers: Tier 1 defines acceptance criteria, Tier 2 builds and verifies. Trivial collapses both tiers. NASH/Urgent have their own flow.
@@ -38,16 +38,18 @@ NASH agent selection: maximize DISAGREEMENT — never two agents of same primary
 ## Rules
 
 0. **Think Tool (MANDATORY)**: Use `<think></think>` before critical decisions. See Think Tool Protocol below.
-1. Load agent profile (capabilities + persistent context) from agent registry before dispatch.
-2. **plan.md**: Create `$ARTIFACTS_DIR/{task}/plan.md` BEFORE any step. Update per tier boundary. Format: `Batch {N}: {desc} | Pipeline: {type} | {SP} SP` + `- [ ] Task {N}.{i}/{total}: {detail}` checkboxes.
-3. **Spec** = `$SPEC_FILE` + `$CONTRACTS_FILE` + `$SOURCE_OF_TRUTH` (absolute law). Pass to every sub-agent.
-4. **Verify**: Thesis runs `$VERIFY_CMD` → `{task}/verify.log`. AT gets log + runs independently. `$VERIFY_PEER` → AT evaluates against stated checklist/rubric. Both can apply to same task.
-5. **Split**: >30K tokens → split by natural unit (one deliverable, one section, one component), never across logic. **Shared-artifact owner**: when splitting, designate one split as owner of shared mutable artifacts. Other splits produce delta instructions, not direct edits.
-6. **Parallel**: Same-tier ATs run in parallel when independent (no shared mutable state). Main waits for all. **Tool Execution**: When calling multiple INDEPENDENT tools (Read, Grep, Glob), invoke all in a single turn for parallel execution.
-7. **Deps**: plan.md lists upstream interfaces. Pass dep contracts as `$INPUT_ARTIFACTS`.
-8. **Handoff**: Criteria → `$CRITERIA_DIR` + `{task}/S1_criteria_spec.md`. Each criterion MUST have a testable assertion (expected input → expected output, or verifiable completeness statement: "Report covers X, Y, Z with comparison table"). Criteria without assertions = auto-P3. Execute-phase satisfies ALL Tier 1 criteria.
-9. **LEDGER**: Main writes after EVERY decision step. Agents CANNOT.
-10. **Retries**: Max 3/tier. FAIL→S{n}: AT provides (a) specific failing items, (b) severity, (c) suggested scope. Agent re-executes with findings as `$INPUT_ARTIFACTS`. After 3 FAILs: escalate. Thesis -15 if same error 3x.
+1. **Code Citations (MANDATORY)**: Include `file:line` references for every code-based claim. See Code Citations Protocol below.
+2. **Tool Summaries (MANDATORY)**: Start every tool call with 3-5 word description of intent. See Tool Summaries Protocol below.
+3. Load agent profile (capabilities + persistent context) from agent registry before dispatch.
+4. **plan.md**: Create `$ARTIFACTS_DIR/{task}/plan.md` BEFORE any step. Update per tier boundary. Format: `Batch {N}: {desc} | Pipeline: {type} | {SP} SP` + `- [ ] Task {N}.{i}/{total}: {detail}` checkboxes.
+5. **Spec** = `$SPEC_FILE` + `$CONTRACTS_FILE` + `$SOURCE_OF_TRUTH` (absolute law). Pass to every sub-agent.
+6. **Verify**: Thesis runs `$VERIFY_CMD` → `{task}/verify.log`. AT gets log + runs independently. `$VERIFY_PEER` → AT evaluates against stated checklist/rubric. Both can apply to same task.
+7. **Split**: >30K tokens → split by natural unit (one deliverable, one section, one component), never across logic. **Shared-artifact owner**: when splitting, designate one split as owner of shared mutable artifacts. Other splits produce delta instructions, not direct edits.
+8. **Parallel**: Same-tier ATs run in parallel when independent (no shared mutable state). Main waits for all. **Tool Execution**: When calling multiple INDEPENDENT tools (Read, Grep, Glob), invoke all in a single turn for parallel execution.
+9. **Deps**: plan.md lists upstream interfaces. Pass dep contracts as `$INPUT_ARTIFACTS`.
+10. **Handoff**: Criteria → `$CRITERIA_DIR` + `{task}/S1_criteria_spec.md`. Each criterion MUST have a testable assertion (expected input → expected output, or verifiable completeness statement: "Report covers X, Y, Z with comparison table"). Criteria without assertions = auto-P3. Execute-phase satisfies ALL Tier 1 criteria.
+11. **LEDGER**: Main writes after EVERY decision step. Agents CANNOT.
+12. **Retries**: Max 3/tier. FAIL→S{n}: AT provides (a) specific failing items, (b) severity, (c) suggested scope. Agent re-executes with findings as `$INPUT_ARTIFACTS`. After 3 FAILs: escalate. Thesis -15 if same error 3x.
 
 ## Think Tool Protocol (v6.3)
 
@@ -96,6 +98,167 @@ Better approach: Create Pull Request for Nash Triad review
 ```
 
 **Conciseness Rule**: Max 200 words. Use bullet points. Focus on: Risks, Checks, Decision.
+
+---
+
+## Code Citations Protocol (v6.4)
+
+**MANDATORY evidence-based references for all code-related claims. Violation = P2 penalty (-15 points).**
+
+### MUST cite when:
+
+1. **Identifying bugs**: Point to exact line where issue occurs
+2. **Proposing fixes**: Reference location that needs modification
+3. **Making architectural claims**: Show file structure or import statements
+4. **Reviewing code**: Reference specific lines being evaluated
+5. **Writing LEDGER entries**: Include evidence for all findings
+
+### Format:
+
+**Standard citation**: `file.ext:123` or `file.ext:123-145` (for ranges)
+
+**Examples:**
+- "Auth validation missing in `api/auth.ts:87`"
+- "Import cycle detected: `utils/helpers.ts:5` → `services/api.ts:12` → `utils/helpers.ts:5`"
+- "Test coverage gap in `src/payment.ts:145-167` (no happy path test)"
+- "CONTRACT_DRAFT violation: endpoint uses POST but spec requires PUT (`api/routes.ts:34` vs `CONTRACT_DRAFT.md:89`)"
+
+### Evidence Requirements:
+
+**Minimal (for simple claims):**
+```
+Bug found in src/auth.ts:42 - missing null check before user.id access
+```
+
+**Standard (for reviews):**
+```
+P2: Missing error handling in api/payment.ts:67-82
+Evidence: No try-catch around Stripe API call
+Impact: Unhandled rejection crashes server
+Fix: Wrap lines 67-82 in try-catch, return 500 on error
+```
+
+**Complete (for LEDGER):**
+```
+Finding: P1 - SQL injection vulnerability
+Location: db/queries.ts:156
+Evidence: Direct string interpolation `SELECT * FROM users WHERE id = ${userId}`
+Severity: Critical security flaw (CWE-89)
+Fix: Use parameterized query `db.query('SELECT * FROM users WHERE id = $1', [userId])`
+Verification: Run `npm run security-audit` → 0 SQL injection warnings
+```
+
+### Penalties:
+
+| Violation | Penalty | Example |
+|-----------|---------|---------|
+| **Vague claim without citation** | P2 (-15) | "Auth has bugs" (no file:line) |
+| **Wrong citation (non-existent line)** | P2 (-15) | "Bug in auth.ts:999" when file has 150 lines |
+| **Evidence-free LEDGER entry** | M3 (-30) | Finding without location/snippet |
+| **Citation for non-code claims** | None | Referencing design docs is allowed but not required |
+
+### Best Practices:
+
+✅ **DO**: Cite before proposing changes
+```
+Before editing api/routes.ts:34, I verified the CONTRACT_DRAFT.md:89
+specifies PUT method, not POST. Making correction now.
+```
+
+✅ **DO**: Use ranges for multi-line issues
+```
+Performance bottleneck in utils/search.ts:45-67 - O(n²) nested loops
+```
+
+✅ **DO**: Cross-reference related files
+```
+Type mismatch: api/auth.ts:23 expects User, but db/models.ts:89 returns UserDTO
+```
+
+❌ **DON'T**: Make claims without evidence
+```
+"The authentication system is broken" (P2 - no citation)
+```
+
+❌ **DON'T**: Cite non-existent locations
+```
+"Bug in server.ts:9999" when file doesn't exist (P2)
+```
+
+---
+
+## Tool Summaries Protocol (v6.4)
+
+**MANDATORY 3-5 word description before every tool call. Saves 15-20% LEDGER tokens.**
+
+### MUST summarize:
+
+- **Read**: What file/section you're reading and why
+- **Write**: What artifact you're creating
+- **Edit**: What change you're making
+- **Bash**: What command/script you're running
+- **Grep/Glob**: What pattern you're searching for
+
+### Format:
+
+**Before tool call, write:**
+```
+Reading authentication implementation
+```
+
+**Then invoke tool:**
+```
+Read(file_path="src/auth.ts")
+```
+
+### Examples:
+
+**Good summaries** (concise, informative):
+```
+Searching for SQL injection patterns
+Grep(pattern="SELECT.*\\$\\{", type="ts")
+
+Creating payment integration tests
+Write(file_path="tests/payment.test.ts", content="...")
+
+Running type checking
+Bash(command="npm run tsc", description="Type check all TS files")
+
+Verifying API contract compliance
+Read(file_path="CONTRACT_DRAFT.md")
+```
+
+**Bad summaries** (too vague or verbose):
+```
+Reading file (too vague - which file? why?)
+Searching for potential issues in the entire TypeScript codebase to identify any problematic patterns (too verbose)
+```
+
+### Penalties:
+
+| Violation | Penalty | When Applied |
+|-----------|---------|--------------|
+| **Missing tool summary** | P4 (-5) | First offense per task |
+| **Repeated missing summaries** | P3 (-10) | 3+ violations in one task |
+| **Misleading summary** | P2 (-15) | Summary doesn't match actual tool action |
+
+### Benefits:
+
+- **LEDGER efficiency**: Main can write "Agent searched for auth bugs (3 files), found 2 issues" instead of logging every Grep/Read call
+- **AT review speed**: Reviewer sees intent immediately, doesn't need to infer from file paths
+- **Token savings**: 15-20% reduction in LEDGER size (tested on 50+ task sample)
+
+### Integration with Parallel Tools:
+
+When calling multiple tools in parallel (Rule 8), summarize the batch:
+```
+Gathering authentication context (3 files in parallel)
+Read(file_path="src/auth.ts")
+Read(file_path="src/middleware/auth.ts")
+Read(file_path="tests/auth.test.ts")
+```
+
+**Conciseness Rule**: 3-5 words. Active voice. Verb-led (e.g., "Searching...", "Creating...", "Verifying...").
 
 ## Multi-Task Dispatch
 
