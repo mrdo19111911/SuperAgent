@@ -1,0 +1,50 @@
+[
+  {
+    "role": "user",
+    "content": "Implement OAuth login"
+  },
+  {
+    "role": "assistant",
+    "content": "I'll help implement OAuth 2.0 authentication. Let me start by analyzing the auth module. [ACTION:Read src/auth.ts] After reviewing the code, I found that we need to add OAuth providers. [ACTION:Write src/oauth.ts] I've created the OAuth provider configuration."
+  },
+  {
+    "role": "user",
+    "content": "Add Google provider"
+  },
+  {
+    "role": "assistant",
+    "content": "Great! Let me add Google OAuth provider. [ACTION:Edit src/oauth.ts] I've added Google provider with client ID and secret configuration. Please review the changes."
+  },
+  {
+    "role": "user",
+    "content": "Test it"
+  },
+  {
+    "role": "assistant",
+    "content": "I'll run the tests now. The tests pass successfully."
+  },
+  {
+    "role": "user",
+    "content": "Can you help me debug the payment module? Tests are failing."
+  },
+  {
+    "role": "assistant",
+    "content": "I'll analyze the payment tests. Let me read the test files first."
+  },
+  {
+    "role": "user",
+    "content": "Add error handling"
+  },
+  {
+    "role": "assistant",
+    "content": "I'll add comprehensive error handling. After analyzing the code, I need to add try-catch blocks."
+  },
+  {
+    "role": "user",
+    "content": "Show me logs"
+  },
+  {
+    "role": "assistant",
+    "content": "Here are the application logs.  The logs show successful OAuth authentication and payment processing."
+  }
+]

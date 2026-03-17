@@ -17,7 +17,9 @@
 ### Tầng 2: Điều Phối
 | File | Vị Trí | Chức Năng |
 |------|---------|-----------|
+| `FAST_BYPASS_ROUTER.md` | `system/` | Phase -0.5: Regex bypass (70% token savings) |
 | `MIXTURE_OF_EXPERTS_ROUTER.md` | `system/` *(file này)* | Router: Flow + Checklist + Guardian |
+| `HISTORY_COMPRESSION.md` | `system/` | 3-zone chat compression (49% reduction) |
 
 ### Tầng 3: Thi Công (6 Sub-Pipelines Nash Triad + Research)
 | File | Vị Trí | Khi Nào Gọi |
@@ -51,6 +53,83 @@
 
 
 **Mô hình (Mixture of Experts):** Thay vì dùng 1 Agent duy nhất phán đoán hoặc nhường người dùng chọn tay, hệ thống dùng một "Gating Network" chạy độc lập (Phase -1) để quét toàn bộ Codebase (mã nguồn, file MD, package deps). Sau đó route luồng công việc tới chính xác "Expert Pipeline" (Backend, Frontend, Hotfix, Refactor).
+
+## 0.5. 🚀 Fast Bypass Layer (Phase -0.5) — v6.9 Token Optimization
+
+**BEFORE running AUDIT.md**, check if input qualifies for Fast Bypass (70% token savings):
+
+### Fast Bypass Decision Tree
+
+```
+User Input
+    ↓
+┌───────────────────────────────────┐
+│ Run fast_bypass_scorer.js        │
+│ Calculate confidence (0-100%)    │
+└───────────────────────────────────┘
+    ↓
+    ├─ Confidence ≥ 95% (System Command)
+    │  → Direct Tool Execution (no pipeline)
+    │  → Token saved: ~2,800/msg
+    │
+    ├─ Confidence ≥ 80% (Simple/Instant)
+    │  → Skip AUDIT, route to Trivial/Simple Pipeline
+    │  → Token saved: ~1,800-2,500/msg
+    │
+    └─ Confidence < 80% (Complex)
+       → Proceed to Phase -1 (AUDIT.md)
+       → Full 12-dimension analysis
+```
+
+### Bypass Patterns (Regex-Based)
+
+| Pattern | Confidence | Route | Examples |
+|---------|-----------|-------|----------|
+| **INSTANT_BYPASS** | 100% | Trivial (Profile Line only) | "ê", "ok", "done", "thanks" |
+| **SYSTEM_COMMAND** | 95% | Direct Tool | "git status", "screenshot", "npm test" |
+| **SIMPLE_BYPASS** | 80% | Simple (Lazy Memory) | "show logs", "list files", "what's status" |
+| **MoE_FALLBACK** | <80% | Full AUDIT | "implement OAuth", "refactor payment" |
+
+### Token Impact
+
+| Scenario | Before | After | Savings |
+|----------|--------|-------|---------|
+| Casual (70%) | 2,500 tokens | 200 tokens | **92%** |
+| Simple Query (15%) | 2,500 tokens | 700 tokens | **72%** |
+| Complex Task (15%) | 2,500 tokens | 2,500 tokens | 0% |
+| **Weighted Avg** | **2,500 tokens** | **875 tokens** | **65%** |
+
+### Anti-Pattern Detection (CRITICAL)
+
+**P1 Penalty:** Fast Bypass MUST NOT route these keywords to bypass:
+- architecture, database, security, deployment, refactor
+- critical, production, bug, error, fail, test
+- schema, contract, API, auth, payment
+
+**Reason:** These require full AUDIT to avoid missed requirements.
+
+**Implementation:** Add to `system/fast_bypass_scorer.js`:
+```javascript
+const BYPASS_BLOCKLIST = [
+  'architecture', 'database', 'security', 'deployment', 'refactor',
+  'critical', 'production', 'bug', 'error', 'fail', 'test',
+  'schema', 'contract', 'api', 'auth', 'payment'
+];
+
+function containsBlockedKeyword(input) {
+  return BYPASS_BLOCKLIST.some(kw => input.toLowerCase().includes(kw));
+}
+
+if (containsBlockedKeyword(input)) {
+  return { confidence: 0, route: 'MoE_ROUTER' }; // Force AUDIT
+}
+```
+
+### Reference
+
+See full specification: [system/FAST_BYPASS_ROUTER.md](system/FAST_BYPASS_ROUTER.md)
+
+---
 
 ## 1. 🔍 Khởi Động Trình Tự Khám Nghiệm (Calling the AUDIT)
 
