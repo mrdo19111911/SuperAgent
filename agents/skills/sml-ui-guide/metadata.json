@@ -1,0 +1,59 @@
+{
+  "id": "sml-ui-guide",
+  "name": "Smartlog UI Guide",
+  "version": "1.0.0",
+  "description": "UX compliance validator for Smartlog Ecosystem (TMS/WMS/OMS) against v2.3 principles",
+  "author": "Nash Framework",
+  "tags": ["ux", "ui-review", "smartlog", "logistics", "b2b", "accessibility", "wcag"],
+  "archetype_fit": {
+    "Critic": 0.6,
+    "Analyst": 0.4
+  },
+  "triggers": [
+    "review ui",
+    "check ux",
+    "smartlog compliance",
+    "audit navigation",
+    "validate accessibility",
+    "tms ui review",
+    "wms ui review",
+    "oms ui review"
+  ],
+  "outputs": [
+    "UX Compliance Report",
+    "Priority Fixes List",
+    "Compliance Score"
+  ],
+  "dependencies": {
+    "reference_doc": "Smartlog_UX_Guiding_Principles_v2.3.md"
+  },
+  "workflow_phases": 3,
+  "estimated_time": "15-30 minutes",
+  "skill_type": "Pure Markdown",
+  "complexity": "Medium",
+  "target_audience": [
+    "Product Managers",
+    "UX Designers",
+    "Frontend Developers",
+    "QA Engineers"
+  ],
+  "key_principles": [
+    "Workflow-First Navigation",
+    "Exception-First Dashboard",
+    "One-Screen Operations",
+    "Visual-First Data-Second",
+    "System-Suggest Human-Approve",
+    "Progressive Complexity",
+    "Cross-Platform Consistency",
+    "Error Recovery UX",
+    "WCAG 2.1 AA Accessibility",
+    "AI Explainability (XAI)"
+  ],
+  "success_metrics": {
+    "time_to_first_success": "<10 min",
+    "task_completion": "<3 clicks",
+    "support_tickets": "<5/user in 30 days",
+    "training_time": "<4 hours",
+    "compliance_score": "18/18"
+  }
+}

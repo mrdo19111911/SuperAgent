@@ -1,24 +1,31 @@
 {
   "registry_version": "2.0",
-  "last_updated": "2026-03-17T12:00:00.000Z",
+  "last_updated": "2026-03-17T18:00:00.000Z",
   "skills": [
+    {
+      "id": "sml-ui-guide",
+      "name": "Smartlog UI Guide",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "UX compliance validator for Smartlog Ecosystem (TMS/WMS/OMS) against v2.3 principles. Validates navigation, visual patterns, AI integration, accessibility (WCAG 2.1), and edge cases.",
+      "tags": ["ux", "ui-review", "smartlog", "logistics", "b2b", "accessibility", "wcag", "ai-governance"],
+      "archetype_fit": ["Critic", "Analyst"],
+      "path": "agents/skills/sml-ui-guide/",
+      "dependencies": ["Smartlog_UX_Guiding_Principles_v2.3.md"],
+      "used_by": [],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-17",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/sml-ui-guide/SKILL.md"
+    },
     {
       "id": "sharpener_reactive",
       "name": "Agent Skill Sharpener (Reactive)",
       "version": "1.0.0",
       "author": "Nash Framework",
-      "description": "Automatically sharpen agent skills by mining PEN/WIN entries from agent files, converting past failures into regression tests, and iteratively improving agent capabilities. More targeted than generic skill creation - focuses on fixing known weaknesses and amplifying proven strengths.",
-      "tags": [
-        "agent-factory",
-        "sharpening",
-        "pen-win",
-        "testing",
-        "reactive"
-      ],
-      "archetype_fit": [
-        "Critic",
-        "Analyst"
-      ],
+      "description": "Automatically sharpen agent skills by mining PEN/WIN entries from agent files, converting past failures into regression tests, and iteratively improving agent capabilities.",
+      "tags": ["agent-factory", "sharpening", "pen-win", "testing", "reactive"],
+      "archetype_fit": ["Critic", "Analyst"],
       "path": "agents/skills/sharpener_reactive/",
       "dependencies": [],
       "used_by": [],
@@ -32,20 +39,9 @@
       "name": "Agent Sharpening 2026 (Proactive)",
       "version": "2.0.0",
       "author": "Nash Framework",
-      "description": "Apply 2026 industry best practices to sharpen Nash agents using patterns from OpenAI Agents SDK, LangGraph, CrewAI, and top production frameworks. Systematically audits agents against 5 core principles, identifies gaps using 9 proven workflow patterns, and applies targeted improvements to reduce tokens by 60-80% while increasing quality.",
-      "tags": [
-        "agent-factory",
-        "sharpening",
-        "token-optimization",
-        "best-practices",
-        "industry-standards",
-        "2026-patterns",
-        "proactive"
-      ],
-      "archetype_fit": [
-        "Strategist",
-        "Analyst"
-      ],
+      "description": "Apply 2026 industry best practices to sharpen Nash agents using patterns from OpenAI Agents SDK, LangGraph, CrewAI. Reduce tokens by 60-80% while increasing quality.",
+      "tags": ["agent-factory", "sharpening", "token-optimization", "best-practices", "2026-patterns", "proactive"],
+      "archetype_fit": ["Strategist", "Analyst"],
       "path": "agents/skills/sharpener_proactive/",
       "dependencies": [],
       "used_by": [],
