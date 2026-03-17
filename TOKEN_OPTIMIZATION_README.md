@@ -297,15 +297,21 @@ content = content.replace(ACTION_TAG_REGEX, '');
 
 ---
 
-### Phase 3: Tiered Prompting (Week 3-4)
+### Phase 3: Tiered Prompting (Week 3-4) — ✅ COMPLETED
 
-- [ ] Categorize rules (MINI/STANDARD/FULL)
-- [ ] Update dispatch logic
-- [ ] Measure task completion rate
+- [x] Categorize rules (MINI/STANDARD/FULL)
+- [x] Update dispatch logic with `selectRuleTier()`
+- [x] Add example dispatches for all pipelines
+- [ ] Measure task completion rate (pending deployment)
 
 **Success Criteria:**
-- 54% token reduction
-- No quality regression
+- 54% token reduction — **Spec ready**
+- No quality regression — **To be measured**
+
+**Tier Distribution:**
+- MINI (0-10): Trivial pipeline (200 tokens)
+- STANDARD (0-32): Simple/Complex (600 tokens)
+- FULL (0-56): Critical Strategists/F-phase (1,200 tokens)
 
 ---
 

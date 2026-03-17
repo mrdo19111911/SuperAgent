@@ -359,16 +359,29 @@ content = content.replace(ACTION_TAG_REGEX, '');
 - 0 action re-execution errors
 - No code block truncation errors
 
-### Phase 3: Tiered Prompting (Week 3-4)
+### Phase 3: Tiered Prompting (Week 3-4) — ✅ COMPLETED
 
 **Deliverables:**
-1. Rule categorization (MINI/STANDARD/FULL) in [NASH_SUBAGENT_PROMPTS.md](system/templates/NASH_SUBAGENT_PROMPTS.md)
-2. Update agent dispatch logic (load tier based on pipeline)
-3. Test: Compare task completion rate (before/after)
+1. ✅ Rule categorization (MINI/STANDARD/FULL) in [NASH_SUBAGENT_PROMPTS.md](system/templates/NASH_SUBAGENT_PROMPTS.md)
+2. ✅ Dispatch logic with `selectRuleTier()` function
+3. ✅ Example dispatches for all 4 pipeline types
+4. ⏳ Test: Compare task completion rate (before/after) — *Pending production deployment*
 
 **Success Metrics:**
-- 1,200 → 550 tokens (54% reduction)
-- No quality regression (task completion rate ≥95%)
+- 1,200 → 550 tokens (54% reduction) — **Spec ready**
+- No quality regression (task completion rate ≥95%) — **To be measured**
+
+**Implementation:**
+```javascript
+function selectRuleTier(pipeline, agentArchetype, phaseLetter) {
+  if (pipeline === 'Trivial') return 'MINI';
+  if (pipeline === 'Critical') {
+    if (agentArchetype === 'Strategist' || phaseLetter === 'F') return 'FULL';
+    return 'STANDARD';
+  }
+  return 'STANDARD';
+}
+```
 
 ### Phase 4: Intent Matrix (Already Implemented)
 

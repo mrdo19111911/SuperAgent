@@ -37,6 +37,24 @@ NASH agent selection: maximize DISAGREEMENT — never two agents of same primary
 
 ## Rules
 
+**Tier System (v6.9 Token Optimization):**
+
+| Tier | Rules | Pipelines | Agent Types | Tokens |
+|------|-------|-----------|-------------|--------|
+| **MINI** | 0-10 | Trivial | All | 200 |
+| **STANDARD** | 0-32 | Simple, Complex | All | 600 |
+| **FULL** | 0-56 | Critical | Strategist, AT#3 (F-phase) | 1,200 |
+
+**Dispatch Logic:**
+- Trivial: Load MINI (fastest, minimal overhead)
+- Simple: Load STANDARD (common operations covered)
+- Complex: Load STANDARD (same as Simple, more deliverables)
+- Critical: Load FULL for Strategists/F-phase, STANDARD for Builders
+
+---
+
+### MINI Tier (Rules 0-10) — Core Essentials
+
 0. **Think Tool**: Use `<think>risks/checks/decision</think>` before: git ops, Phase C/F transitions, failures, completion. P0 if violated. Max 200 words.
 1. **Code Citations**: Use `file:line` for code claims (bugs/fixes/reviews/LEDGER). P2 if missing. Format: `Bug in auth.ts:42 - null check`.
 2. **Tool Summaries**: Write 3-5 word intent before Read/Write/Edit/Bash/Grep/Glob. P4 first miss, P3 if 3+, P2 if misleading. Format: "Reading auth implementation" → Read(...).
@@ -48,6 +66,12 @@ NASH agent selection: maximize DISAGREEMENT — never two agents of same primary
 8. **Parallel**: Same-tier ATs run in parallel when independent (no shared mutable state). Main waits for all. **Tool Execution**: When calling multiple INDEPENDENT tools (Read, Grep, Glob), invoke all in a single turn for parallel execution.
 9. **Deps**: plan.md lists upstream interfaces. Pass dep contracts as `$INPUT_ARTIFACTS`.
 10. **Handoff**: Criteria → `$CRITERIA_DIR` + `{task}/S1_criteria_spec.md`. Each criterion MUST have a testable assertion (expected input → expected output, or verifiable completeness statement: "Report covers X, Y, Z with comparison table"). Criteria without assertions = auto-P3. Execute-phase satisfies ALL Tier 1 criteria.
+
+---
+
+### STANDARD Tier (Rules 0-30) — Common Operations
+*Includes MINI (0-10) + additional rules below:*
+
 11. **LEDGER**: Main writes after EVERY decision step. Agents CANNOT.
 12. **Retries**: Max 3/tier. FAIL→S{n}: AT provides (a) specific failing items, (b) severity, (c) suggested scope. Agent re-executes with findings as `$INPUT_ARTIFACTS`. After 3 FAILs: escalate. Thesis -15 if same error 3x.
 13. **File Ops**: Before Edit(), classify scope: **surgical** (1-10 lines, verify unique via grep -c), **rewrite** (>50% file, use Write()), **inject** (append at boundary). P2 if Edit() fails due to ambiguous old_string.
@@ -70,6 +94,12 @@ NASH agent selection: maximize DISAGREEMENT — never two agents of same primary
 30. **Branch Hygiene** (v6.8): Before git operations, check: (a) current branch not main/master, (b) no uncommitted changes blocking checkout, (c) remote tracking configured. Auto-create feature branch from main if on main. P1 if force-push to main/master.
 31. **Commit Message Templates** (v6.8): Use conventional commits format: `type(scope): description` where type = feat|fix|docs|refactor|test|chore. Max 72 chars subject. Body explains "why" not "what". Include breaking changes as `BREAKING CHANGE:` footer. P3 if non-conventional format.
 32. **User Preference Memory** (v6.8): Track user corrections/preferences in `agents/knowledge/operational/user_preferences.md`: coding style, frameworks, approval patterns, communication style. Apply automatically in future tasks. Update after 3+ similar corrections. P2 if repeat corrected behavior.
+
+---
+
+### FULL Tier (Rules 0-56) — Advanced Features
+*Includes STANDARD (0-32) + additional rules below:*
+
 33. **Framework Profiles** (v6.9): Load framework-specific conventions from `system/frameworks/{name}.md` (React, Vue, Django, Rails). Includes: banned patterns, auto-imports, file structure, naming conventions. Apply automatically when detected. P2 if violate framework conventions after profile loaded.
 34. **Design-First Pipeline** (v6.9): For UI-heavy tasks, run Pipeline 0.5 (Design) before Pipeline 1 (Requirements). Generate design system → user approval → implementation. Use `pipelines/00_DESIGN.md`. Prevents design drift. P1 if implement UI without approved design in Critical pipeline.
 35. **Frontend-First with Mock Data** (v6.9): For full-stack tasks, build UI with mock.js first → screenshot validation → extract contracts.md → implement backend. Enables rapid prototyping. Use `pipelines/07_FRONTEND_FIRST.md`. P3 if skip mock data step.
@@ -199,9 +229,65 @@ Builder bonus: Thesis passes AT first try → +5. Evidence required on every fin
 
 ## Dispatch Template
 
+**Tier Selection (v6.9):**
+```javascript
+function selectRuleTier(pipeline, agentArchetype, phaseLetter) {
+  // Trivial: Always MINI
+  if (pipeline === 'Trivial') return 'MINI';
+
+  // Critical: FULL for Strategists + F-phase, STANDARD for others
+  if (pipeline === 'Critical') {
+    if (agentArchetype === 'Strategist' || phaseLetter === 'F') return 'FULL';
+    return 'STANDARD';
+  }
+
+  // Simple/Complex: Always STANDARD
+  return 'STANDARD';
+}
+```
+
+**Example Dispatches:**
+
+```markdown
+# Trivial Pipeline - MINI Tier (200 tokens)
+Pipeline: Trivial
+Agent: Thục TS (Builder)
+Tier: MINI (Rules 0-10)
+Task: Fix typo in README.md
+
+# Simple Pipeline - STANDARD Tier (600 tokens)
+Pipeline: Simple
+Agent: Lân FE (Builder)
+Tier: STANDARD (Rules 0-32)
+Task: Add button to header component
+
+# Complex Pipeline - STANDARD Tier (600 tokens)
+Pipeline: Complex
+Agent: Phúc SA (Strategist)
+Tier: STANDARD (Rules 0-32)
+Phase: A (Design criteria)
+Task: Design API contracts for payment module
+
+# Critical Pipeline - FULL Tier (1,200 tokens)
+Pipeline: Critical
+Agent: Mộc (Critic/Strategist)
+Tier: FULL (Rules 0-56)
+Phase: F (Cross-cutting review)
+Task: Root-cause analysis + security audit
+
+# Critical Pipeline - STANDARD Tier (600 tokens)
+Pipeline: Critical
+Agent: Hoàng .NET (Builder)
+Tier: STANDARD (Rules 0-32)
+Phase: C (Execute)
+Task: Implement payment webhook handler
+```
+
+---
+
 ```
 ## NASH: $TRIAD_ROLE | $PIPELINE_STEP
-### 100pt. M1/M2/M3=2× penalty.
+### 100pt. M1/M2/M3=2× penalty. | Tier: $RULE_TIER
 You are **$TRIAD_ROLE**. $CROSS_CHECK_AGENT reviews same output independently.
 ### Task
 $TASK_DESCRIPTION
