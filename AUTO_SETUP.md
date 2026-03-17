@@ -267,15 +267,33 @@ Target agents:
 **Dung PM (Project Manager):**
 ```bash
 # Install from skills.bak if available, otherwise skip
-[ -f "agents/skills.bak/bug-triage/SKILL.md" ] && cp -r agents/skills.bak/bug-triage agents/skills/ && node bin/nash register-skill bug-triage
-[ -f "agents/skills.bak/deployment-excellence/SKILL.md" ] && cp -r agents/skills.bak/deployment-excellence agents/skills/ && node bin/nash register-skill deployment-excellence
+if [ -f "agents/skills.bak/bug-triage/SKILL.md" ]; then
+  cp -r agents/skills.bak/bug-triage agents/skills/
+  node bin/nash register-skill bug-triage
+  node bin/nash install-skill bug-triage --agent dung-manager
+fi
+
+if [ -f "agents/skills.bak/deployment-excellence/SKILL.md" ]; then
+  cp -r agents/skills.bak/deployment-excellence agents/skills/
+  node bin/nash register-skill deployment-excellence
+  node bin/nash install-skill deployment-excellence --agent dung-manager
+fi
 ```
 
 **Phuc SA (Solution Architect):**
 ```bash
 # Install architecture skills
-[ -f "agents/skills.bak/contract-draft-template/SKILL.md" ] && cp -r agents/skills.bak/contract-draft-template agents/skills/ && node bin/nash register-skill contract-draft-template
-[ -f "agents/skills.bak/arch-challenge-response/SKILL.md" ] && cp -r agents/skills.bak/arch-challenge-response agents/skills/ && node bin/nash register-skill arch-challenge-response
+if [ -f "agents/skills.bak/contract-draft-template/SKILL.md" ]; then
+  cp -r agents/skills.bak/contract-draft-template agents/skills/
+  node bin/nash register-skill contract-draft-template
+  node bin/nash install-skill contract-draft-template --agent phuc-sa
+fi
+
+if [ -f "agents/skills.bak/arch-challenge-response/SKILL.md" ]; then
+  cp -r agents/skills.bak/arch-challenge-response agents/skills/
+  node bin/nash register-skill arch-challenge-response
+  node bin/nash install-skill arch-challenge-response --agent phuc-sa
+fi
 ```
 
 **Note:** Only install if skills.bak/ exists. If not, skip this step.
