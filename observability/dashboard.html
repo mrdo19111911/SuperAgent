@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nash Framework Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background: #1e293b;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      transition: all 0.2s;
+    }
+
+    .metric-card:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+    }
+
+    .metric-label {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #3b82f6;
+      line-height: 1;
+    }
+
+    .metric-change {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #10b981;
+    }
+
+    .metric-change.negative {
+      color: #ef4444;
+    }
+
+    .section {
+      background: #1e293b;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #f1f5f9;
+    }
+
+    .task-list {
+      list-style: none;
+    }
+
+    .task-item {
+      background: #0f172a;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      border-left: 4px solid #3b82f6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .task-item.completed {
+      border-left-color: #10b981;
+      opacity: 0.7;
+    }
+
+    .task-item.failed {
+      border-left-color: #ef4444;
+    }
+
+    .task-name {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .task-meta {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-running {
+      background: #1e3a8a;
+      color: #93c5fd;
+    }
+
+    .status-completed {
+      background: #064e3b;
+      color: #6ee7b7;
+    }
+
+    .status-failed {
+      background: #7f1d1d;
+      color: #fca5a5;
+    }
+
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .agent-card {
+      background: #0f172a;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      text-align: center;
+    }
+
+    .agent-card.active {
+      border-color: #10b981;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+    }
+
+    .agent-name {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .agent-score {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #3b82f6;
+    }
+
+    .refresh-indicator {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: #1e293b;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+
+    .refresh-indicator.updating {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .error-message {
+      background: #7f1d1d;
+      color: #fca5a5;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      border: 1px solid #991b1b;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .updating {
+      animation: pulse 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Nash Framework Dashboard</h1>
+      <p class="subtitle">Real-time monitoring of agent orchestration system</p>
+    </header>
+
+    <div id="error-container"></div>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Total Tasks</div>
+        <div class="metric-value" id="metric-total-tasks">-</div>
+        <div class="metric-change" id="metric-total-change">-</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-label">Active Tasks</div>
+        <div class="metric-value" id="metric-active-tasks">-</div>
+        <div class="metric-change">Running now</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-label">Success Rate</div>
+        <div class="metric-value" id="metric-success-rate">-</div>
+        <div class="metric-change" id="metric-success-change">-</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-label">Avg Tokens/Task</div>
+        <div class="metric-value" id="metric-avg-tokens">-</div>
+        <div class="metric-change">Last 10 tasks</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Recent Tasks</div>
+      <ul class="task-list" id="task-list">
+        <li style="color: #64748b; text-align: center; padding: 2rem;">
+          Loading tasks...
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Active Agents</div>
+      <div class="agent-grid" id="agent-grid">
+        <div style="color: #64748b; text-align: center; padding: 2rem; grid-column: 1/-1;">
+          Loading agents...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="refresh-indicator" id="refresh-indicator">
+    Last updated: <span id="last-update">Never</span>
+  </div>
+
+  <script>
+    // Configuration
+    const API_BASE = 'http://localhost:4000/api';
+    const REFRESH_INTERVAL = 2000; // 2 seconds
+
+    let previousData = {
+      totalTasks: 0,
+      successRate: 0
+    };
+
+    // Fetch data from API
+    async function fetchData(endpoint) {
+      try {
+        const response = await fetch(`${API_BASE}${endpoint}`);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return await response.json();
+      } catch (error) {
+        console.error(`Failed to fetch ${endpoint}:`, error);
+        showError(`API Error: ${error.message}`);
+        return null;
+      }
+    }
+
+    // Show error message
+    function showError(message) {
+      const container = document.getElementById('error-container');
+      container.innerHTML = `
+        <div class="error-message">
+          <strong>Connection Error:</strong> ${message}
+          <br>Make sure the observability server is running on port 4000.
+        </div>
+      `;
+    }
+
+    // Clear error message
+    function clearError() {
+      document.getElementById('error-container').innerHTML = '';
+    }
+
+    // Update metrics
+    async function updateMetrics() {
+      const tasks = await fetchData('/tasks');
+      if (!tasks) return;
+
+      clearError();
+
+      const totalTasks = tasks.length;
+      const activeTasks = tasks.filter(t => t.status === 'running').length;
+      const completedTasks = tasks.filter(t => t.status === 'completed').length;
+      const successRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+      // Calculate average tokens (last 10 tasks)
+      const recentTasks = tasks.slice(-10);
+      const avgTokens = recentTasks.length > 0
+        ? Math.round(recentTasks.reduce((sum, t) => sum + (t.tokens_used || 0), 0) / recentTasks.length)
+        : 0;
+
+      // Update metric displays
+      document.getElementById('metric-total-tasks').textContent = totalTasks;
+      document.getElementById('metric-active-tasks').textContent = activeTasks;
+      document.getElementById('metric-success-rate').textContent = successRate + '%';
+      document.getElementById('metric-avg-tokens').textContent = avgTokens.toLocaleString();
+
+      // Update change indicators
+      const totalChange = totalTasks - previousData.totalTasks;
+      if (totalChange > 0) {
+        document.getElementById('metric-total-change').textContent = `+${totalChange} since last refresh`;
+        document.getElementById('metric-total-change').className = 'metric-change';
+      }
+
+      const rateChange = successRate - previousData.successRate;
+      if (rateChange !== 0) {
+        const changeEl = document.getElementById('metric-success-change');
+        changeEl.textContent = `${rateChange > 0 ? '+' : ''}${rateChange}% from previous`;
+        changeEl.className = rateChange >= 0 ? 'metric-change' : 'metric-change negative';
+      }
+
+      previousData = { totalTasks, successRate };
+    }
+
+    // Update task list
+    async function updateTasks() {
+      const tasks = await fetchData('/tasks');
+      if (!tasks) return;
+
+      const taskList = document.getElementById('task-list');
+
+      if (tasks.length === 0) {
+        taskList.innerHTML = '<li style="color: #64748b; text-align: center; padding: 2rem;">No tasks yet</li>';
+        return;
+      }
+
+      // Show last 10 tasks, most recent first
+      const recentTasks = tasks.slice(-10).reverse();
+
+      taskList.innerHTML = recentTasks.map(task => `
+        <li class="task-item ${task.status}">
+          <div>
+            <div class="task-name">${task.id}: ${task.description || 'Untitled task'}</div>
+            <div class="task-meta">
+              Pipeline: ${task.pipeline || 'Unknown'} |
+              Tokens: ${(task.tokens_used || 0).toLocaleString()} |
+              Started: ${formatDate(task.created_at)}
+            </div>
+          </div>
+          <div class="status-badge status-${task.status}">
+            ${task.status}
+          </div>
+        </li>
+      `).join('');
+    }
+
+    // Update agents
+    async function updateAgents() {
+      const agents = await fetchData('/agents');
+      if (!agents) return;
+
+      const agentGrid = document.getElementById('agent-grid');
+
+      if (agents.length === 0) {
+        agentGrid.innerHTML = '<div style="color: #64748b; text-align: center; padding: 2rem; grid-column: 1/-1;">No active agents</div>';
+        return;
+      }
+
+      agentGrid.innerHTML = agents.map(agent => `
+        <div class="agent-card ${agent.status === 'active' ? 'active' : ''}">
+          <div class="agent-name">${agent.name}</div>
+          <div class="agent-score">${agent.score || 0}</div>
+          <div class="task-meta">${agent.role || 'Agent'}</div>
+        </div>
+      `).join('');
+    }
+
+    // Update all data
+    async function updateDashboard() {
+      const indicator = document.getElementById('refresh-indicator');
+      indicator.classList.add('updating');
+
+      await Promise.all([
+        updateMetrics(),
+        updateTasks(),
+        updateAgents()
+      ]);
+
+      document.getElementById('last-update').textContent = formatTime(new Date());
+      indicator.classList.remove('updating');
+    }
+
+    // Format date
+    function formatDate(dateString) {
+      if (!dateString) return 'Unknown';
+      const date = new Date(dateString);
+      const now = new Date();
+      const diff = Math.floor((now - date) / 1000); // seconds
+
+      if (diff < 60) return `${diff}s ago`;
+      if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+      if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+      return `${Math.floor(diff / 86400)}d ago`;
+    }
+
+    // Format time
+    function formatTime(date) {
+      return date.toLocaleTimeString('en-US', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    }
+
+    // Initial load
+    updateDashboard();
+
+    // Auto-refresh every 2 seconds
+    setInterval(updateDashboard, REFRESH_INTERVAL);
+
+    console.log('Nash Dashboard initialized. Polling API every', REFRESH_INTERVAL / 1000, 'seconds.');
+  </script>
+</body>
+</html>
