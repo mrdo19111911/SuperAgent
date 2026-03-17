@@ -1,0 +1,58 @@
+{
+  "id": "sharpener_reactive",
+  "name": "Agent Skill Sharpener",
+  "version": "1.0.0",
+  "description": "Mine PEN/WIN entries from production failures and auto-generate regression tests to sharpen agent skills",
+  "author": "Nash Framework",
+  "tags": ["pen-win", "regression-testing", "agent-improvement", "production-failures", "skill-sharpening"],
+  "fast_route_patterns": {
+    "high_confidence": [
+      {"pattern": "^(mine|extract|analyze) (pen|win)", "confidence": 95, "description": "PEN/WIN extraction commands"},
+      {"pattern": "sharpen.*reactive", "confidence": 90, "description": "Reactive sharpening request"},
+      {"pattern": "convert.*pen.*(eval|test)", "confidence": 90, "description": "PEN to eval conversion"},
+      {"pattern": "production failure.*agent", "confidence": 92, "description": "Production failure analysis"}
+    ],
+    "medium_confidence": [
+      {"pattern": "past failures|regression test", "confidence": 80, "description": "Learning from failures"},
+      {"pattern": "agent.*improve.*pen", "confidence": 78, "description": "Agent improvement via PEN"},
+      {"pattern": "ledger.*analysis", "confidence": 75, "description": "LEDGER-based improvement"},
+      {"pattern": "fix.*known.*weakness", "confidence": 77, "description": "Targeted weakness fixing"}
+    ],
+    "blocklist": [
+      "2026 patterns",
+      "industry standards",
+      "best practices framework"
+    ]
+  },
+  "archetype_fit": {
+    "Analyst": 0.4,
+    "Builder": 0.4,
+    "Critic": 0.2
+  },
+  "triggers": [
+    "mine PEN entries",
+    "sharpen from failures",
+    "convert PEN to eval",
+    "fix production failures",
+    "reactive sharpening",
+    "extract WIN patterns",
+    "regression test generation"
+  ],
+  "outputs": [
+    "Agent Profile JSON",
+    "Regression Test Suite",
+    "Sharpening Report",
+    "Enhanced Agent File",
+    "PEN/WIN Analysis"
+  ],
+  "dependencies": {},
+  "workflow_phases": 5,
+  "estimated_time": "45-90 minutes",
+  "skill_type": "Pure Markdown",
+  "complexity": "High",
+  "target_audience": [
+    "Agent Developers",
+    "QA Engineers",
+    "Production Support"
+  ]
+}

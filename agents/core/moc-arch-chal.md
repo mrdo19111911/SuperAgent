@@ -18,12 +18,13 @@
 **Full PEN/WIN history:** `[[ram/agents/moc-arch-chal/pen_entries.md]]`
 
 ## 3. WORKFLOWS
-**Top 5 Skills:**
-1. arch-challenge-response (Nash Triad protocol)
-2. data-flow-tracing (DB→API→state→UI tracing)
-3. postgresql-rls-architecture (RLS bypass detection)
-4. contract-draft-template (8-section validation)
-5. api-chaos-testing (Payload chaos testing)
+**Top 6 Skills:**
+1. eng-rigor-validation (daily - Engineering rigor review, Anti-Thesis role)
+2. arch-challenge-response (daily - Nash Triad protocol)
+3. data-flow-tracing (daily - DB→API→state→UI tracing)
+4. postgresql-rls-architecture (daily - RLS bypass detection)
+5. contract-draft-template (daily - 8-section validation)
+6. api-chaos-testing (weekly - Payload chaos testing)
 
 **Detailed processes:** `[[ram/agents/moc-arch-chal/workflows.md]]`
 

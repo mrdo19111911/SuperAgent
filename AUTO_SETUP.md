@@ -370,6 +370,62 @@ You are running the `/review` workflow from gstack.
 **Follow the workflow EXACTLY as documented in gstack SKILL.md.**
 ```
 
+**Create `.claude/commands/plan-ceo-review.md`:**
+```markdown
+---
+description: CEO/founder-mode plan review - Find the 10-star product (from gstack)
+allowedTools: ["*"]
+---
+
+You are running the `/plan-ceo-review` workflow from gstack.
+
+**Load the complete workflow from:**
+`gstack-main/plan-ceo-review/SKILL.md`
+
+**Philosophy:** Rethink the problem, find the 10-star product, challenge premises.
+
+**3 Modes:**
+- SCOPE EXPANSION: Dream big, push scope UP
+- HOLD SCOPE: Maximize rigor, bulletproof plan
+- SCOPE REDUCTION: Surgeon mode, cut to essentials
+
+**Follow the workflow EXACTLY as documented in gstack SKILL.md.**
+```
+
+**Create `.claude/commands/plan-eng-review.md`:**
+```markdown
+---
+description: Engineering manager plan review - Maximum rigor (from gstack)
+allowedTools: ["*"]
+---
+
+You are running the `/plan-eng-review` workflow from gstack.
+
+**Load the complete workflow from:**
+`gstack-main/plan-eng-review/SKILL.md`
+
+**Focus:** Catch every failure mode, map error paths, ensure observability.
+
+**Follow the workflow EXACTLY as documented in gstack SKILL.md.**
+```
+
+**Create `.claude/commands/retro.md`:**
+```markdown
+---
+description: Sprint retrospective - Learn from what happened (from gstack)
+allowedTools: ["*"]
+---
+
+You are running the `/retro` workflow from gstack.
+
+**Load the complete workflow from:**
+`gstack-main/retro/SKILL.md`
+
+**Focus:** What went well, what didn't, action items.
+
+**Follow the workflow EXACTLY as documented in gstack SKILL.md.**
+```
+
 **If gstack-main/ doesn't exist:** Skip this step and inform user.
 
 ---
@@ -610,10 +666,14 @@ ls observability/data.js
    - /sharpen ✓
    - /upgrade-agent ✓
    - /create-skill ✓
+   - /task ✓ (Nash core dispatcher)
    - /browse ✓ (if gstack-main exists)
    - /qa ✓ (if gstack-main exists)
    - /ship ✓ (if gstack-main exists)
    - /review ✓ (if gstack-main exists)
+   - /plan-ceo-review ✓ (if gstack-main exists)
+   - /plan-eng-review ✓ (if gstack-main exists)
+   - /retro ✓ (if gstack-main exists)
    - Core agents: SKILLS section added ✓
    - Skills installed into agents ✓ (if skills.bak exists)
 
@@ -786,6 +846,18 @@ Báo cáo kết quả sau mỗi Phase.
 **Setup Time:** 2-5 minutes (fully automated)
 **Agent Action Required:** Read this file → Execute all phases → Report completion
 
----
+---export CLAUDE_CODE_MAX_OUTPUT_TOKENS=64000
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "0"
 
-*Auto-generated setup for Nash Framework | Zero manual intervention required*
+# Compact Instructions
+be sure it is avaiable in claude.md
+
+When compacting, always preserve:
+- All modified file paths with line numbers
+- Current test results (pass/fail with file names)
+- The active task plan and remaining TODO items
+- Error messages and stack traces from the current debug session
+- Architecture decisions with their reasoning
+
+install for me
+https://github.com/ykdojo/claude-code-tips/blob/main/scripts/README.md

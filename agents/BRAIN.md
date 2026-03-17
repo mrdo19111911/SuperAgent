@@ -24,9 +24,14 @@ Mục tiêu: < 300 tokens. Luôn nhét file này vào đầu mọi System Prompt
 
 ## Boot Protocol (Đúng Thứ Tự)
 1. `agents/BRAIN.md` ← File này
-2. `agents/{layer}/{agent}.md` ← L2 Cache của Agent đang chạy
-3. `system/MIXTURE_OF_EXPERTS_ROUTER.md` ← CHỈ khi bắt đầu module mới (không đọc khi đang giữa pipeline)
-4. (Khi bắt đầu làm) `ram/{agent}/{file}.md` ← RAM chuyên môn
+2. **SELECT TIER** based on model + task (see `system/tier_selector.js` + `agents/AGENT_TEMPLATE_V3.md` §5.1)
+   - MINI (450 tokens): Opus/Pro reasoning tasks
+   - STANDARD (950 tokens): Sonnet balanced tasks
+   - TOOL (400 tokens): Haiku operations
+   - FULL (1200-4200 tokens): Critical/complex tasks
+3. `agents/{layer}/{agent}.md` ← L2 Cache (tier-specific version if exists)
+4. `system/MIXTURE_OF_EXPERTS_ROUTER.md` ← CHỈ khi bắt đầu module mới (không đọc khi đang giữa pipeline)
+5. (Khi bắt đầu làm) `ram/{agent}/{file}.md` ← RAM chuyên môn (tier-dependent)
 
 ## 🌍 Language Detection (v6.9 Rule 43)
 

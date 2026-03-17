@@ -32,21 +32,32 @@ Nash Agent Framework is a **lightweight, portable AI agent orchestration system*
 
 ## Quick Start
 
-**Get running in 15 minutes:**
+**Get running in 5 minutes with AUTO-SETUP:**
 
 ```bash
-# 1. Install production setup (NO Docker)
-bash scripts/install-production.sh
+# Clone repo
+git clone <your-repo-url>
+cd nash-agent-framework
 
-# 2. Install dependencies + local embedding model
-npm install
-npm run install:embeddings
+# ONE-COMMAND SETUP (Windows)
+setup-vector-db.bat
 
-# 3. Start observability server
-npm start
+# ONE-COMMAND SETUP (Linux/Mac)
+bash setup-vector-db.sh
 
-# 4. Dispatch your first task
-claude --agent agents/core/dung-manager.md "Add logging to user authentication module"
+# That's it! Vector DB is ready 🎉
+```
+
+**What gets installed:**
+- ✅ Vector embeddings for semantic PEN search (no Docker!)
+- ✅ In-memory vector database (~80MB model)
+- ✅ All tests validated automatically
+- ✅ Ready to use in 3-5 minutes
+
+**Optional (if you need observability dashboard):**
+```bash
+npm install  # Installs SQLite + Express (needs VS Build Tools on Windows)
+npm start    # Start dashboard on port 4000
 
 # 5. Monitor progress
 # Grafana: http://localhost:3000 (admin/admin)

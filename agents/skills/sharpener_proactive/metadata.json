@@ -1,0 +1,59 @@
+{
+  "id": "sharpener_proactive",
+  "name": "Agent Sharpening 2026",
+  "version": "2.0.0",
+  "description": "Apply 2026 industry best practices to sharpen Nash agents using patterns from OpenAI Agents SDK, LangGraph, CrewAI",
+  "author": "Nash Framework",
+  "tags": ["agent-sharpening", "token-optimization", "best-practices", "industry-standards", "2026-patterns"],
+  "fast_route_patterns": {
+    "high_confidence": [
+      {"pattern": "^(sharpen|optimize|upgrade) agent", "confidence": 95, "description": "Direct agent optimization commands"},
+      {"pattern": "apply.*2026.*patterns", "confidence": 90, "description": "Modern pattern application request"},
+      {"pattern": "reduce.*tokens", "confidence": 90, "description": "Token optimization request"},
+      {"pattern": "industry.*best.*practices.*agent", "confidence": 92, "description": "Industry standards application"}
+    ],
+    "medium_confidence": [
+      {"pattern": "(openai sdk|langgraph|crewai|beam\\.ai|autogen)", "confidence": 80, "description": "Agent framework references"},
+      {"pattern": "best practices.*agent", "confidence": 75, "description": "Agent best practices inquiry"},
+      {"pattern": "token.*optimization", "confidence": 78, "description": "General token optimization"},
+      {"pattern": "progressive.*loading", "confidence": 75, "description": "Progressive loading pattern"}
+    ],
+    "blocklist": [
+      "pen entries",
+      "production failure",
+      "ledger"
+    ]
+  },
+  "archetype_fit": {
+    "Strategist": 0.5,
+    "Builder": 0.3,
+    "Analyst": 0.2
+  },
+  "triggers": [
+    "sharpen agent",
+    "optimize agent",
+    "upgrade to 2026 standards",
+    "apply best practices",
+    "reduce tokens",
+    "industry patterns",
+    "token optimization"
+  ],
+  "outputs": [
+    "Agent Audit Report",
+    "Sharpening Plan",
+    "Enhanced Agent File",
+    "Token Reduction Metrics"
+  ],
+  "dependencies": {
+    "reference_docs": ["system/BEST_PRACTICE_AGENT.md"]
+  },
+  "workflow_phases": 5,
+  "estimated_time": "30-60 minutes",
+  "skill_type": "Pure Markdown",
+  "complexity": "High",
+  "target_audience": [
+    "Agent Developers",
+    "Framework Architects",
+    "Performance Engineers"
+  ]
+}

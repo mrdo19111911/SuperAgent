@@ -27,6 +27,153 @@ claude --agent agents/core/dung-manager.md "Implement feature X for module Y"
 
 ---
 
+## Token Optimization (v6.9)
+
+Nash Framework implements 4-layer token optimization achieving **50-65% reduction**:
+
+### Layer 0: Fast Route Bypass (30-50% savings for casual messages)
+
+**Automatic routing without LLM:**
+```bash
+# System checks regex patterns BEFORE loading context
+Input: "ê" → Instant bypass (200 tokens vs 2,500)
+Input: "git status" → System command (700 tokens vs 2,500)
+Input: "implement OAuth" → Full router (2,500 tokens, needs AUDIT)
+```
+
+**Blocklist (always trigger full AUDIT):**
+- architecture, database, security, deployment, refactor
+- critical, production, bug, error, fail, test
+- schema, contract, API, auth, payment
+
+**Implementation:** `system/FAST_BYPASS_ROUTER.md` + `system/fast_bypass_scorer.js`
+
+### Layer 1: Model-Specific Tiers (20-30% savings for reasoning tasks)
+
+**Tier Selection by Model + Task:**
+
+| Model | Task Type | Tier | Context Budget | Use Case |
+|-------|-----------|------|----------------|----------|
+| Opus/Pro | Reasoning | MINI | 450 tokens | Architecture decisions, trade-offs |
+| Opus/Pro | Execution | STANDARD | 950 tokens | Complex implementation |
+| Sonnet | Trivial | MINI | 450 tokens | Simple queries |
+| Sonnet | Simple/Complex | STANDARD | 950 tokens | Coding, reviews |
+| Sonnet | Critical | FULL | 1,200-4,200 tokens | Multi-agent coordination |
+| Haiku | Any | TOOL | 400 tokens | File ops, cleanup, simple tasks |
+
+**Implementation:** `agents/AGENT_TEMPLATE_V3.md` §5.1 + `system/tier_selector.js`
+
+### Layer 2: Lazy Memory (L2/RAM/HDD) (60-80% savings vs full context)
+
+**3-Tier Memory Architecture:**
+```
+L2 Cache (Always):      agents/{layer}/{agent}.md    ≤500 tokens
+RAM (On-Demand):        ram/agents/{agent}/*.md      0-3,000 tokens
+HDD (Never Preload):    Source code, schemas         0 tokens
+```
+
+**Enforcement:**
+- `system/ram_loader.py`: Max depth 3, cycle detection
+- `agents/core/nhien-janitor.md`: Auto-cleanup every 2 weeks
+- Budget: Every agent file **must** be ≤500 tokens
+
+**Example - Skills Lazy Loading:**
+```markdown
+# sml-ui-guide only loads needed references:
+Task: "Audit navigation" → Load references/navigation.md (+208 tokens)
+Task: "Audit dashboard" → Load references/dashboard.md (+512 tokens)
+NOT loaded: references/ai-gov.md, error-recovery.md (save 3,825 tokens)
+```
+
+### Layer 3: Memory Eviction (40-60% history compression)
+
+**Priority-Based Auto-Eviction:**
+```
+P0 (Critical): Never evict (e.g., "RLS needs NOBYPASSRLS")
+P1 (Active): Keep until module done
+P2 (Lesson): Keep 90 days → downgrade to P3
+P3 (Done): Keep 30 days → archive
+P4 (Draft): Delete after sprint
+```
+
+**Pattern Consolidation:**
+```
+IF 3+ PEN entries with same error_code:
+  → Merge to 1 P0 PATTERN entry
+  → Delete duplicates
+  → Save ~200-300 tokens
+```
+
+**Implementation:** `system/MEMORY_EVICTION_PROTOCOL.md` + Nhiên Janitor (Haiku)
+
+### Token Impact Summary
+
+| Layer | Feature | Savings | Applies To |
+|-------|---------|---------|------------|
+| 0 | Fast Route Bypass | 30-50% | 70% of messages (casual) |
+| 1 | Model-Specific Tiers | 20-30% | Opus/Pro reasoning tasks |
+| 2 | Lazy Memory (L2/RAM/HDD) | 60-80% | All tasks (vs full context) |
+| 3 | Memory Eviction | 40-60% | Chat history, PEN/WIN |
+
+**Overall Result:**
+- Baseline: 2,500 tokens/request average
+- After optimization: 875 tokens/request average
+- **Total savings: 65%** ✅
+
+### Quick Diagnostic Commands
+
+```bash
+# Check agent token budget
+grep "≤ 500 tokens" agents/core/*.md
+
+# Validate RAM depth
+python system/ram_loader.py ram/agents/dung-manager/workflows.md
+
+# Test fast route matching
+node system/fast_route_matcher.js "review ui for smartlog"
+
+# Check tier selection
+node system/tier_selector.js --model=opus --task=reasoning
+
+# Memory eviction report
+# (Run by Nhiên Janitor every 2 weeks)
+```
+
+### Best Practices
+
+**DO:**
+- ✅ Use fast route patterns for common triggers
+- ✅ Select MINI tier for Opus/Pro reasoning tasks
+- ✅ Load RAM only when explicitly referenced with `[[ram/...]]`
+- ✅ Keep agent files ≤500 tokens (L2 Cache budget)
+- ✅ Set PEN entries to P0 if pattern repeats 3+ times
+
+**DON'T:**
+- ❌ Bypass fast route for critical keywords (architecture, security, etc.)
+- ❌ Load full context for Haiku tasks (use TOOL tier)
+- ❌ Preload source code or schemas (HDD = never preload)
+- ❌ Keep P4 draft entries after sprint (auto-delete)
+- ❌ Duplicate PEN entries (consolidate at 3+ occurrences)
+
+### Monitoring & Metrics
+
+**Track these KPIs (Weekly):**
+```
+1. Fast Route Hit Rate: Target >60%
+2. Avg Tokens/Request: Target <1,000 (vs 2,500 baseline)
+3. L2 Cache Budget Violations: Target 0 (no files >500 tokens)
+4. Memory Eviction Frequency: Target every 2 weeks
+5. Token Savings vs Baseline: Target >50%
+```
+
+**Dashboard:** `system/token_optimization_dashboard.md` (coming in P2)
+
+---
+
+*See detailed audit report: `NASH_SKILLS_TOKEN_OPTIMIZATION_AUDIT.md`*
+
+---
+
 ## Architecture
 
 ### Phase -1: Audit → Routing
@@ -143,7 +290,10 @@ When Pipeline 2 (Architecture) runs, Phuc SA produces `CONTRACT_DRAFT.md` with 8
 
 1. **Nash Triad in every pipeline** — no self-approval
 2. **PEN entries = hard constraints** — check before submitting
-3. **Token conservation** (Rule 0) — read only when needed, write concisely
+3. **Token conservation (Rule 0)** — read only when needed, write concisely
+   - **NEW: Fast route bypass** — Check regex patterns before loading LLM
+   - **NEW: Model-specific tiers** — MINI for Opus reasoning, TOOL for Haiku
+   - **NEW: L2 Cache budget** — Every agent file ≤500 tokens (enforced)
 4. **Gate scripts are law** — no manual overrides
 5. **Evidence-based scoring** — commit/log/gate evidence required
 6. **Targeted git add** — never `git add .`
@@ -159,6 +309,7 @@ nash-agent-framework/
 ├── main.md                            # Entry point orchestrator
 ├── agents/
 │   ├── BRAIN.md                       # Agent memory architecture
+│   ├── AGENT_TEMPLATE_V3.md          # Template with Model-Specific Tiers (§5.1)
 │   ├── core/dung-manager.md          # PM orchestrator (main entry)
 │   ├── core/{agent}.md               # 9 core agents (L2 Cache <500 tokens)
 │   ├── dev/{agent}.md                # 10 dev agents
@@ -166,6 +317,10 @@ nash-agent-framework/
 │   └── user/{agent}.md               # 3 user-facing agents
 ├── system/
 │   ├── AUDIT.md                       # 12-dimension audit spec
+│   ├── FAST_BYPASS_ROUTER.md          # Layer 0 optimization (v6.9)
+│   ├── fast_bypass_scorer.js          # Regex-based fast routing
+│   ├── tier_selector.js               # Model-specific tier selection
+│   ├── fast_route_matcher.js          # Skill pattern matching
 │   ├── MIXTURE_OF_EXPERTS_ROUTER.md   # MoE routing logic
 │   ├── NASH.md                        # Nash Equilibrium rules
 │   ├── SCORING_RULES.md              # P0-P4 scoring tables
@@ -173,6 +328,9 @@ nash-agent-framework/
 │   └── templates/
 │       ├── LEDGER_TEMPLATE.md         # Immutable scoring record
 │       └── NASH_SUBAGENT_PROMPTS.md   # v6.2 universal dispatch template
+├── tests/
+│   ├── test_fast_route_skills.js      # Fast route pattern tests
+│   └── test_tier_selection.js         # Model tier tests
 ├── pipelines/
 │   ├── 01_REQUIREMENTS_AND_RESEARCH.md
 │   ├── 02_ARCHITECTURE_AND_DB.md

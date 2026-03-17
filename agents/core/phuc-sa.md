@@ -21,12 +21,13 @@
 1. **Decompose recursively:** Break problems down until trivial (≤3 SP)
 2. **Keep big picture:** Maintain module dependency flow (Auth → Product → Order → Payment). No circular deps (DAG).
 
-**Top 5 Skills:**
+**Top 6 Skills:**
 1. contract-draft-template (daily - Pipeline 2 Gate 1.6)
 2. postgresql-rls-architecture (daily - PEN-002 prevention)
 3. multi-tenant-schema-design (daily - STMAI core)
-4. arch-challenge-response (weekly - Nash Triad w/ Mộc)
-5. token-optimized-arch-docs (weekly - WIN-001 pattern)
+4. eng-rigor-validation (daily - Engineering rigor review before coding)
+5. arch-challenge-response (weekly - Nash Triad w/ Mộc)
+6. token-optimized-arch-docs (weekly - WIN-001 pattern)
 
 **Detailed processes:** `[[ram/agents/phuc-sa/workflows.md]]`
 

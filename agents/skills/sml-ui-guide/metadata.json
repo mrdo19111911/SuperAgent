@@ -5,6 +5,21 @@
   "description": "UX compliance validator for Smartlog Ecosystem (TMS/WMS/OMS) against v2.3 principles",
   "author": "Nash Framework",
   "tags": ["ux", "ui-review", "smartlog", "logistics", "b2b", "accessibility", "wcag"],
+  "fast_route_patterns": {
+    "high_confidence": [
+      {"pattern": "^(review|audit|check|validate) (ui|ux|design|interface)", "confidence": 95, "description": "Direct UX review commands"},
+      {"pattern": "smartlog.*compliance", "confidence": 95, "description": "Smartlog compliance check"},
+      {"pattern": "(tms|wms|oms|supply chain|marketplace|control tower).*ui.*review", "confidence": 90, "description": "Logistics UI review"},
+      {"pattern": "ux.*audit.*(tms|wms|oms)", "confidence": 92, "description": "Logistics UX audit"}
+    ],
+    "medium_confidence": [
+      {"pattern": "(navigation|dashboard|color|accessibility|a11y)", "confidence": 80, "description": "UX component keywords"},
+      {"pattern": "wcag|accessibility.*standard", "confidence": 85, "description": "Accessibility standards check"},
+      {"pattern": "exception.*first|workflow.*first", "confidence": 78, "description": "Smartlog principle references"},
+      {"pattern": "design.*token|component.*library", "confidence": 75, "description": "Design system review"}
+    ],
+    "blocklist": []
+  },
   "archetype_fit": {
     "Critic": 0.6,
     "Analyst": 0.4

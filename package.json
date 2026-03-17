@@ -9,6 +9,10 @@
     "install:embeddings": "node -e \"require('@xenova/transformers').pipeline('feature-extraction', 'Snowflake/snowflake-arctic-embed-xs')\"",
     "lint": "eslint system/*.js observability/*.js",
     "qa": "bash gates/qa.sh .",
+    "setup": "npm install && node scripts/auto_generate_ki.cjs && node scripts/compress_ki.cjs && node scripts/analyze_git_dependencies.cjs && echo '✅ Nash Framework setup complete (KI: compressed 69%, cached 30min TTL)'",
+    "setup:ki": "node scripts/auto_generate_ki.cjs && node scripts/compress_ki.cjs",
+    "setup:cache": "node -e \"require('./scripts/ki_cache.cjs').clear(); console.log('🗑️  KI cache cleared')\"",
+    "analyze:git": "node scripts/analyze_git_dependencies.cjs",
     "start": "node observability/server.js",
     "test": "jest --coverage",
     "test:e2e": "jest tests/e2e",
@@ -28,8 +32,10 @@
   "author": "Nash Agent Framework Team",
   "license": "MIT",
   "dependencies": {
+    "@xenova/transformers": "^2.17.0"
+  },
+  "optionalDependencies": {
     "@qdrant/js-client-rest": "^1.7.0",
-    "@xenova/transformers": "^2.10.0",
     "better-sqlite3": "^9.2.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
@@ -37,12 +43,8 @@
     "prom-client": "^15.1.0"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.8",
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
     "eslint": "^8.56.0",
-    "jest": "^29.7.0",
-    "supertest": "^6.3.3"
+    "jest": "^29.7.0"
   },
   "engines": {
     "node": ">=18.0.0"

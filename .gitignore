@@ -36,3 +36,11 @@ agents/skills/shannon/
 # Skill submodules (embedded git repos)
 agents/skills.bak/*/.git
 ram/skills/*/.git
+
+# Node modules (not committed)
+node_modules/
+test_vector_env/node_modules/
+
+# Hugging Face cache (embedding models)
+.cache/
+test_vector_env/.cache/
