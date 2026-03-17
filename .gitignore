@@ -32,6 +32,9 @@ bash-audit.log
 # Token counting cache (Decision 18A - persistent memoization)
 .token_cache.json
 
+# Generated database (recreate with: npm run setup:db)
+data/nash.db
+
 # Node modules (not committed)
 node_modules/
 test_vector_env/node_modules/

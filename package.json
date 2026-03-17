@@ -2,18 +2,19 @@
   "name": "nash-agent-framework",
   "version": "3.0.0",
   "description": "Nash Agent Framework - MoE Router + Nash Triad + 3-tier memory with SQLite, Vector DB, and observability",
-  "main": "observability/server.js",
+  "main": "observability/server.cjs",
   "type": "module",
   "scripts": {
     "backup": "bash scripts/backup.sh",
     "install:embeddings": "node -e \"require('@xenova/transformers').pipeline('feature-extraction', 'Snowflake/snowflake-arctic-embed-xs')\"",
     "lint": "eslint system/*.js observability/*.js",
     "qa": "bash gates/qa.sh .",
-    "setup": "npm install && node scripts/auto_generate_ki.cjs && node scripts/compress_ki.cjs && node scripts/analyze_git_dependencies.cjs && echo '✅ Nash Framework setup complete (KI: compressed 69%, cached 30min TTL)'",
+    "setup": "npm install && node scripts/create-demo-db.cjs && node scripts/auto_generate_ki.cjs && node scripts/compress_ki.cjs && node scripts/analyze_git_dependencies.cjs && echo '✅ Nash Framework setup complete'",
+    "setup:db": "node scripts/create-demo-db.cjs",
     "setup:ki": "node scripts/auto_generate_ki.cjs && node scripts/compress_ki.cjs",
     "setup:cache": "node -e \"require('./scripts/ki_cache.cjs').clear(); console.log('🗑️  KI cache cleared')\"",
     "analyze:git": "node scripts/analyze_git_dependencies.cjs",
-    "start": "node observability/server.js",
+    "start": "node observability/server.cjs",
     "test": "jest --coverage",
     "test:e2e": "jest tests/e2e",
     "test:integration": "jest tests/integration",
@@ -32,15 +33,15 @@
   "author": "Nash Agent Framework Team",
   "license": "MIT",
   "dependencies": {
-    "@xenova/transformers": "^2.17.0"
-  },
-  "optionalDependencies": {
-    "@qdrant/js-client-rest": "^1.7.0",
-    "better-sqlite3": "^9.2.2",
+    "sql.js": "^1.10.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "lru-cache": "^10.1.0",
     "prom-client": "^15.1.0"
+  },
+  "optionalDependencies": {
+    "@qdrant/js-client-rest": "^1.7.0",
+    "@xenova/transformers": "^2.17.0"
   },
   "devDependencies": {
     "eslint": "^8.56.0",
