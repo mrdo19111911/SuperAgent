@@ -1,4 +1,4 @@
-# Nash SubAgent Dispatch — v6.7
+# Nash SubAgent Dispatch — v6.8
 
 > **Roles:** THESIS = primary executor. AT (Anti-Thesis) = reviewer/auditor (#1/#2/#3 = parallel). Main = orchestrator (dispatches, scores, writes LEDGER). Letters A-F are phase labels — each pipeline uses a subset.
 > **Structure:** Standard pipelines (Simple, Complex, Critical) have two tiers: Tier 1 defines acceptance criteria, Tier 2 builds and verifies. Trivial collapses both tiers. NASH/Urgent have their own flow.
@@ -58,6 +58,18 @@ NASH agent selection: maximize DISAGREEMENT — never two agents of same primary
 18. **Exhaustive Completion** (v6.7): NEVER stop mid-task. Track every requirement to done. If blocked after 3 retries (Rule 12) → escalate with full context, don't leave partial work.
 19. **Error Loop Detection** (v6.7): After 3 failures on same issue → HALT. Escalate with: (a) error pattern, (b) 3 attempted fixes, (c) root cause hypothesis. Don't retry same approach 4th time. P1 if violated.
 20. **Progressive Search** (v6.7): Search strategy: (1) Glob broad pattern, (2) identify hot dirs, (3) Grep scoped to hot dirs, (4) Read specific files. Avoid reading 2000-line files blindly. Run searches in parallel (Rule 8).
+21. **Live Diagnostics** (v6.8): During Phase C, poll IDE diagnostic API every 5s (if available). On error detection → fix immediately before next change. Use `system/diagnostic_watcher.js` wrapper. Prevents error accumulation. P2 if ship with known diagnostics.
+22. **Dynamic Pipeline Upgrade** (v6.8): When scope exceeds current pipeline (3+ new deps in Simple, cross-module in Complex) → upgrade mid-flight. Log upgrade reason in plan.md. Prevents scope-creep deaths. P1 if continue with underspec'd pipeline causing failures.
+23. **AST-Aware Edits** (v6.8): For symbolic changes (rename function, change signature), use AST tools (TypeScript: `ts-morph`, Python: `libcst`) over string Edit(). Fallback to Edit() if AST unavailable. Eliminates string-match brittleness. P2 if Edit() fails on refactor.
+24. **Streaming Diffs** (v6.8): For large file changes (>200 lines), use unified diff format in output instead of full rewrites. Show `@@ -start,count +start,count @@` with context. Saves -4000 tokens/large-edit. User/Main applies with `patch`.
+25. **Cached Codebase Intelligence** (v6.8): After first codebase scan, persist symbol table + import graph to `tmp/cache/{task}/symbols.json`. Reuse across same-task sub-agents. Invalidate on file write. Saves -1500 tokens/re-scan. Use `system/cache_manager.js`.
+26. **Model-Specific Tool Limits** (v6.8): Sonnet 3.7: max 5 parallel tools/turn. Haiku 3.5: max 3. Opus 4: max 8. If exceed → batch into sequential turns. Prevents tool-call failures. P3 if tool rejection due to limit.
+27. **Agentic Repair Loop** (v6.8): On tool failure (Edit/Bash/Glob) → auto-retry with adjusted params (1 retry max). Examples: Edit() ambiguous → re-grep with -C context. Bash timeout → increase timeout 2x. P2 if escalate without auto-repair attempt.
+28. **Approval Batching** (v6.8): In Complex/Critical, batch PERMISSION-REQUIRED actions into single approval request (max 5 actions/batch). Present as numbered list: "Approve all? Y/N/Select". Saves -300 tokens/action, -2min user time. P3 if request approval per-action.
+29. **Git Hook Integration** (v6.8): After code changes, run pre-commit hooks if configured (.husky, .git/hooks/pre-commit). Auto-fix formatting/lint issues (max 1 auto-fix). If hooks fail after auto-fix → report to user. Don't fix pre-existing issues outside change scope. P2 if skip hooks.
+30. **Branch Hygiene** (v6.8): Before git operations, check: (a) current branch not main/master, (b) no uncommitted changes blocking checkout, (c) remote tracking configured. Auto-create feature branch from main if on main. P1 if force-push to main/master.
+31. **Commit Message Templates** (v6.8): Use conventional commits format: `type(scope): description` where type = feat|fix|docs|refactor|test|chore. Max 72 chars subject. Body explains "why" not "what". Include breaking changes as `BREAKING CHANGE:` footer. P3 if non-conventional format.
+32. **User Preference Memory** (v6.8): Track user corrections/preferences in `agents/knowledge/operational/user_preferences.md`: coding style, frameworks, approval patterns, communication style. Apply automatically in future tasks. Update after 3+ similar corrections. P2 if repeat corrected behavior.
 
 
 ## Multi-Task Dispatch

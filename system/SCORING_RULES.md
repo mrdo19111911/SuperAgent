@@ -54,6 +54,16 @@ Nguyên tắc cốt lõi: **Kẻ phát hiện được cộng điểm (+), kẻ 
 | **[v6.7] Stop mid-task without completing requirements** | **P2** (Medium) |
 | **[v6.7] Add extra work beyond task scope** | **P3** (Low) |
 | **[v6.7] Read 2000+ line file without progressive search** | **P3** (Low) |
+| **[v6.8] Ship code with known diagnostics errors** | **P2** (Medium) |
+| **[v6.8] Continue underspec'd pipeline causing failures** | **P1** (High) |
+| **[v6.8] Edit() fails on refactor (should use AST)** | **P2** (Medium) |
+| **[v6.8] Exceed model tool limits causing rejection** | **P3** (Low) |
+| **[v6.8] Escalate without auto-repair attempt** | **P2** (Medium) |
+| **[v6.8] Request per-action approval (should batch)** | **P3** (Low) |
+| **[v6.8] Skip pre-commit hooks** | **P2** (Medium) |
+| **[v6.8] Force-push to main/master** | **P1** (High) |
+| **[v6.8] Non-conventional commit format** | **P3** (Low) |
+| **[v6.8] Repeat corrected behavior (ignore user prefs)** | **P2** (Medium) |
 
 ## Quick Resolution Rules
 
