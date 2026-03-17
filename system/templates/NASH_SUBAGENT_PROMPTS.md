@@ -1,4 +1,4 @@
-# Nash SubAgent Dispatch — v6.2
+# Nash SubAgent Dispatch — v6.3
 
 > **Roles:** THESIS = primary executor. AT (Anti-Thesis) = reviewer/auditor (#1/#2/#3 = parallel). Main = orchestrator (dispatches, scores, writes LEDGER). Letters A-F are phase labels — each pipeline uses a subset.
 > **Structure:** Standard pipelines (Simple, Complex, Critical) have two tiers: Tier 1 defines acceptance criteria, Tier 2 builds and verifies. Trivial collapses both tiers. NASH/Urgent have their own flow.
@@ -37,16 +37,65 @@ NASH agent selection: maximize DISAGREEMENT — never two agents of same primary
 
 ## Rules
 
+0. **Think Tool (MANDATORY)**: Use `<think></think>` before critical decisions. See Think Tool Protocol below.
 1. Load agent profile (capabilities + persistent context) from agent registry before dispatch.
 2. **plan.md**: Create `$ARTIFACTS_DIR/{task}/plan.md` BEFORE any step. Update per tier boundary. Format: `Batch {N}: {desc} | Pipeline: {type} | {SP} SP` + `- [ ] Task {N}.{i}/{total}: {detail}` checkboxes.
 3. **Spec** = `$SPEC_FILE` + `$CONTRACTS_FILE` + `$SOURCE_OF_TRUTH` (absolute law). Pass to every sub-agent.
 4. **Verify**: Thesis runs `$VERIFY_CMD` → `{task}/verify.log`. AT gets log + runs independently. `$VERIFY_PEER` → AT evaluates against stated checklist/rubric. Both can apply to same task.
 5. **Split**: >30K tokens → split by natural unit (one deliverable, one section, one component), never across logic. **Shared-artifact owner**: when splitting, designate one split as owner of shared mutable artifacts. Other splits produce delta instructions, not direct edits.
-6. **Parallel**: Same-tier ATs run in parallel when independent (no shared mutable state). Main waits for all.
+6. **Parallel**: Same-tier ATs run in parallel when independent (no shared mutable state). Main waits for all. **Tool Execution**: When calling multiple INDEPENDENT tools (Read, Grep, Glob), invoke all in a single turn for parallel execution.
 7. **Deps**: plan.md lists upstream interfaces. Pass dep contracts as `$INPUT_ARTIFACTS`.
 8. **Handoff**: Criteria → `$CRITERIA_DIR` + `{task}/S1_criteria_spec.md`. Each criterion MUST have a testable assertion (expected input → expected output, or verifiable completeness statement: "Report covers X, Y, Z with comparison table"). Criteria without assertions = auto-P3. Execute-phase satisfies ALL Tier 1 criteria.
 9. **LEDGER**: Main writes after EVERY decision step. Agents CANNOT.
 10. **Retries**: Max 3/tier. FAIL→S{n}: AT provides (a) specific failing items, (b) severity, (c) suggested scope. Agent re-executes with findings as `$INPUT_ARTIFACTS`. After 3 FAILs: escalate. Thesis -15 if same error 3x.
+
+## Think Tool Protocol (v6.3)
+
+**MANDATORY reflection before critical decisions. Violation = P0 penalty (-30 points).**
+
+### MUST think before (P0 if violated):
+
+1. **Git operations**: push, force-push, branch deletion, merge to main/master
+2. **Phase transitions**:
+   - Before Phase C (execute): Verify you have ALL file locations, ALL acceptance criteria understood, ALL dependencies identified
+   - Before Phase F (final report): Verify ALL acceptance criteria met, ALL tests passing, ALL contract requirements fulfilled
+3. **Test/Build failures**: Before proposing fixes, analyze root cause (not symptoms), impact on other components, whether it's environment issue vs. code bug
+4. **Completion reports**: Before claiming "done", verify against acceptance criteria
+
+### SHOULD think before (best practice):
+
+5. Critical architectural decisions
+6. Unexpected errors after multiple attempts
+7. Reporting environment issues to user
+8. Opening images/screenshots (describe what you see in context of task)
+
+### Format:
+
+```xml
+<think>
+[Internal reasoning - user won't see this. Max 200 words.]
+- What do I know?
+- What are the risks?
+- What's the best approach?
+- What could go wrong?
+→ Decision: [your choice]
+</think>
+```
+
+### Example:
+
+```xml
+<think>
+Task: Push changes to main branch.
+Current branch: feature/auth (per git status)
+Target: main (production branch per git log)
+Risk: Breaking production, no peer review
+Better approach: Create Pull Request for Nash Triad review
+→ Decision: Create PR, not direct push
+</think>
+```
+
+**Conciseness Rule**: Max 200 words. Use bullet points. Focus on: Risks, Checks, Decision.
 
 ## Multi-Task Dispatch
 

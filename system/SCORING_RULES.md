@@ -20,6 +20,10 @@ Nguyên tắc cốt lõi: **Kẻ phát hiện được cộng điểm (+), kẻ 
 | Báo cáo láo, ngụy tạo lỗi (False Positive M3) | **P0** (Blocker) |
 | Lọt lỗi Kiến trúc nghiêm trọng (Dũng bắt được ở P5/P6/P7 - Rule M2) | **P0** (Blocker) |
 | Bug lọt thẳng ra môi trường Production | **P0** (Blocker) |
+| **[v6.3] Thiếu Think Tool trước git force-push/delete branch** | **P0** (Blocker) |
+| **[v6.3] Thiếu Think Tool trước Phase C transition (chưa verify context)** | **P0** (Blocker) |
+| **[v6.3] Thiếu Think Tool trước báo cáo hoàn thành (chưa verify acceptance criteria)** | **P0** (Blocker) |
+| **[v6.3] Ngụy tạo câu trả lời không có Think reflection (fabrication)** | **P0** (Blocker) |
 | Bug lọt qua Gate QA P7 | **P1** (High) |
 | Phá vỡ Hợp đồng API (BREAKING Contract drift) | **P2** (Medium) |
 | Lọt lỗi hở SPEC / Gap giữa Contract và Yêu cầu | **P2** (Medium) |
