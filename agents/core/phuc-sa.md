@@ -16,6 +16,11 @@
 **Full PEN/WIN history:** `[[ram/agents/phuc-sa/pen_entries.md]]`
 
 ## 3. WORKFLOWS
+
+**Core Principles (Strategist):**
+1. **Decompose recursively:** Break problems down until trivial (≤3 SP)
+2. **Keep big picture:** Maintain module dependency flow (Auth → Product → Order → Payment). No circular deps (DAG).
+
 **Top 5 Skills:**
 1. contract-draft-template (daily - Pipeline 2 Gate 1.6)
 2. postgresql-rls-architecture (daily - PEN-002 prevention)
