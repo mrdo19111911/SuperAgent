@@ -6,14 +6,23 @@
   "type": "module",
   "scripts": {
     "backup": "bash scripts/backup.sh",
-    "install:embeddings": "node -e \"require('@xenova/transformers').pipeline('feature-extraction', 'Snowflake/snowflake-arctic-embed-xs')\"",
+    "setup:index": "node scripts/ki_vector.cjs",
     "lint": "eslint system/*.js observability/*.js",
     "qa": "bash gates/qa.sh .",
-    "setup": "npm install && node scripts/create-demo-db.cjs && node scripts/auto_generate_ki.cjs && node scripts/compress_ki.cjs && node scripts/analyze_git_dependencies.cjs && echo '✅ Nash Framework setup complete'",
+    "setup": "npm install && node scripts/create-demo-db.cjs && node scripts/auto_generate_ki.cjs && node scripts/compress_ki.cjs && node scripts/ki_vector.cjs && node scripts/analyze_git_dependencies.cjs && (grep -qxF '.gitnexus/' ../.gitignore 2>/dev/null || echo '.gitnexus/' >> ../.gitignore) && (npx gitnexus analyze .. || true) && echo '✅ Nash Framework setup complete'",
     "setup:db": "node scripts/create-demo-db.cjs",
     "setup:ki": "node scripts/auto_generate_ki.cjs && node scripts/compress_ki.cjs",
+    "setup:vectors": "node scripts/ki_vector.cjs",
+    "ki:search": "node scripts/ki_search.cjs",
+    "ki:list": "node scripts/ki_search.cjs --list",
     "setup:cache": "node -e \"require('./scripts/ki_cache.cjs').clear(); console.log('🗑️  KI cache cleared')\"",
     "analyze:git": "node scripts/analyze_git_dependencies.cjs",
+    "kg:analyze": "npx gitnexus analyze ..",
+    "kg:analyze:force": "npx gitnexus analyze .. --force",
+    "kg:clean": "npx gitnexus clean",
+    "kg:list": "npx gitnexus list",
+    "kg:mcp": "npx gitnexus mcp",
+    "setup:kg": "npx gitnexus analyze ..",
     "start": "node observability/server.cjs",
     "test": "jest --coverage",
     "test:e2e": "jest tests/e2e",
@@ -27,24 +36,22 @@
     "moe-router",
     "sqlite",
     "vector-db",
+    "knowledge-graph",
     "observability",
     "llm"
   ],
   "author": "Nash Agent Framework Team",
   "license": "MIT",
   "dependencies": {
-    "sql.js": "^1.10.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "lru-cache": "^10.1.0",
-    "prom-client": "^15.1.0"
-  },
-  "optionalDependencies": {
-    "@qdrant/js-client-rest": "^1.7.0",
-    "@xenova/transformers": "^2.17.0"
+    "prom-client": "^15.1.0",
+    "sql.js": "^1.10.0"
   },
   "devDependencies": {
     "eslint": "^8.56.0",
+    "gitnexus": "^1.0.0",
     "jest": "^29.7.0"
   },
   "engines": {

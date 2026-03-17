@@ -1,0 +1,6 @@
+# Exclude RAM skills (large third-party code, not core SuperAgent)
+ram/
+# Exclude data/cache
+data/
+.cache/
+node_modules/

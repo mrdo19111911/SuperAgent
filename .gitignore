@@ -32,8 +32,9 @@ bash-audit.log
 # Token counting cache (Decision 18A - persistent memoization)
 .token_cache.json
 
-# Generated database (recreate with: npm run setup:db)
+# Generated databases (recreate with: npm run setup)
 data/nash.db
+data/ki_vectors.db
 
 # Node modules (not committed)
 node_modules/
@@ -42,3 +43,4 @@ test_vector_env/node_modules/
 # Hugging Face cache (embedding models)
 .cache/
 test_vector_env/.cache/
+.gitnexus

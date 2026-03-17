@@ -32,46 +32,168 @@ Nash Agent Framework is a **lightweight, portable AI agent orchestration system*
 
 ## Quick Start
 
-**Get running in 5 minutes with AUTO-SETUP:**
+### Standalone (development)
 
 ```bash
-# Clone repo
 git clone <your-repo-url>
 cd nash-agent-framework
-
-# ONE-COMMAND SETUP (Windows)
-setup-vector-db.bat
-
-# ONE-COMMAND SETUP (Linux/Mac)
-bash setup-vector-db.sh
-
-# That's it! Vector DB is ready 🎉
+npm run setup
 ```
 
-**What gets installed:**
-- ✅ Vector embeddings for semantic PEN search (no Docker!)
-- ✅ In-memory vector database (~80MB model)
-- ✅ All tests validated automatically
-- ✅ Ready to use in 3-5 minutes
+### Embed into an existing project
 
-**Optional (if you need observability dashboard):**
 ```bash
-npm install  # Installs SQLite + Express (needs VS Build Tools on Windows)
-npm start    # Start dashboard on port 4000
-
-# 5. Monitor progress
-# Grafana: http://localhost:3000 (admin/admin)
-# Prometheus: http://localhost:9090
-# REST API: http://localhost:4000
+cd your-project/
+git clone <your-repo-url> SuperAgent
+cd SuperAgent && npm run setup
 ```
 
-**What just happened?**
+**What `npm run setup` does:**
+1. Installs dependencies (pure JS, no native binaries)
+2. Builds BM25 search index over knowledge docs
+3. Analyzes git history (hot files, co-change patterns)
+4. Scans target codebase with GitNexus Knowledge Graph (if embedded)
+5. Ready to use
+
+**Dispatch a task:**
+```bash
+claude --agent agents/core/dung-manager.md "Implement feature X"
+```
+
+**What happens:**
 1. **Audit**: 12-dimension codebase analysis
-2. **Route**: MoE Router selects Pipeline #3 (Coding)
+2. **Route**: MoE Router selects optimal pipeline
 3. **Execute**: Nash Triad (Thesis builds → Anti-Thesis reviews → Synthesis judges)
-4. **Score**: Immutable LEDGER.md created with zero-sum scoring
+4. **Score**: Immutable LEDGER.md with zero-sum scoring
+
+**Optional (observability dashboard):**
+```bash
+npm start    # Dashboard on http://localhost:4000
+```
 
 **See:** [docs/01_QUICKSTART.md](docs/01_QUICKSTART.md) for full tutorial.
+
+---
+
+## Installation Guide
+
+### Prerequisites
+
+- **Node.js** >= 18.0.0
+- **Claude Code** (CLI) — [Install guide](https://docs.anthropic.com/en/docs/claude-code)
+- **Git** — for repository analysis
+
+### Step 1: Embed SuperAgent into your project
+
+```bash
+cd your-project/
+git clone <your-repo-url> SuperAgent
+cd SuperAgent
+```
+
+### Step 2: Install and build indexes
+
+```bash
+npm run setup
+```
+
+This runs automatically:
+```
+npm install                              # Pure JS deps (sql.js, express, lru-cache)
+node scripts/create-demo-db.cjs         # SQLite demo database
+node scripts/auto_generate_ki.cjs       # Generate knowledge items
+node scripts/compress_ki.cjs            # Compress knowledge items
+node scripts/ki_vector.cjs              # Build BM25 search index
+node scripts/analyze_git_dependencies.cjs  # Git hot files + co-change patterns
+npx gitnexus analyze ..                  # Build Knowledge Graph of your project
+```
+
+**After setup, you have:**
+- `data/ki_vectors.db` — BM25 search index (knowledge docs)
+- `.gitnexus/` — Knowledge Graph database (your project's code structure)
+- `.claude/skills/gitnexus/` — 6 auto-generated agent skills
+
+### Step 3: Register Knowledge Graph MCP server
+
+```bash
+# Option A: Via Claude Code CLI
+claude mcp add gitnexus -- npx -y gitnexus@latest mcp
+
+# Option B: Manual — create .mcp.json in project root
+cat <<'EOF' > ../.mcp.json
+{
+  "mcpServers": {
+    "gitnexus": {
+      "command": "npx",
+      "args": ["-y", "gitnexus@latest", "mcp"]
+    }
+  }
+}
+EOF
+```
+
+This gives agents access to 7 MCP tools: `query`, `impact`, `context`, `detect_changes`, `rename`, `cypher`, `list_repos`.
+
+### Step 4: Start coding with agents
+
+```bash
+# Dispatch a task through the full SDLC pipeline
+claude --agent SuperAgent/agents/core/dung-manager.md "Implement user authentication"
+
+# Or use Claude Code directly — agents auto-detect Knowledge Graph
+claude
+```
+
+**Agents now have:**
+- BM25 search over framework knowledge (scoring rules, conventions, architecture)
+- Knowledge Graph of your entire codebase (functions, classes, imports, call chains)
+- Impact analysis before making changes
+- Entry point discovery for onboarding
+- Dead code detection for cleanup
+
+### Verify everything works
+
+```bash
+cd SuperAgent
+
+# Check BM25 search
+npm run ki:search "scoring rules"        # Should return ranked results
+npm run ki:list                           # Should list indexed chunks
+
+# Check Knowledge Graph
+npm run kg:list                           # Should show your project
+npx gitnexus query "main entry point"    # Should find entry points
+npx gitnexus impact "yourFunction"       # Should show blast radius
+
+# Check GitNexus status
+npx gitnexus status                      # Index stats
+```
+
+### Updating indexes
+
+```bash
+# After changing knowledge docs
+npm run setup:index                       # Rebuild BM25
+
+# After changing source code
+npm run kg:analyze                        # Incremental KG update
+npm run kg:analyze:force                  # Full KG rebuild
+
+# GitNexus also auto-reindexes after git commits (via PostToolUse hook)
+```
+
+### Exclude directories from Knowledge Graph
+
+Create `.gitnexusignore` in project root (same syntax as `.gitignore`):
+
+```
+# Example: exclude vendor code and generated files
+node_modules/
+dist/
+build/
+vendor/
+*.generated.ts
+```
 
 ---
 
@@ -140,6 +262,54 @@ Before any pipeline runs, the framework diagnoses the codebase:
 Audit: C1=20%, C4=0%, C8=0% → Route: Pipeline 1 → 2 → 3
 Audit: C11=75% (bug) → Route: Pipeline 3 (Coding)
 Task: [URGENT] tag → Route: Pipeline 6 (Hotfix)
+```
+
+### Knowledge Intelligence (Dual Search)
+
+SuperAgent uses two complementary search systems to understand both **knowledge** and **code structure**:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  BM25 Search (Knowledge Docs)                               │
+│  ├─ Index: agents/knowledge/*.md → SQLite (data/ki_vectors.db)
+│  ├─ Query: "scoring rules penalties" → ranked results (26ms)│
+│  ├─ Pure JS, zero native deps                               │
+│  └─ Used by: All agents for domain knowledge lookup         │
+├─────────────────────────────────────────────────────────────┤
+│  GitNexus Knowledge Graph (Code Structure)                  │
+│  ├─ Index: Target project source → .gitnexus/ (graph DB)   │
+│  ├─ 9 languages: TS, JS, Python, Java, C, C++, C#, Go, Rust│
+│  ├─ 7 MCP tools: query, impact, context, detect_changes,   │
+│  │   rename, cypher, list_repos                             │
+│  └─ Used by: Agents for impact analysis, dependency mapping,│
+│     entry point discovery, dead code detection              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+| Dimension | BM25 | GitNexus KG |
+|-----------|------|-------------|
+| **Scope** | Knowledge docs (`.md`) | Source code (9 languages) |
+| **Good at** | "What are the scoring rules?" | "What breaks if I change UserService?" |
+| **Speed** | ~26ms | ~8s initial scan, instant queries |
+| **Deps** | sql.js (pure JS) | gitnexus (Tree-sitter WASM) |
+| **Storage** | `data/ki_vectors.db` | `.gitnexus/` |
+
+**BM25 commands:**
+```bash
+npm run ki:search "Nash Triad review"    # Search knowledge docs
+npm run ki:list                           # List all indexed chunks
+npm run setup:index                       # Rebuild BM25 index
+```
+
+**GitNexus commands:**
+```bash
+npm run kg:analyze                        # Scan target codebase
+npm run kg:analyze:force                  # Full rebuild
+npm run kg:list                           # List indexed repos
+npm run kg:clean                          # Delete index
+npx gitnexus impact "functionName"        # Blast radius analysis
+npx gitnexus context "ClassName"          # 360° symbol view
+npx gitnexus query "authentication flow"  # Search execution flows
 ```
 
 ### 3-Tier Memory System
@@ -243,8 +413,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Acknowledgments
 
 - **Anthropic Claude** — AI assistance via Claude Code
-- **SQLite** — World's most deployed database engine
-- **Qdrant** — High-performance vector database
+- **SQLite** — World's most deployed database engine (via sql.js)
+- **GitNexus** — Zero-server code intelligence engine
 - **Grafana** — Beautiful observability dashboards
 - **Prometheus** — Industry-standard metrics collection
 
