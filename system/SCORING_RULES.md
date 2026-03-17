@@ -42,6 +42,8 @@ Nguyên tắc cốt lõi: **Kẻ phát hiện được cộng điểm (+), kẻ 
 | **[v6.4] Thiếu tool summary (lần đầu tiên trong task)** | **P4** (Trivial) |
 | **[v6.5] Agent skip Approval Gate khi chạy Complex/Critical pipeline** | **P1** (High) |
 | **[v6.5] Agent chạy gates sequential khi parallel_validate.sh available** | **P3** (Low) |
+| **[v6.6] Edit() fails do ambiguous old_string (không verify unique)** | **P2** (Medium) |
+| **[v6.6] Dùng Write() khi nên dùng Edit() surgical mode (<10 lines)** | **P3** (Low) |
 
 ## Quick Resolution Rules
 

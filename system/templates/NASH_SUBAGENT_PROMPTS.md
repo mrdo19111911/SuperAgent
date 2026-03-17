@@ -50,6 +50,7 @@ NASH agent selection: maximize DISAGREEMENT — never two agents of same primary
 10. **Handoff**: Criteria → `$CRITERIA_DIR` + `{task}/S1_criteria_spec.md`. Each criterion MUST have a testable assertion (expected input → expected output, or verifiable completeness statement: "Report covers X, Y, Z with comparison table"). Criteria without assertions = auto-P3. Execute-phase satisfies ALL Tier 1 criteria.
 11. **LEDGER**: Main writes after EVERY decision step. Agents CANNOT.
 12. **Retries**: Max 3/tier. FAIL→S{n}: AT provides (a) specific failing items, (b) severity, (c) suggested scope. Agent re-executes with findings as `$INPUT_ARTIFACTS`. After 3 FAILs: escalate. Thesis -15 if same error 3x.
+13. **File Ops**: Before Edit(), classify scope: **surgical** (1-10 lines, verify unique via grep -c), **rewrite** (>50% file, use Write()), **inject** (append at boundary). P2 if Edit() fails due to ambiguous old_string.
 
 
 ## Multi-Task Dispatch
@@ -163,6 +164,8 @@ You are **$TRIAD_ROLE**. $CROSS_CHECK_AGENT reviews same output independently.
 $TASK_DESCRIPTION
 ### Input
 $INPUT_ARTIFACTS
+### Knowledge (v6.6+)
+agents/knowledge/{relevant_domain}/*.md (read if task relates to known domains: auth, payment, user, etc.)
 ### Output → `$ARTIFACTS_DIR/{task}/S{n}_{role}_output.md`
 ### Verify → $VERIFY_CMD and/or $VERIFY_PEER
 ```
