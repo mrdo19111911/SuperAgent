@@ -455,14 +455,14 @@ allowedTools: ["*"]
 
 | Audit Signal | Pipeline | File |
 |--------------|----------|------|
-| C1 empty, new domain | Pipeline 0.5: Research | `pipelines/00_RESEARCH.md` |
-| C1 empty, C2 gaps | Pipeline 1: Requirements | `pipelines/01_requirements.md` |
-| C4 spaghetti, C8 no schema | Pipeline 2: Architecture | `pipelines/02_architecture.md` |
-| FE module | Design Flow | `pipelines/DESIGN_FLOW.md` |
-| C11/C12 code gaps | Pipeline 3: Coding | `pipelines/03_coding.md` |
-| C6 no tests, C10 bugs | Pipeline 4: Testing | `pipelines/04_testing.md` |
-| C5/C7 security/deployment | Pipeline 5: Security | `pipelines/05_security.md` |
-| Production P0 bug | Pipeline 6: Hotfix | `pipelines/06_hotfix.md` |
+| C1 empty, new domain | Pipeline 0.5: Research | `system/pipelines/00_RESEARCH.md` |
+| C1 empty, C2 gaps | Pipeline 1: Requirements | `system/pipelines/01_requirements.md` |
+| C4 spaghetti, C8 no schema | Pipeline 2: Architecture | `system/pipelines/02_architecture.md` |
+| FE module | Design Flow | `system/pipelines/design_flow_CUSTOM.md` |
+| C11/C12 code gaps | Pipeline 3: Coding | `system/pipelines/03_coding.md` |
+| C6 no tests, C10 bugs | Pipeline 4: Testing | `system/pipelines/04_testing.md` |
+| C5/C7 security/deployment | Pipeline 5: Security | `system/pipelines/05_security.md` |
+| Production P0 bug | Pipeline 6: Hotfix | `system/pipelines/06_hotfix.md` |
 
 **Present plan to user → Wait for approval**
 
@@ -472,7 +472,7 @@ allowedTools: ["*"]
 
 **For each phase:**
 
-1. **Load pipeline file** (e.g., `pipelines/02_architecture.md`)
+1. **Load pipeline file** (e.g., `system/pipelines/02_architecture.md`)
 2. **Load required agents** from `agents/core/`, `agents/dev/`, etc.
 3. **Load agent skills** via `node bin/nash list-skills`
 4. **Dispatch sub-agents** using `system/templates/NASH_SUBAGENT_PROMPTS.md`
