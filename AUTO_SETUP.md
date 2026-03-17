@@ -234,6 +234,128 @@ ls .claude/commands/create-skill.md
 
 ---
 
+### Step 3.6: Add SKILLS Section to Core Agents
+
+**Important:** Agents need `## ⚙️ SKILLS` section to support skill installation.
+
+**For each core agent, add SKILLS section using Edit tool:**
+
+Target agents:
+- `agents/core/dung-manager.md`
+- `agents/core/phuc-sa.md`
+- `agents/core/moc-arch-chal.md`
+- `agents/core/son-qa.md`
+
+**Insert after `## 3. WORKFLOWS` section:**
+
+```markdown
+## 3.5. SKILLS
+
+**Installed Skills:** (managed by nash CLI)
+
+<!-- Skills will be added here via: node bin/nash install-skill <skill-id> --agent <name> -->
+```
+
+**Use Edit tool to insert this section into each agent file.**
+
+---
+
+### Step 3.7: Install Skills into Core Agents
+
+**Use Bash tool to install skills based on agent roles:**
+
+**Dung PM (Project Manager):**
+```bash
+# Install from skills.bak if available, otherwise skip
+[ -f "agents/skills.bak/bug-triage/SKILL.md" ] && cp -r agents/skills.bak/bug-triage agents/skills/ && node bin/nash register-skill bug-triage
+[ -f "agents/skills.bak/deployment-excellence/SKILL.md" ] && cp -r agents/skills.bak/deployment-excellence agents/skills/ && node bin/nash register-skill deployment-excellence
+```
+
+**Phuc SA (Solution Architect):**
+```bash
+# Install architecture skills
+[ -f "agents/skills.bak/contract-draft-template/SKILL.md" ] && cp -r agents/skills.bak/contract-draft-template agents/skills/ && node bin/nash register-skill contract-draft-template
+[ -f "agents/skills.bak/arch-challenge-response/SKILL.md" ] && cp -r agents/skills.bak/arch-challenge-response agents/skills/ && node bin/nash register-skill arch-challenge-response
+```
+
+**Note:** Only install if skills.bak/ exists. If not, skip this step.
+
+---
+
+### Step 3.8: Install gstack Slash Commands (Bonus)
+
+**Check if gstack-main/ exists:**
+
+```bash
+ls gstack-main/browse/SKILL.md 2>/dev/null
+```
+
+**If exists, create slash commands using Write tool:**
+
+**Create `.claude/commands/browse.md`:**
+```markdown
+---
+description: Browse web with persistent browser automation (from gstack)
+allowedTools: ["*"]
+---
+
+You are running the `/browse` workflow from gstack.
+
+**Load the complete workflow from:**
+`gstack-main/browse/SKILL.md`
+
+**Follow the workflow EXACTLY as documented in gstack SKILL.md.**
+```
+
+**Create `.claude/commands/qa.md`:**
+```markdown
+---
+description: Run QA checks with 4 modes (from gstack)
+allowedTools: ["*"]
+---
+
+You are running the `/qa` workflow from gstack.
+
+**Load the complete workflow from:**
+`gstack-main/qa/SKILL.md`
+
+**Follow the workflow EXACTLY as documented in gstack SKILL.md.**
+```
+
+**Create `.claude/commands/ship.md`:**
+```markdown
+---
+description: Ship code quickly with automated checks (from gstack)
+allowedTools: ["*"]
+---
+
+You are running the `/ship` workflow from gstack.
+
+**Load the complete workflow from:**
+`gstack-main/ship/SKILL.md`
+
+**Follow the workflow EXACTLY as documented in gstack SKILL.md.**
+```
+
+**Create `.claude/commands/review.md`:**
+```markdown
+---
+description: Code review with greptile triage (from gstack)
+allowedTools: ["*"]
+---
+
+You are running the `/review` workflow from gstack.
+
+**Load the complete workflow from:**
+`gstack-main/review/SKILL.md`
+
+**Follow the workflow EXACTLY as documented in gstack SKILL.md.**
+```
+
+**If gstack-main/ doesn't exist:** Skip this step and inform user.
+
+---
+
 ## Phase 4: Test Everything Works
 
 ### Step 4.1: Test Nash CLI
@@ -301,6 +423,12 @@ ls observability/data.js
    - /sharpen ✓
    - /upgrade-agent ✓
    - /create-skill ✓
+   - /browse ✓ (if gstack-main exists)
+   - /qa ✓ (if gstack-main exists)
+   - /ship ✓ (if gstack-main exists)
+   - /review ✓ (if gstack-main exists)
+   - Core agents: SKILLS section added ✓
+   - Skills installed into agents ✓ (if skills.bak exists)
 
 ✅ Phase 4: Verification - PASSED
    - Nash CLI: 2 skills listed ✓
