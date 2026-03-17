@@ -13,12 +13,13 @@
 **Full PEN/WIN history:** `[[ram/agents/lan-dev-fe/pen_entries.md]]`
 
 ## 3. WORKFLOWS
-**Top 5 Skills:**
+**Top Skills:**
 1. react-vite-patterns (daily)
 2. playwright-best-practices-skill (daily)
 3. frontend-security-coder (weekly)
 4. react-best-practices-vercel (weekly)
-5. ux-audit-checklist (as needed)
+5. smartlog-ux-guide (RAM) — UX compliance for B2B logistics UI implementation
+6. ux-audit-checklist (as needed)
 
 **Detailed processes:** `[[ram/agents/lan-dev-fe/workflows.md]]`
 

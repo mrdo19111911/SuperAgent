@@ -13,12 +13,13 @@
 **Full PEN/WIN history:** `[[ram/agents/son-qa/pen_entries.md]]`
 
 ## 3. WORKFLOWS
-**Top 5 Skills:**
+**Top Skills:**
 1. api-chaos-testing (daily) — Payload fuzzing, RLS bypass, SQL injection
 2. systematic-debugging (daily) — 4-phase root cause, backward tracing
 3. test-auditor (weekly) — 7-worker coordination, usefulness scoring
 4. api-security-testing (weekly) — Auth bypass, IDOR, JWT flows
 5. e2e-testing (weekly) — Playwright, visual regression, cross-browser
+6. smartlog-ux-guide (RAM) — UX compliance audit before production (18-item checklist)
 
 **Detailed processes:** `[[ram/agents/son-qa/workflows.md]]`
 

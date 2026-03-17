@@ -3,20 +3,22 @@
   "last_updated": "2026-03-17T18:00:00.000Z",
   "skills": [
     {
-      "id": "sml-ui-guide",
-      "name": "Smartlog UI Guide",
-      "version": "1.0.0",
+      "id": "smartlog-ux-guide",
+      "name": "Smartlog UX Guide",
+      "version": "4.0.0",
       "author": "Nash Framework",
-      "description": "UX compliance validator for Smartlog Ecosystem (TMS/WMS/OMS) against v2.3 principles. Validates navigation, visual patterns, AI integration, accessibility (WCAG 2.1), and edge cases.",
-      "tags": ["ux", "ui-review", "smartlog", "logistics", "b2b", "accessibility", "wcag", "ai-governance"],
-      "archetype_fit": ["Critic", "Analyst"],
+      "description": "UX audit & compliance for B2B logistics (TMS/WMS/OMS/SCP/Marketplace/Control Tower). 8 core principles, 18-item checklist, WCAG 2.1 AA, HEART metrics, 13 reference files. Compressed 44% via Nash Triad methodology.",
+      "tags": ["ux", "ui-audit", "smartlog", "logistics", "b2b", "accessibility", "wcag", "ai-governance", "compliance", "heart-metrics"],
+      "archetype_fit": ["Critic", "Analyst", "Builder"],
       "path": "agents/skills/sml-ui-guide/",
-      "dependencies": ["Smartlog_UX_Guiding_Principles_v2.3.md"],
-      "used_by": [],
+      "dependencies": [],
+      "used_by": ["quang-designer (L2 Cache)", "lan-dev-fe (RAM)", "son-qa (RAM)", "minh-fe-arch-chal (RAM)", "phuc-sa (RAM)"],
       "maintenance_status": "active",
       "last_modified": "2026-03-17",
       "test_coverage": "0%",
-      "documentation_url": "agents/skills/sml-ui-guide/SKILL.md"
+      "documentation_url": "agents/skills/sml-ui-guide/SKILL.md",
+      "token_optimization": "44% reduction via tables, abbreviations, NO CODE examples",
+      "reference_files": 13
     },
     {
       "id": "sharpener_reactive",

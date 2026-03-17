@@ -13,8 +13,10 @@
 **Full PEN/WIN history:** `[[ram/agents/quang-designer/pen_entries.md]]`
 
 ## 3. WORKFLOWS
-Skills: See registry
+**Core Skills:**
+- `smartlog-ux-guide` (L2 Cache) — UX audit & compliance for B2B logistics (TMS/WMS/OMS/SCP/Marketplace/CTR)
 
+**Skills registry:** `agents/skills/_registry.json`
 **Detailed processes:** `[[ram/agents/quang-designer/workflows.md]]`
 
 ## 4. TOOLS
