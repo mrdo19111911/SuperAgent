@@ -1,106 +1,64 @@
-# Best Practice Agent Design - Quick Reference
+# Best Practices Quick Ref
 
-**Purpose:** Quick lookup for common agent design questions (covers 90% of use cases).
-**For full details:** See `BEST_PRACTICES_DETAILED.md`
-
-**Last updated:** 2026-03-16
+> **Purpose:** Quick lookup for agent design (90% use cases)
+> **Details:** [ram/advanced/best_practices_details.md](../../ram/advanced/best_practices_details.md)
 
 ---
 
-## Core Principles (The Non-Negotiables)
+## Core Principles (5 Non-Negotiables)
 
-### 1. Context is Fuel, Not Cargo
-Treat tokens as a PRIMARY constraint. Load context progressively (Tier 0→1→2→3), cache deterministic operations, compress conversation history (recent verbatim, old summarized). NEVER load all skills/PENs/WINs upfront or keep full conversation in context. Target: 60-80% token reduction vs naive approach.
-
-### 2. Single Responsibility per Agent
-Each agent does ONE thing exceptionally well. Avoid "God Agents" that review architecture, write code, run tests, and deploy. Instead, create specialized agents (ArchitectureReviewer, CodeImplementer) each with bounded context and token budgets (800-1200 tokens). Result: 70% token savings, higher quality per domain.
-
-### 3. Adversarial Validation (Nash Triad)
-No agent self-approves. Always Thesis→Anti-Thesis→Synthesis pattern. Every pipeline step has Challenger + Judge with zero-sum scoring to prevent collusion (if QA approves bad code, both penalized). Follows industry patterns from LangGraph critic nodes, CrewAI validation nodes.
-
-### 4. Memory Hierarchy (3-Tier Model)
-Store long-term memory externally, retrieve selectively. L2 Cache (250 tokens): Agent role + active P0-P1 PENs + skill metadata. RAM (500-2000 tokens): Load skill content/PEN details when keyword detected. HDD (External DB): All history retrieved via vector search (top 3). Token Savings: 85% (3K→450 tokens idle).
-
-### 5. Clear Boundaries & Interfaces
-Agents communicate via immutable contracts, not shared mutable state. Use CONTRACT_DRAFT.md as immutable interface between pipeline stages. Each agent receives frozen input and produces new output without side effects. Prevents race conditions and stale data.
+1. **Context = Fuel, Not Cargo** - Load progressively (Tier 0→3), compress history. Target: 60-80% token reduction
+2. **Single Responsibility** - 1 agent = 1 thing. Bounded context (800-1200 tokens). Result: 70% token savings
+3. **Adversarial Validation (Nash Triad)** - No self-approval. Thesis→Anti-Thesis→Synthesis + zero-sum scoring
+4. **Memory Hierarchy (3-Tier)** - L2 Cache (250T) → RAM (500-2K) → HDD (vector search). Savings: 85%
+5. **Clear Boundaries** - Immutable contracts (CONTRACT_DRAFT.md), no shared mutable state
 
 ---
 
-## The 9 Production Workflow Patterns (2026)
+## 9 Production Workflow Patterns (2026)
 
-### Pattern 1: ReAct (Reasoning + Action)
-Brief reasoning→Immediate action→Repeat. Use for fast-moving tasks (triage, routing, support), real-time decisions, exploratory workflows. Trade-offs: Fast/responsive but can loop endlessly (add stop conditions). Nash Usage: Hotfix pipeline (Pipeline 6).
-
-### Pattern 2: Plan-and-Execute
-Plan ALL steps upfront→Execute sequentially. Use for complex multi-step tasks, when order matters, when cost of failure is high. Trade-offs: Clear/auditable/predictable but slower than ReAct and can't adapt mid-execution. Nash Usage: Architecture pipeline (Pipeline 2).
-
-### Pattern 3: Critic / Reflection
-Agent reviews its OWN output before finalizing. Use for writing, summarization, design recommendations, anywhere accuracy > speed. Trade-offs: Higher quality but 2x token cost and 2x latency. Nash Usage: NOT USED - we prefer separate Critic agent (Nash Triad) over self-review.
-
-### Pattern 4: Multi-Agent Debate
-Multiple agents argue, best answer wins. Use when unclear right answer, need diverse perspectives, high-stakes decisions. Trade-offs: Catches blind spots but expensive (3x tokens) and slow (sequential debates). Nash Usage: Phúc SA (Thesis) + Mộc (Anti-Thesis) + Xuân (Synthesis).
-
-### Pattern 5: Hierarchical Planning
-Break task into sub-tasks, delegate to specialists. Use for large complex tasks (>30 SP), when sub-tasks are independent, need parallel execution. Trade-offs: Parallel execution (fast) + specialized context but coordination overhead + need robust sub-agent protocol. Nash Usage: Pipeline orchestration (Dũng PM delegates).
-
-### Pattern 6: Tool-Use Chains
-Agent calls tools sequentially to build up knowledge. Use when need external data (APIs, databases, grep), deterministic operations, knowledge retrieval. Trade-offs: Grounded in real data + transparent but slow (sequential calls) and tool failures break chain. Nash Usage: Every agent uses tools (Read, Write, Grep, Task).
-
-### Pattern 7: Human-in-the-Loop
-Agent asks human for approval/input at key decision points. Use for high-stakes decisions (deploy to prod), ambiguous requirements, compliance/legal gates. Trade-offs: Safety (human oversight) + handles ambiguity but slow (human latency) and breaks automation. Nash Usage: Gates 5-7 require human approval for deployment.
-
-### Pattern 8: Iterative Refinement
-Loop: Generate→Evaluate→Refine until criteria met. Use for optimization problems, gradual improvement needed, "good enough" is subjective. Trade-offs: Converges to quality but unbounded iterations (set max) and expensive (N iterations × tokens). Nash Usage: Agent Sharpener (baseline→iterate→pass 90%).
-
-### Pattern 9: Dynamic Routing
-Route task to specialist based on content analysis. Use for heterogeneous task types, need optimal specialist, multi-domain system. Trade-offs: Optimal agent selection + token-efficient but router itself costs tokens and misrouting = wasted work. Nash Usage: MIXTURE_OF_EXPERTS_ROUTER.md (core innovation with 12-dimension audit).
+| Pattern | Use When | Nash Example | Trade-off |
+|---------|----------|--------------|-----------|
+| **ReAct** | Fast decisions, triage | Hotfix (Pipeline 6) | Fast but can loop |
+| **Plan-Execute** | Multi-step, order matters | Architecture (P2) | Clear but slow |
+| **Critic/Reflection** | Quality > speed | NOT USED (prefer Nash) | 2x tokens |
+| **Multi-Agent Debate** | Unclear answer, high stakes | Phúc+Mộc+Xuân | 3x tokens |
+| **Hierarchical** | Large task (>30 SP), parallel | Dũng delegates | Coordination overhead |
+| **Tool-Use Chains** | External data, deterministic | All agents | Tool failures break |
+| **Human-in-Loop** | High stakes, compliance | Gates 5-7 | Human latency |
+| **Iterative Refine** | Optimization, gradual | Agent Sharpener | Unbounded iterations |
+| **Dynamic Routing** | Multi-domain, heterogeneous | MoE Router (12D) | Router token cost |
 
 ---
 
-## Production Best Practices (2026 Standards)
+## Production Best Practices (2026)
 
-### 1. Verification & Guardrails
-Never trust agent output in high-stakes domains. Use fact-checking agents, critic agents, rule-based validators, human review gates. Nash Implementation: Phase D (Functional Verify - Sơn QA) → Phase E (Non-Functional Verify - Ngữ Security) → Phase F (Cross-Cutting - Xuân). Key Insight: As of 2026, treat agent outputs with healthy skepticism.
-
-### 2. Clear SLAs & Budget Limits
-Define performance constraints upfront: max_duration (30 min), max_tokens (15K), max_tool_calls (50), timeout_action (escalate_to_human). Nash budgets: EXPANSION (15K-30K), HOLD (10K-15K), REDUCTION (5K-10K). Enforce hard limits - throw error if exceeded.
-
-### 3. Transparent Observability
-Log full transcripts (every tool call), track token usage (per agent, per task), measure latency (P50, P95, P99), track error rates & retry patterns. Nash stack: Prometheus metrics (tasks_total, task_duration, tokens_used, agents_active), Grafana dashboards (completion rate, duration, efficiency, quota tracking), SQLite logs (full transcripts, tool call audit, LEDGER scoring).
-
-### 4. Fallbacks & Graceful Degradation
-Never fail catastrophically. Always have Plan B. Vector DB down → fallback to grep. LLM API error → retry with exponential backoff → switch to smaller model → escalate to human. Tool timeout → log warning → continue with partial data → mark task as "needs_review".
-
-### 5. Human Review in High-Stakes Domains
-Require human oversight for: medical diagnosis/treatment, legal advice/contracts, financial reporting/trading, code deployment to production, policy decisions affecting users. Nash Gates: Gate 5 (Security: automated scan→human review), Gate 6 (Staging: automated tests→human smoke test), Gate 7 (Production: human approval required).
+1. **Verification** - Never trust agent output. Fact-check + critic + validator + human gates (D→E→F phases)
+2. **SLAs & Budgets** - max_duration (30 min), max_tokens (15K), max_tool_calls (50), hard limits
+3. **Observability** - Log transcripts, track tokens/latency/errors. Stack: Prometheus + Grafana + SQLite
+4. **Fallbacks** - Always Plan B. Vector DB down → grep. LLM error → retry → smaller model → human
+5. **Human Review** - Required for: medical, legal, financial, prod deploy, policy decisions
 
 ---
 
-## Nash Framework Unique Innovations
+## Nash Unique Innovations
 
-### 1. PEN/WIN Learning System
-Immutable memory of failures (PEN) and successes (WIN). Agents query vector DB for relevant past mistakes before acting. Auto-sharpening: Convert PEN→regression test→fix→mark FIXED. Industry Parallel: None. Most frameworks lack persistent failure memory.
-
-### 2. Zero-Sum Scoring (Game Theory)
-Builder creates bug: -15 points. QA catches bug: +15 points. QA misses bug: -30 points (M1 multiplier). Result: No incentive to collude (both lose), strong incentive to find REAL bugs. Industry Parallel: LangGraph has critic nodes but no scoring system.
-
-### 3. Cognitive Mode Switching
-Adaptive budgets based on task complexity. EXPANSION (new domain: 15K-30K tokens), HOLD (critical: 10K-15K tokens), REDUCTION (simple impl: 5K-10K tokens). Token Savings: 40-60% on routine tasks. Industry Parallel: None. Most frameworks use fixed budgets.
-
-### 4. MoE Router (12-Dimension Audit)
-Audit task across 12 dimensions (Clarity, Complexity, Risk, Scope, Urgency, Dependencies, Tech Debt, Test Coverage, Documentation, Team Capacity, Historical Data, Business Value) → route to 1 of 6 pipelines (Requirements / Architecture / Coding / Testing / Security / Hotfix). Industry Parallel: CrewAI has routing but simpler (role-based, not multi-dimensional).
+1. **PEN/WIN System** - Immutable failure/success memory, vector search, auto-sharpening
+2. **Zero-Sum Scoring** - Builder bug: -15. QA catch: +15. QA miss: -30 (M1). No collusion
+3. **Cognitive Mode** - EXPANSION (15-30K), HOLD (10-15K), REDUCTION (5-10K). Savings: 40-60%
+4. **MoE Router** - 12-dimension audit → 6 pipelines. Industry: CrewAI has simpler routing
 
 ---
 
-## Common Anti-Patterns (What NOT to Do)
+## Anti-Patterns (DON'T)
 
-1. **God Agent:** One agent does everything → 20K token context → slow, unfocused. FIX: Specialize agents, delegate sub-tasks.
-2. **Shared Mutable State:** Multiple agents mutate global state → race conditions, stale data. FIX: Immutable contracts, message passing.
-3. **No Stop Conditions:** ReAct loop runs forever → infinite token burn. FIX: Max iterations (10 max), timeout (30 min), stuck detection.
-4. **Trusting Agent Output Blindly:** Agent says "tests pass" → Deploy → Production breaks. FIX: Always run ACTUAL tests, not just "agent claims tests pass".
-5. **No Token Tracking:** "Why is this task so expensive?" → No visibility. FIX: Prometheus metrics, Grafana dashboards, per-agent budgets.
-6. **Loading Everything Upfront:** Agent.md = 15K tokens (all PENs, all skills, all examples). FIX: Progressive disclosure (Tier 0→1→2→3).
+1. **God Agent** - Fix: Specialize
+2. **Shared Mutable State** - Fix: Immutable contracts
+3. **No Stop Conditions** - Fix: Max iterations (10), timeout (30 min)
+4. **Trust Blindly** - Fix: Run ACTUAL tests
+5. **No Token Tracking** - Fix: Prometheus metrics
+6. **Load Everything** - Fix: Progressive disclosure
 
 ---
 
-**For detailed explanations, code examples, and implementation guidance, see `BEST_PRACTICES_DETAILED.md`**
+**Full details:** [ram/advanced/best_practices_details.md](../../ram/advanced/best_practices_details.md)

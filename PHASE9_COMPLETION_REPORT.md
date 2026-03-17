@@ -1,20 +1,24 @@
-# Phase 9 Completion Report - Quick Wins Token Optimization
+# Phase 9+10 Completion Report - Token Optimization
 
 **Date:** 2026-03-17
-**Duration:** ~2 hours
+**Duration:** ~2.5 hours
 **Approach:** Quick wins (high ROI, low effort)
 
 ---
 
 ## Executive Summary
 
-Phase 9 achieved **12,567 tokens** savings through quick wins:
+Phase 9+10 achieved **12,713 tokens** total savings:
 1. Delete obsolete files (10,156 tokens)
-2. Compress custom pipelines (1,932 tokens)
+2. Compress custom pipelines (2,000 tokens)
 3. Compress BOOTSTRAP.md (479 tokens)
+4. Compress BEST_PRACTICES_QUICK_REF.md (78 tokens)
 
-**Status:** Phase 9 Quick Wins COMPLETE
-**Next Steps:** Remaining optimizations (METADATA, souls/, quick refs) deferred to future Phase 10
+**Effective baseline reduction:** 28,000 → 25,443 tokens (9.1% reduction)
+**Obsolete cleanup:** 10,156 tokens (never loaded again)
+
+**Status:** Phase 9+10 COMPLETE
+**Deferred:** METADATA.yaml (YAML has high token density), souls/ agents (optional personality overlays), skills conditional loading (requires code changes)
 
 ---
 
@@ -91,9 +95,29 @@ Phase 9 achieved **12,567 tokens** savings through quick wins:
 | Compress BOOTSTRAP.md | 479 | 30 min | MEDIUM |
 | **TOTAL** | **12,567** | **85 min** | **HIGH** |
 
+### 4. Compress BEST_PRACTICES_QUICK_REF.md ✅ (78 tokens saved)
+
+**Strategy:** Extract verbose pattern descriptions to `ram/advanced/best_practices_details.md`
+
+| File | Before | After | Saved |
+|------|--------|-------|-------|
+| `system/advanced/BEST_PRACTICES_QUICK_REF.md` | 937 | 859 | **78** |
+
+**L2 file now contains:**
+- Core principles table (5 items)
+- 9 workflow patterns table (Pattern / Use When / Nash Example / Trade-off)
+- Production best practices (5 items)
+- Nash innovations (4 items)
+- Anti-patterns (6 items with fixes)
+
+**Details moved to RAM:**
+- Full explanations of each pattern with trade-offs
+- Detailed anti-pattern fixes
+- Production observability stack details
+
 ---
 
-## Deferred Optimizations (Future Phase 10)
+## Deferred Optimizations (Not Completed)
 
 Based on latest `scripts/analyze_token_waste.py` run:
 
