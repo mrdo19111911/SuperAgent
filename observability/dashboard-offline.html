@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nash Framework Dashboard (Simple)</title>
+  <title>Nash Framework Dashboard</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -51,6 +51,12 @@
       padding: 1.5rem;
       border-radius: 12px;
       border: 1px solid #334155;
+      transition: all 0.2s;
+    }
+
+    .metric-card:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
     }
 
     .metric-label {
@@ -138,6 +144,11 @@
       color: #fca5a5;
     }
 
+    .status-pending {
+      background: #713f12;
+      color: #fcd34d;
+    }
+
     .agent-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -150,6 +161,7 @@
       border-radius: 8px;
       border: 1px solid #334155;
       text-align: center;
+      transition: all 0.2s;
     }
 
     .agent-card.active {
@@ -157,9 +169,14 @@
       box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
     }
 
+    .agent-card:hover {
+      transform: translateY(-2px);
+    }
+
     .agent-name {
       font-weight: 600;
       margin-bottom: 0.5rem;
+      font-size: 1.1rem;
     }
 
     .agent-score {
@@ -194,12 +211,12 @@
 <body>
   <div class="container">
     <header>
-      <h1>Nash Framework Dashboard</h1>
-      <p class="subtitle">Static JSON-based monitoring (no backend required)</p>
+      <h1>🎯 Nash Framework Dashboard</h1>
+      <p class="subtitle">Offline-ready • No backend required • Edit inline data to update</p>
     </header>
 
     <div class="note">
-      📝 <strong>How to update:</strong> Edit <code>observability/data.js</code> to update tasks/agents. Refresh browser to see changes. (JSONP-style - no CORS!)
+      📝 <strong>How to update:</strong> Edit the <code>dashboardData</code> object in this HTML file (line 215). Save and refresh to see changes.
     </div>
 
     <div class="metrics-grid">
@@ -226,20 +243,12 @@
 
     <div class="section">
       <div class="section-title">Recent Tasks</div>
-      <ul class="task-list" id="task-list">
-        <li style="color: #64748b; text-align: center; padding: 2rem;">
-          Loading tasks...
-        </li>
-      </ul>
+      <ul class="task-list" id="task-list"></ul>
     </div>
 
     <div class="section">
       <div class="section-title">Active Agents</div>
-      <div class="agent-grid" id="agent-grid">
-        <div style="color: #64748b; text-align: center; padding: 2rem; grid-column: 1/-1;">
-          Loading agents...
-        </div>
-      </div>
+      <div class="agent-grid" id="agent-grid"></div>
     </div>
   </div>
 
@@ -247,29 +256,121 @@
     Last updated: <span id="last-update">-</span>
   </div>
 
-  <!-- Load data via script tag (JSONP-style - NO CORS NEEDED!) -->
-  <script src="./data.js"></script>
-
   <script>
-    // Data is now in window.nashData (loaded from data.js)
-    function loadData() {
-      const data = window.nashData;
+    // ========================================================================
+    // DATA - EDIT THIS SECTION TO UPDATE DASHBOARD
+    // ========================================================================
+    const dashboardData = {
+      tasks: [
+        {
+          id: "T1_01",
+          description: "Add logging to authentication module",
+          status: "completed",
+          pipeline: "Coding",
+          tokens_used: 12500,
+          created_at: "2026-03-17T03:30:00Z"
+        },
+        {
+          id: "T1_02",
+          description: "Design user dashboard wireframes",
+          status: "completed",
+          pipeline: "Design Flow",
+          tokens_used: 8300,
+          created_at: "2026-03-17T04:30:00Z"
+        },
+        {
+          id: "T1_03",
+          description: "Fix memory leak in event handler",
+          status: "running",
+          pipeline: "Hotfix",
+          tokens_used: 15600,
+          created_at: "2026-03-17T05:00:00Z"
+        },
+        {
+          id: "T1_04",
+          description: "Write integration tests for API endpoints",
+          status: "running",
+          pipeline: "Testing",
+          tokens_used: 9200,
+          created_at: "2026-03-17T05:15:00Z"
+        },
+        {
+          id: "T1_05",
+          description: "Security audit before deployment",
+          status: "pending",
+          pipeline: "Security",
+          tokens_used: 0,
+          created_at: "2026-03-17T05:25:00Z"
+        },
+        {
+          id: "T1_06",
+          description: "Refactor database query optimization",
+          status: "completed",
+          pipeline: "Coding",
+          tokens_used: 18200,
+          created_at: "2026-03-17T02:30:00Z"
+        },
+        {
+          id: "T1_07",
+          description: "Update API documentation",
+          status: "completed",
+          pipeline: "Requirements",
+          tokens_used: 6500,
+          created_at: "2026-03-17T01:30:00Z"
+        },
+        {
+          id: "T1_08",
+          description: "Implement caching layer",
+          status: "failed",
+          pipeline: "Coding",
+          tokens_used: 14800,
+          created_at: "2026-03-16T23:30:00Z"
+        }
+      ],
+      agents: [
+        {
+          name: "Dung PM",
+          role: "Project Manager",
+          status: "active",
+          score: 150,
+          tasks_count: 12
+        },
+        {
+          name: "Phuc SA",
+          role: "Software Architect",
+          status: "active",
+          score: 180,
+          tasks_count: 8
+        },
+        {
+          name: "Moc",
+          role: "Code Reviewer",
+          status: "active",
+          score: 165,
+          tasks_count: 15
+        },
+        {
+          name: "Thuc",
+          role: "Backend Developer",
+          status: "idle",
+          score: 120,
+          tasks_count: 6
+        },
+        {
+          name: "Lan",
+          role: "Quality Assurance",
+          status: "active",
+          score: 140,
+          tasks_count: 10
+        }
+      ],
+      last_updated: new Date().toISOString()
+    };
 
-      if (!data) {
-        document.getElementById('task-list').innerHTML =
-          '<li style="color: #ef4444; text-align: center; padding: 2rem;">Error: data.js not loaded</li>';
-        return;
-      }
+    // ========================================================================
+    // DASHBOARD LOGIC - NO NEED TO EDIT BELOW
+    // ========================================================================
 
-      updateMetrics(data);
-      updateTasks(data.tasks);
-      updateAgents(data.agents);
-
-      document.getElementById('last-update').textContent =
-        new Date(data.last_updated).toLocaleString();
-    }
-
-    // Update metrics
     function updateMetrics(data) {
       const tasks = data.tasks;
       const totalTasks = tasks.length;
@@ -286,7 +387,6 @@
       document.getElementById('metric-avg-tokens').textContent = avgTokens.toLocaleString();
     }
 
-    // Update task list
     function updateTasks(tasks) {
       const taskList = document.getElementById('task-list');
 
@@ -295,7 +395,6 @@
         return;
       }
 
-      // Show last 10 tasks, most recent first
       const recentTasks = tasks.slice(-10).reverse();
 
       taskList.innerHTML = recentTasks.map(task => `
@@ -315,7 +414,6 @@
       `).join('');
     }
 
-    // Update agents
     function updateAgents(agents) {
       const agentGrid = document.getElementById('agent-grid');
 
@@ -333,7 +431,6 @@
       `).join('');
     }
 
-    // Format date
     function formatDate(dateString) {
       const date = new Date(dateString);
       const now = new Date();
@@ -345,10 +442,18 @@
       return `${Math.floor(diff / 86400)}d ago`;
     }
 
-    // Load data on page load
-    loadData();
+    // Initialize dashboard
+    function init() {
+      updateMetrics(dashboardData);
+      updateTasks(dashboardData.tasks);
+      updateAgents(dashboardData.agents);
+      document.getElementById('last-update').textContent = new Date(dashboardData.last_updated).toLocaleString();
+      console.log('✅ Nash Dashboard loaded successfully!');
+      console.log('📝 To update data, edit the dashboardData object in this file.');
+    }
 
-    console.log('Nash Dashboard (Simple) loaded. Edit data.json to update.');
+    // Load on page ready
+    init();
   </script>
 </body>
 </html>

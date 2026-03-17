@@ -1,0 +1,109 @@
+// JSONP callback - can be loaded directly via <script> tag
+// No CORS needed!
+
+window.nashData = {
+  tasks: [
+    {
+      id: "T1_01",
+      description: "Add logging to authentication module",
+      status: "completed",
+      pipeline: "Coding",
+      tokens_used: 12500,
+      created_at: "2026-03-17T03:30:00Z"
+    },
+    {
+      id: "T1_02",
+      description: "Design user dashboard wireframes",
+      status: "completed",
+      pipeline: "Design Flow",
+      tokens_used: 8300,
+      created_at: "2026-03-17T04:30:00Z"
+    },
+    {
+      id: "T1_03",
+      description: "Fix memory leak in event handler",
+      status: "running",
+      pipeline: "Hotfix",
+      tokens_used: 15600,
+      created_at: "2026-03-17T05:00:00Z"
+    },
+    {
+      id: "T1_04",
+      description: "Write integration tests for API endpoints",
+      status: "running",
+      pipeline: "Testing",
+      tokens_used: 9200,
+      created_at: "2026-03-17T05:15:00Z"
+    },
+    {
+      id: "T1_05",
+      description: "Security audit before deployment",
+      status: "pending",
+      pipeline: "Security",
+      tokens_used: 0,
+      created_at: "2026-03-17T05:25:00Z"
+    },
+    {
+      id: "T1_06",
+      description: "Refactor database query optimization",
+      status: "completed",
+      pipeline: "Coding",
+      tokens_used: 18200,
+      created_at: "2026-03-17T02:30:00Z"
+    },
+    {
+      id: "T1_07",
+      description: "Update API documentation",
+      status: "completed",
+      pipeline: "Requirements",
+      tokens_used: 6500,
+      created_at: "2026-03-17T01:30:00Z"
+    },
+    {
+      id: "T1_08",
+      description: "Implement caching layer",
+      status: "failed",
+      pipeline: "Coding",
+      tokens_used: 14800,
+      created_at: "2026-03-16T23:30:00Z"
+    }
+  ],
+  agents: [
+    {
+      name: "Dung PM",
+      role: "Project Manager",
+      status: "active",
+      score: 150,
+      tasks_count: 12
+    },
+    {
+      name: "Phuc SA",
+      role: "Software Architect",
+      status: "active",
+      score: 180,
+      tasks_count: 8
+    },
+    {
+      name: "Moc",
+      role: "Code Reviewer",
+      status: "active",
+      score: 165,
+      tasks_count: 15
+    },
+    {
+      name: "Thuc",
+      role: "Backend Developer",
+      status: "idle",
+      score: 120,
+      tasks_count: 6
+    },
+    {
+      name: "Lan",
+      role: "Quality Assurance",
+      status: "active",
+      score: 140,
+      tasks_count: 10
+    }
+  ],
+  last_updated: "2026-03-17T05:30:00Z"
+};
