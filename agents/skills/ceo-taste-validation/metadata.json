@@ -1,0 +1,76 @@
+{
+  "skill_id": "ceo-taste-validation",
+  "version": "2.0.0",
+  "semantic_version": {
+    "major": 2,
+    "minor": 0,
+    "patch": 0
+  },
+  "author": {
+    "name": "Nash Framework Team",
+    "created_by_agent": "phuc-sa",
+    "created_date": "2026-03-17",
+    "adapted_from": "gstack plan-ceo-review by Garry Tan"
+  },
+  "description": {
+    "short": "CEO/Founder-mode plan review with 3 modes (EXPANSION/HOLD/REDUCTION)",
+    "long": "CEO Taste Validation reviews plans with founder-mode product thinking. Challenges premises, explores 10x opportunities, can expand or reduce scope. Three modes: EXPANSION (dream big, find platonic ideal), HOLD SCOPE (maximum rigor, bulletproof plan), REDUCTION (ruthless cut to essentials). Uses 2-phase workflow: Pre-Review System Audit + Nuclear Scope Challenge, then 10-section review."
+  },
+  "tags": [
+    "ceo",
+    "founder-mode",
+    "plan-review",
+    "architecture",
+    "product-thinking",
+    "scope-challenge",
+    "10x-thinking"
+  ],
+  "archetype_fit": [
+    "Strategist"
+  ],
+  "triggers": [
+    "When user asks for 'CEO review' or 'founder review'",
+    "New feature planning (greenfield)",
+    "Architecture decisions with unclear product direction",
+    "User says 'should we build X?' (premise challenge needed)",
+    "User says 'go big' or 'ambitious' or 'cathedral' (EXPANSION mode)",
+    "Plan touches >15 files (suggest REDUCTION mode)"
+  ],
+  "dependencies": {
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash",
+      "AskUserQuestion"
+    ],
+    "mcp_servers": [],
+    "other_skills": [
+      "arch-challenge-response",
+      "contract-draft-template"
+    ]
+  },
+  "compatible_agents": [
+    "ceo"
+  ],
+  "test_suite": {
+    "path": "tests/evals.json",
+    "test_count": 0,
+    "coverage": "0%",
+    "last_run": null,
+    "pass_rate": null
+  },
+  "performance": {
+    "avg_tokens": 800,
+    "avg_duration_seconds": null,
+    "complexity": "high",
+    "notes": "Skeleton ~800 tokens, references loaded on-demand (0-5,000 additional tokens depending on sections needed)"
+  },
+  "maintenance": {
+    "status": "active",
+    "last_updated": "2026-03-17",
+    "changelog": "tests/CHANGELOG.md",
+    "known_issues": [],
+    "refactoring_notes": "v2.0.0: Refactored to workflow skeleton pattern (44% token reduction vs v1.0.0 monolithic version). References loaded lazily."
+  }
+}
