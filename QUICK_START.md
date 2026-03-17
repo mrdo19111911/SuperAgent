@@ -29,10 +29,11 @@ Sau khi agent chạy xong, bạn sẽ có:
 
 ```
 ✅ Nash CLI works: node bin/nash list-skills → 2 skills
-✅ Slash commands: /sharpen, /upgrade-agent
+✅ Slash commands: /sharpen, /upgrade-agent, /create-skill, /task
 ✅ Gate scripts: bash gates/validate.sh works
 ✅ Dashboard: observability/dashboard-simple.html opens
 ✅ Factories: Agent sharpening fully operational
+✅ Task Dispatcher: /task auto-routes through 6 SDLC pipelines
 ```
 
 ---
@@ -44,7 +45,7 @@ Sau khi agent chạy xong, bạn sẽ có:
 - **Windows/Linux:** `Ctrl+Shift+P` → "Developer: Reload Window"
 - **Mac:** `Cmd+Shift+P` → "Developer: Reload Window"
 
-Sau đó gõ `/` trong chat → Thấy `/sharpen` và `/upgrade-agent`
+Sau đó gõ `/` trong chat → Thấy `/sharpen`, `/upgrade-agent`, `/create-skill`, `/task`
 
 ---
 
@@ -87,12 +88,15 @@ Sau khi setup + reload VSCode, test:
 node bin/nash list-skills
 
 # Test 2: Slash commands
+/task Implement user authentication module
+
+# Test 3: Agent sharpening
 /sharpen agents/core/dung-manager.md
 
-# Test 3: Gate scripts
+# Test 4: Gate scripts
 bash gates/validate.sh --help
 
-# Test 4: Dashboard
+# Test 5: Dashboard
 # Open observability/dashboard-simple.html in browser
 ```
 
