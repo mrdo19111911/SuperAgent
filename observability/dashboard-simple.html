@@ -345,10 +345,45 @@
       return `${Math.floor(diff / 86400)}d ago`;
     }
 
-    // Load data on page load
-    loadData();
+    // Auto-reload data every 3 seconds
+    let lastDataHash = null;
 
-    console.log('Nash Dashboard (Simple) loaded. Edit data.json to update.');
+    function hashData(data) {
+      return JSON.stringify(data);
+    }
+
+    function checkAndReload() {
+      // Create a timestamp to bypass cache
+      const timestamp = new Date().getTime();
+      const script = document.createElement('script');
+      script.src = `./data.js?t=${timestamp}`;
+
+      script.onload = function() {
+        const currentHash = hashData(window.nashData);
+
+        // If data changed, reload dashboard
+        if (lastDataHash !== null && currentHash !== lastDataHash) {
+          console.log('✨ Data changed - refreshing dashboard...');
+          loadData();
+        }
+
+        lastDataHash = currentHash;
+
+        // Remove script tag to avoid duplicates
+        document.body.removeChild(script);
+      };
+
+      document.body.appendChild(script);
+    }
+
+    // Initial load
+    loadData();
+    lastDataHash = hashData(window.nashData);
+
+    // Auto-refresh every 3 seconds
+    setInterval(checkAndReload, 3000);
+
+    console.log('✅ Nash Dashboard loaded. Auto-refreshing every 3s when data.js changes.');
   </script>
 </body>
 </html>
