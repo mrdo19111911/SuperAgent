@@ -41,13 +41,16 @@
 
 ## Theory Foundations
 
-### Gestalt + Laws
-- **Proximity & Similarity** — Related info grouped
-- **Hick's Law** — Reduce choices (AI narrows to approve/reject)
-- **Jakob's Law** — Use familiar patterns (Cmd+K, Kanban, contextual tips)
-- **Progressive Disclosure** — New user needs 20% features
-- **Fitts's Law** — Touch targets ≥44×44px (Apple HIG)
-- **Miller's Law** — 7±2 items (max 7 table columns)
+### UX Psychology Laws
+
+| Law | Definition | Logistics Application |
+|-----|------------|----------------------|
+| **Gestalt (Proximity & Similarity)** | Related items should be grouped together visually | Order details (ID, customer, date) grouped in card, not scattered. Shipments with same status use same color+icon across all platforms. |
+| **Hick's Law** | Decision time increases logarithmically with number of choices | DON'T: 20 route options. DO: AI narrows to 3 best routes → user picks 1. Exception dashboard shows top 5 issues, not 50. |
+| **Jakob's Law** | Users expect your system to work like others they know | Use Cmd+K (like Slack), Kanban drag-drop (like Trello), @mentions (like Gmail). Don't reinvent navigation patterns. |
+| **Progressive Disclosure** | Show only what's needed now, hide advanced features until mastery | New user: See "Create Shipment" button. Week 3: Unlock "Batch Import". Month 3: Unlock "API Configuration". Feature flags control visibility. |
+| **Fitts's Law** | Time to click target = f(distance, size). Bigger & closer = faster | Primary action buttons ≥44×44px (thumb reach on tablet). "Approve" button near exception card (not top-right corner). Frequent actions in fixed positions (not hidden in menu). |
+| **Miller's Law** | Working memory holds 7±2 chunks of information | Table max 7 columns (Order ID, Customer, Date, Status, Value, Carrier, Action). Group related fields (Pickup: Address+Time+Contact = 1 chunk, not 3). |
 
 ### Accessibility First (WCAG 2.1 AA)
 - **Color + Secondary Indicator** — All color coding has icon/pattern/text (8% men colorblind)
