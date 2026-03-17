@@ -1,367 +1,341 @@
-# Smartlog UI Guide (Ultra-Compressed v3)
+---
+name: smartlog-ux-guide
+version: 3.0.0
+description: |
+  Smartlog Ecosystem UX audit and compliance skill. Use when reviewing UI/UX for TMS, WMS, OMS,
+  Supply Chain Planning, Marketplace, or Control Tower. Triggers on: UX audit, design review,
+  accessibility check, workflow navigation, exception dashboard, AI governance, HEART metrics,
+  dark mode, or any Smartlog UI compliance verification. Enforces Smartlog UX Guiding Principles
+  v2.3 + Implementation Roadmap as production standards.
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Bash
+  - Glob
+  - Grep
+  - Task
+  - TodoWrite
+tags:
+  - ux-audit
+  - smartlog
+  - b2b-logistics
+  - accessibility
+  - wcag
+  - compliance
+---
 
-**Compression:** 3,052 → 2,156 words (29% reduction), 100% content preserved
+# Smartlog UI Guide
+## UX Audit & Compliance for B2B Logistics
 
-**Mission:** Non-UX readers audit UI in 15 minutes without training.
+**Target:** TMS · WMS · OMS · Supply Chain Planning · Marketplace · Control Tower
 
-**Philosophy:** "If you can't understand it in 30 seconds, it's written wrong."
+**Users:** 60% are 45+ with vision issues, 4h max training, <5 support tickets/user/30d
+
+**Goal:** 10-min first success, 30-50% faster decisions, 40-60% less support
 
 ---
 
-## Why This Matters
+## Quick Reference — 8 Core Principles
 
-**Problem:** 70% of digital transformations fail due to poor UX, not bad tech (McKinsey, 2021)
+Before auditing ANY screen, check these 8 principles:
 
-**Cost of Bad UX:**
-- Training: 2-3 days vs 4 hours
-- Support: 10-20 tickets/user first 30d (good UX = <5)
-- Planning: 10-15 clicks vs 3
-- Quit rate: First week
+| # | Principle | Quick Check | Block if FAIL |
+|---|-----------|-------------|---------------|
+| 1 | **Workflow-First Navigation** | Nav follows Order→Plan→Execute→Track (NOT database menu) | Yes |
+| 2 | **Exception-First Dashboard** | Problems shown first, not KPI cards | Yes |
+| 3 | **One-Screen Operations** | Core tasks complete in <3 clicks on 1 screen | Yes |
+| 4 | **Visual-First, Data-Second** | Status colors + icon/text backup (8% men colorblind) | Yes |
+| 5 | **System-Suggest, Human-Approve** | AI shows Approve/Adjust/Reject (never auto-execute high-risk) | Yes |
+| 6 | **Progressive Complexity** | New users see Essential tier only (Week 1-2) | No (warn) |
+| 7 | **Cross-Platform Consistency** | Uses shared component library (not custom one-off) | Yes |
+| 8 | **Error Recovery UX** | Destructive actions have Undo or Soft Delete (30d) | Yes |
 
-**Goal:** Any supply chain worker operates Smartlog in 10 min, decides 30-50% faster, needs 40-60% less support.
-
----
-
-## Theory Foundations
-
-| Principle | Definition | Why It Matters | Example |
-|-----------|-----------|----------------|---------|
-| **Mental Model** | How users think about the system | Navigation that matches workflow = faster adoption | Workflow nav ("Receive→Plan→Ship") vs DB nav ("Orders Table→Details") |
-| **Cognitive Load** | Amount of thinking required | Less thinking = faster decisions | Exception dashboard (12 delayed) vs vanity metrics (1,234 orders) |
-| **Progressive Disclosure** | Show simple first, advanced later | Don't overwhelm new users | Basic filters visible, advanced behind "More filters" |
-| **Feedback Loop** | System response to user action | Instant feedback = confidence | Inline validation vs post-submit errors |
-| **Error Recovery** | How easily users fix mistakes | Soft delete + undo = less fear | 30-day recovery vs hard delete |
-| **Accessibility** | Usable by all abilities | Color+icon+text vs color-only | Colorblind users see status via icons |
+*See `references/core-principles.md` for detailed DO/DON'T examples and implementation patterns*
 
 ---
 
-## 8 Core Principles (Quick Audit)
+## Architecture — Read Only What You Need
 
-| # | Principle | DON'T | DO | Quick Check |
-|---|-----------|-------|-----|-------------|
-| 1 | **Workflow Navigation** | Database structure menu | Task-based menu (Receive→Plan→Ship) | Menu follows real work steps? |
-| 2 | **Exception-First** | Vanity metrics (Total: 1,234) | Problems (12 delayed shipments) | Dashboard shows actionable issues? |
-| 3 | **Standard Colors** | Inconsistent status colors | Grey/Blue/Orange/Green/Red/Purple | Same color = same meaning everywhere? |
-| 4 | **Speed** | >5 clicks, no feedback | <3 clicks, <2s load, spinners | Core task under 3 clicks? |
-| 5 | **AI Governance** | Auto-execute AI suggestions | Suggest→User approves, "Why?" button | AI requires human approval? |
-| 6 | **Error Recovery** | Hard delete, post-submit errors | Inline validation, undo, soft delete | Destructive actions have undo? |
-| 7 | **Mobile-First** | Small buttons, online-only | 44px touch targets, offline mode | Works on tablet offline? |
-| 8 | **10-Min Onboarding** | No demo data, complex first task | Sandbox + guided first success | New user sees value in 10 min? |
+This skill is organized by audit task. Read ONLY the reference file you need:
 
----
+| You are auditing... | Read this reference | Contains |
+|---------------------|---------------------|----------|
+| Colors, typography, spacing, tokens | `references/design-tokens.md` | 6 status colors, dark mode, WCAG contrast |
+| Navigation, sidebar, breadcrumb, Cmd+K | `references/navigation.md` | Workflow-first patterns, cross-system breadcrumb |
+| Dashboard, KPI cards, exception feed | `references/dashboard-patterns.md` | Control Tower, Planning Board, Map-Centric |
+| AI suggestions, recommendations, XAI | `references/ai-ux.md` | 3 risk levels, "Tại sao?" button, Recommendation Card |
+| Forms, validation, errors, destructive actions | `references/error-recovery.md` | Inline validation, auto-save, Undo/Soft Delete |
+| Onboarding, empty states, sandbox | `references/onboarding.md` | 10-min first success, 5-step flow, demo data |
+| Mobile, tablet, offline, scanner | `references/mobile-offline.md` | Touch 44×44px, optimistic UI, conflict resolution |
+| RBAC, data masking, audit trail, session | `references/security-privacy.md` | Hide not disable, MFA, session 30min timeout |
+| Map, timeline, Kanban, bulk ops | `references/patterns.md` | 10 design patterns with when-to-use guidance |
+| Accessibility, dark mode, performance | `references/accessibility-perf.md` | WCAG 2.1 AA, contrast 4.5:1, <2s page load |
 
-## Mental Models (Theory → Practice)
-
-| Mental Model | User Expectation | System Design | Validation |
-|--------------|------------------|---------------|------------|
-| **Task-Oriented** | "I need to ship this order" | Navigation = workflow steps | Menu shows "Ship Orders", not "Shipments Table" |
-| **Exception-Driven** | "Show me what needs fixing" | Dashboard = problem list | Top card = "12 delayed shipments" with fix buttons |
-| **Status-Aware** | "What's the current state?" | Colors + icons + text | Orange badge with clock icon = "In Progress" |
-| **Confidence-Building** | "Can I undo this?" | Soft delete + undo toast | Delete shows "Undo?" for 10 seconds |
-| **Context-Preserving** | "Where am I?" | Breadcrumbs + highlight | "Orders > Shipment #123 > Edit" |
+**Always start with `references/design-tokens.md`** — contains color system, typography, spacing rules for ALL components.
 
 ---
 
-## 10 Design Patterns (Implementation Templates)
+## Philosophy — 3 Pillars
 
-| # | Pattern | Purpose | Components | When to Use |
-|---|---------|---------|------------|-------------|
-| 1 | **Exception Card** | Show actionable problems | severity, count, title, actions[] | Dashboard, alerts |
-| 2 | **Planning Board** | Kanban drag-drop | columns[], onDragEnd() | Task planning, status transitions |
-| 3 | **AI Recommendation** | Suggest→Approve flow | title, aiReason, impact[], actions[] | Route suggestions, auto-allocation |
-| 4 | **Empty State** | Guide first action | icon, title, description, actions[] | No data screens |
-| 5 | **Status Badge** | Visual state indicator | color, icon, text | Order status, shipment tracking |
-| 6 | **Inline Validation** | Real-time input check | error, helperText | Forms, data entry |
-| 7 | **Undo Toast** | Recover from mistakes | message, action.undo() | Delete, cancel operations |
-| 8 | **Progress Indicator** | Long operation feedback | percentage, cancelButton | Reports, bulk operations |
-| 9 | **Search Command** | Quick navigation | Cmd+K global search | Any screen, quick jump |
-| 10 | **Role Filter** | Hide inaccessible features | hasPermission() guard | Buttons, menu items |
+```
+Pillar 1: Design for how humans WORK, not how databases STORE
+  → Navigation = workflow steps (Order→Plan→Execute→Track)
+  → Info architecture = supply chain flow
+  → Mental models = role-based views
 
----
+Pillar 2: System SUGGESTS decisions, not just DISPLAYS data
+  → Every screen asks: "What should user DO with this?"
+  → AI recommendations present options + confidence
+  → Exception-first: surface problems, hide noise
 
-## AI Governance (Risk-Based Approval)
+Pillar 3: ONE language across the ecosystem
+  → Same tokens, components, patterns everywhere
+  → Learn WMS → instantly understand TMS
+  → Shared library is single source of truth
+```
 
-| Risk Level | Example | AI Behavior | User Action | Implementation |
-|------------|---------|-------------|-------------|----------------|
-| **Low** | Auto-fill form fields | Auto-apply (user can undo) | None (undo available) | `autoApply: true, undoTimeout: 10000` |
-| **Medium** | Route suggestion | Show recommendation | Click "Approve" | `requireApproval: true, showImpact: true` |
-| **High** | Split shipment | Show warning only | Manual handling | `aiSuggestion: false, manualOnly: true` |
-
-**XAI (Explainability) Requirements:**
-- Every AI suggestion has "Why?" button
-- Show business impact: cost, time, CO2
-- Display confidence score (>80% = safe, <80% = review)
-- Log decisions for audit trail
+*See `references/ux-theory.md` for Systems Thinking foundations (Gestalt, Hick's Law, Fitts's Law, Miller's Law)*
 
 ---
 
-## Onboarding (10-Minute First Success)
+## Workflow Navigation Map
 
-| Step | Goal | User Action | Success Metric |
-|------|------|-------------|----------------|
-| 1 | **Role Selection** | Choose role (Warehouse/Transport/Planner) | Role-specific UI loaded |
-| 2 | **Sandbox Mode** | Use demo data (50 shipments, 10 carriers) | No fear of breaking real data |
-| 3 | **Guided Task** | Complete first task (create shipment) | Task completed with highlights |
-| 4 | **Achievement** | See success message + next steps | User feels progress |
-| 5 | **Checklist** | Track onboarding progress | Clear path to mastery |
+Every platform's sidebar MUST follow this workflow order. Do NOT organize by database entity.
 
----
+```
+OMS:   Receive Order → Validate → Allocate → Release
+WMS:   Inbound → Put-away → Storage → Pick → Pack → Outbound
+TMS:   Plan → Assign Carrier → Dispatch → In Transit → Delivered
+SCP:   Demand Forecast → Supply Plan → Inventory Opt → Execution
+MKT:   Discover → Compare → Book → Track → Rate
+CTR:   Monitor → Detect Exception → Drill-down → Resolve → Report
+```
 
-## Security & Privacy (RBAC UX)
+**Breadcrumb rule:** Cross-system drill-down shows full path:
+```
+Control Tower > Exception #4821 > TMS Shipment SH-8834 > WMS Allocation WA-9912
+```
 
-**Principle:** Hide what users can't access (don't show disabled buttons)
-
-| Role | TMS Access | WMS Access | OMS Access | Pricing Visibility | Implementation |
-|------|-----------|-----------|-----------|-------------------|----------------|
-| **Admin** | Full | Full | Full | Full | No restrictions |
-| **Planner** | Read/Write | Read | Read/Write | Full | Plan routes, allocate |
-| **Warehouse** | None | Full | Read | Hidden | Pick/pack only |
-| **Driver** | Read (assigned) | None | None | Hidden | Track shipment only |
-| **Carrier** | Read (assigned) | None | None | Hidden | Update delivery status |
-
-**Data Masking:**
-- Drivers/carriers see `***` for prices
-- Warehouse sees order IDs, not customer names
-- Planners see aggregated costs, not vendor contracts
+*See `references/navigation.md` for implementation*
 
 ---
 
-## Edge Cases (Production-Ready Checklist)
+## Mental Model by Role
 
-| Category | Scenario | Expected Behavior | Implementation | Test Case |
-|----------|----------|-------------------|----------------|-----------|
-| **Timezone** | User in GMT+7, carrier in GMT-5 | All times in user's timezone + UTC tooltip | `moment.tz(userTimezone)` | Create order in Vietnam, assign NYC carrier |
-| **Currency** | Order in USD, cost in VND | Display both + exchange rate | `formatCurrency(amount, currency)` | Multi-currency shipment |
-| **Offline** | Warehouse loses Wi-Fi | Save locally, sync when online | `IndexedDB + background sync` | Disconnect network, complete pick task |
-| **Latency** | Report takes 30 seconds | Progress bar + cancel button | Background job + polling | Generate 10K shipment report |
-| **Partial Failure** | 8/10 items allocated | Show 8 success, 2 failed with reasons | Partial success toast | Bulk allocate with insufficient stock |
-| **Conflict** | 2 users edit same order | Last write wins + conflict alert | Optimistic locking | Open order in 2 tabs, edit simultaneously |
-| **Empty State** | No shipments to display | Guide user to create first shipment | Empty state component | New account, zero data |
-| **Error Recovery** | API timeout | Retry button + local draft saved | Error boundary + retry logic | Simulate network timeout |
+Each role sees DIFFERENT default view (feature flags control this):
 
----
+| Role | Primary Screen | Primary Action | Key Metrics |
+|------|---------------|----------------|-------------|
+| Logistics Planner | Planning Board + Map | Plan, Optimize | Capacity, Route cost |
+| Warehouse Operator | Task List + Floor Map | Pick, Pack, Ship | Tasks pending, Zone load |
+| Transport Coordinator | Timeline + Tracking | Dispatch, Track | On-time %, ETA accuracy |
+| SC Manager | Dashboard + Forecast | Plan, Approve | Demand accuracy, Fill rate |
+| Marketplace User | Search + Compare | Discover, Book | Price, SLA, Rating |
+| Executive | Control Tower | Monitor, Steer | KPI exceptions, Trends |
 
-## Implementation Roadmap
-
-| Phase | Duration | Deliverables | Gate Criteria | Owner |
-|-------|----------|--------------|---------------|-------|
-| **Phase 0: Foundation** | Week 1-3 | Design tokens, component library, baseline audit | No hardcoded colors allowed | UX Lead |
-| **Phase 1: Core** | Week 4-10 | 8 principles + 10 patterns implemented | 80% audit checklist pass | Dev Team |
-| **Phase 2: Ecosystem** | Week 11-20 | Onboarding, AI governance, security UX, edge cases | HEART metrics baseline | Full Team |
-| **Phase 3: Measurement** | Week 20+ | HEART dashboard, quarterly audits, continuous improvement | First quarterly review done | PM + UX |
+*See `references/core-principles.md` for role-specific patterns*
 
 ---
 
-## HEART Framework (Quarterly Metrics)
+## Audit Checklist (6 Categories, 18 Items)
 
-| Category | Metric | Target | Measurement Method | Action if Below Target |
-|----------|--------|--------|-------------------|------------------------|
-| **Happiness** | CSAT | ≥4.0/5.0 | Quarterly survey (NPS) | User research sessions, identify pain points |
-| **Engagement** | DAU | 60% daily active | Analytics dashboard | Push notifications, feature highlights |
-| **Adoption** | Feature usage | 40% use core features in month 1 | Feature tracking | Onboarding optimization, tooltips |
-| **Retention** | 90-day retention | 80% still active | User cohort analysis | Re-engagement campaigns, value reminders |
-| **Task Success** | Completion rate | 95% | Task flow analytics | Fix drop-off points, simplify flows |
-| **Time to First Success** | Onboarding | <10 minutes | Stopwatch test | Streamline steps, add shortcuts |
-| **Support Tickets** | Operational | <3 per user/month | Support dashboard | Improve error messages, add help tooltips |
-| **Clicks per Task** | Efficiency | <3 clicks | User flow analysis | Consolidate screens, add shortcuts |
-| **Page Load Time** | Performance | <2 seconds | Lighthouse, RUM | Optimize bundles, lazy loading |
-| **Error Rate** | Reliability | <5% | Error tracking (Sentry) | Fix top errors, improve validation |
+### Navigation & IA (5 items)
+- [ ] Workflow navigation (Order→Plan→Execute→Track, NOT database menu)
+- [ ] Breadcrumb cross-system (show full path when drill-down TMS→WMS)
+- [ ] Cmd+K global search (works from all screens)
+- [ ] Exception-first dashboard (problems shown first, not KPI cards)
+- [ ] <3 clicks for core tasks (resolve exception, create shipment, update status)
 
----
+### Visual & Interaction (6 items)
+- [ ] Color + secondary indicator (every color has icon/text, 8% men colorblind)
+- [ ] Contrast WCAG 2.1 AA (4.5:1 text, 3:1 large)
+- [ ] Touch targets 44×44px (mobile/tablet compliance)
+- [ ] Planning Board Kanban (drag-drop for workflow tasks)
+- [ ] Map-centric (NOT sidebar) for TMS/WMS
+- [ ] Empty state guides action ("Create first shipment" / "Import demo data")
 
-## Anti-Patterns (Avoid These)
+### Intelligence & AI (4 items)
+- [ ] AI recommendation format ([Suggestion] + [Data] + [3 Actions: Approve/Adjust/Reject])
+- [ ] "Tại sao?" button (XAI - explain AI logic, always present)
+- [ ] 3 risk levels (Low: auto-apply | Medium: 1-click | High: manual)
+- [ ] Error recovery (inline validation + auto-save + undo/soft-delete 30d)
 
-| # | Anti-Pattern | Why Bad | Correct Pattern | Audit Question |
-|---|--------------|---------|-----------------|----------------|
-| 1 | Database-structure menu | Users don't think in DB terms | Workflow menu (Receive→Plan→Ship) | Menu follows work steps? |
-| 2 | Vanity metrics dashboard | Nobody logs in to see totals | Exception-first (12 delayed) | Dashboard shows actionable issues? |
-| 3 | Multi-screen tasks | 10-15 clicks = frustration | One-screen operations (<3 clicks) | Core task under 3 clicks? |
-| 4 | Color-only status | 8% of men colorblind | Color + icon + text | Every color has icon/text? |
-| 5 | Hard delete | Accidents happen | Soft delete + undo (30d recovery) | Destructive actions have undo? |
-| 6 | Hardcoded colors | Inconsistent across screens | Design tokens (CSS variables) | Colors from design system? |
-| 7 | No demo data | Users afraid to try | Sandbox mode (demo shipments) | New users have test data? |
-| 8 | AI auto-execute | Mistakes amplified | Suggest→User approves | AI requires approval? |
-| 9 | Disabled buttons shown | Confusing UX | Hide if no permission | Show only accessible features? |
-| 10 | Post-submit validation | Frustrating re-entry | Inline validation (as-you-type) | Errors shown immediately? |
+### Onboarding & Accessibility (3 items)
+- [ ] 10-min first success (new user completes first task <10 min)
+- [ ] Sandbox mode (50 demo shipments, 10 carriers, 5 warehouses)
+- [ ] Keyboard navigation (all complex actions keyboard-accessible)
+
+*See `references/accessibility-perf.md` for tools: axe-core, Lighthouse, Pa11y*
 
 ---
 
-## Best Practices (Production Checklist)
+## Anti-Patterns (7 Auto-FAIL)
 
-### Navigation & Structure
-- [ ] Workflow-first menu (not database structure)
-- [ ] Breadcrumbs on all screens
-- [ ] Cmd+K global search
-- [ ] <3 clicks for core tasks
-- [ ] Role-based menu filtering (hide inaccessible)
+These patterns BLOCK production deployment:
 
-### Visual Design & Accessibility
-- [ ] Design tokens for all colors (no hardcoding)
-- [ ] Standard status colors (grey/blue/orange/green/red/purple)
-- [ ] Every color has icon + text label
-- [ ] Touch targets ≥44px (mobile/tablet)
-- [ ] Contrast ratio ≥4.5:1 (WCAG AA)
-- [ ] Keyboard navigation (tab order, shortcuts)
+| # | Anti-Pattern | Why It Fails | Fix |
+|---|--------------|--------------|-----|
+| 1 | Menu theo database | Training 2-3 days | Workflow-first: Order→Plan→Execute→Track |
+| 2 | >10 form fields (no AI) | 5-10 min/shipment entry | Auto-fill + AI suggestion + smart defaults |
+| 3 | >5 clicks for core task | 10-15 clicks to resolve exception | One-screen operations (<3 clicks) |
+| 4 | Table-only (no visual) | Hard to see patterns | Planning Board (Kanban) + Map (GPS/floor plan) |
+| 5 | KPI dashboard (no exceptions) | User doesn't know what to do | Exception-first: delayed shipments, stock alerts |
+| 6 | Map in sidebar | Map secondary, context lost | Map-centric: map = center, data = sidebar/overlay |
+| 7 | Empty screens (no demo) | User can't learn system | Sandbox mode: 50 shipments, 10 carriers, 5 warehouses |
 
-### Performance & Speed
-- [ ] Page loads <2 seconds
-- [ ] Skeleton screens for slow loads
-- [ ] Background jobs for bulk ops (>5s)
-- [ ] Progress bars with cancel buttons
-- [ ] Optimistic UI updates (instant feedback)
-
-### AI & Intelligence
-- [ ] Dashboard shows exceptions, not totals
-- [ ] AI suggestions have "Why?" button
-- [ ] Risk-based approval (low/medium/high)
-- [ ] Business impact display (cost, time, CO2)
-- [ ] Confidence scores visible (>80% safe)
-
-### Error Handling & Recovery
-- [ ] Inline validation (as-you-type)
-- [ ] Clear error messages with suggested fixes
-- [ ] Soft delete with 30-day recovery
-- [ ] Undo toast for destructive actions (10s timeout)
-- [ ] Offline mode (save local, sync later)
-- [ ] Retry buttons for failed operations
-
-### Mobile & Offline
-- [ ] Touch targets ≥44px
-- [ ] Works offline (IndexedDB cache)
-- [ ] Barcode scanner integration
-- [ ] Responsive layout (phone/tablet/desktop)
-- [ ] Swipe gestures (mobile-native patterns)
-
-### Onboarding & Education
-- [ ] 10-minute first success flow
-- [ ] Sandbox mode with demo data
-- [ ] Role-specific guided tasks
-- [ ] Achievement system (progress tracking)
-- [ ] Empty states guide next actions
-
-### Security & Privacy
-- [ ] Hide features without permission (not disable)
-- [ ] Data masking (drivers/carriers can't see prices)
-- [ ] Audit trail for AI decisions
-- [ ] Session timeout warnings
-- [ ] GDPR compliance (data export/delete)
+*See `references/patterns.md` for design pattern library*
 
 ---
 
-## Audit Checklist (5 Minutes per Screen)
+## Color System (6 Status Colors)
 
-### 1. Navigation Test
-- [ ] Reachable from main menu in <3 clicks?
-- [ ] Breadcrumb shows path?
-- [ ] Cmd+K search finds this screen?
+| Color | Hex | Status | Use Case |
+|-------|-----|--------|----------|
+| **Grey** | #9E9E9E | Draft / Unprocessed | New order, unplanned shipment |
+| **Blue** | #2196F3 | Planned | Allocated, Assigned, Scheduled |
+| **Orange** | #FF9800 | Active / In Progress | In Transit, Picking, Processing |
+| **Green** | #4CAF50 | Completed / Success | Delivered, Received, Closed |
+| **Red** | #F44336 | Error / Delayed | Late shipment, Failed validation |
+| **Purple** | #9C27B0 | Waiting External | Pending Carrier, Customs clearance |
 
-### 2. Visual Test
-- [ ] Status colors match standard (grey/blue/orange/green/red/purple)?
-- [ ] Every color has icon or text label?
-- [ ] Buttons >44px on mobile?
+**MUST:** Every color has icon/text label (colorblind support). Dark mode variants maintain 4.5:1 contrast.
 
-### 3. Speed Test
-- [ ] Page loads <2 seconds?
-- [ ] Core action completes in <3 clicks?
-- [ ] Long operations (>5s) show progress bar?
-
-### 4. Intelligence Test
-- [ ] Dashboard shows exceptions, not vanity metrics?
-- [ ] AI suggestions have "Why?" button?
-- [ ] Can complete task on one screen?
-
-### 5. Error Test
-- [ ] Type invalid input → inline error shown?
-- [ ] Disconnect internet → "offline" message?
-- [ ] Try delete → "Are you sure?" or undo option?
-
-### 6. Mobile Test
-- [ ] Open on tablet → buttons still clickable?
-- [ ] Go offline → can still work (syncs later)?
-- [ ] Barcode scanner works?
+*See `references/design-tokens.md` for CSS variables and dark mode implementation*
 
 ---
 
-## Compliance Report Template
+## Compliance Report Format
 
-### AI Maturity Assessment
+```markdown
+# Smartlog UX Compliance Report
 
-**Level 1 (Basic):** System suggests, user reviews, manual execution
-- Example: Route recommendations, user approves, manually assigns carrier
+**Platform:** [TMS/WMS/OMS/SC/Marketplace/Control Tower]
+**Date:** YYYY-MM-DD
+**Reviewer:** [Name]
 
-**Level 2 (Moderate):** Auto-execution with undo, low-risk only
-- Example: Auto-fill form fields, user can undo within 10 seconds
+## Summary
 
-**Level 3 (Advanced):** Adaptive learning, confidence-based automation
-- Example: High-confidence allocations (>90%) auto-execute, low-confidence (<80%) require review
+| Category | Pass | Fail | Warn | Score |
+|----------|------|------|------|-------|
+| Navigation & IA | X/5 | X | X | X% |
+| Visual & Interaction | X/6 | X | X | X% |
+| Intelligence & AI | X/4 | X | X | X% |
+| Onboarding & Accessibility | X/3 | X | X | X% |
+| **TOTAL** | **X/18** | **X** | **X** | **X%** |
 
-**Level 4 (Autonomous):** Full automation with human oversight, incident response
-- Example: AI handles 95% of routine allocations, escalates anomalies to humans
+**Verdict:** ✅ PASS (≥15/18) | ⚠️ NEEDS REVISION (12-14) | ❌ REJECT (<12)
 
-### Compliance Checklist
-- [ ] EU AI Act: High-risk systems have human oversight (Level 1-2 minimum)
-- [ ] GDPR: AI decisions logged for audit trail (30-day retention)
-- [ ] ISO 9001: Quality gates prevent AI errors from propagating
-- [ ] SOC 2: Access controls prevent unauthorized AI overrides
+## Failures (P0 - Must Fix Before Launch)
 
----
+❌ **[Item #X] — [Principle Name]**
+- **Evidence:** [Screenshot/Description]
+- **Impact:** [User pain / Business risk]
+- **Fix:** [Specific action required]
+- **Owner:** [Team/Person]
+- **Deadline:** [Date]
 
-## Quick Reference Card (Print & Stick to Monitor)
+## Warnings (P1 - Fix Before Next Sprint)
 
-### Core Principles
-1. **Navigation:** Workflow, not database
-2. **Dashboard:** Exceptions, not totals
-3. **Colors:** Standard + icon/text
-4. **AI:** Suggest→Approve ("Why?" button)
-5. **Errors:** Inline validation + undo
-6. **Mobile:** 44px targets + offline
-7. **Speed:** <3 clicks, <2s load
-8. **Onboarding:** 10-min success + demo
+⚠️ **[Item #X] — [Principle Name]**
+- **Evidence:** [Screenshot/Description]
+- **Suggestion:** [Improvement recommendation]
 
-### Audit Checklist (5 min/screen)
-- [ ] Workflow navigation
-- [ ] Exception-first content
-- [ ] Standard colors + accessibility
-- [ ] <3 clicks core task
-- [ ] Error recovery (undo/retry)
-- [ ] Mobile-friendly
-- [ ] AI "Why?" button
-- [ ] Empty state guidance
+## Passes (P2 - Good Practices)
 
-### Avoid These
-- Database menus
-- Vanity metrics
-- Color-only status
-- Hard deletes
-- >3 clicks
-- No demo data
-- Hardcoded colors
-- AI auto-execute
+✅ **[Item #X] — [Principle Name]**
+- **Evidence:** [What was done well]
 
----
+## Anti-Pattern Check (7 Auto-FAIL)
 
-## Glossary (For Non-UX People)
+| # | Anti-Pattern | Detected? | Evidence |
+|---|--------------|-----------|----------|
+| 1 | Menu theo database | ❌ YES / ✅ NO | [Description] |
+| 2 | >10 form fields (no AI) | ❌ YES / ✅ NO | [Description] |
+| 3 | >5 clicks (core task) | ❌ YES / ✅ NO | [Description] |
+| 4 | Table-only (no visual) | ❌ YES / ✅ NO | [Description] |
+| 5 | KPI dashboard (no exceptions) | ❌ YES / ✅ NO | [Description] |
+| 6 | Map sidebar (not center) | ❌ YES / ✅ NO | [Description] |
+| 7 | Empty blank (no demo) | ❌ YES / ✅ NO | [Description] |
 
-| Term | Definition | Example |
-|------|-----------|---------|
-| **Breadcrumb** | Navigation trail showing location | "Home > Orders > Shipment #123" |
-| **Design Token** | Variable storing design values for consistency | `--status-in-progress: #FF9800` |
-| **Exception-First** | Show problems requiring action, not stats | "12 delayed" vs "1,234 total" |
-| **Mental Model** | How users think about system | Workflow-based vs database-based |
-| **Progressive Disclosure** | Show simple first, advanced later | Basic filters visible, "More filters" button |
-| **Skeleton Screen** | Placeholder showing structure while loading | Grey boxes before content loads |
-| **Soft Delete** | Mark deleted, allow recovery vs permanent | 30-day recovery vs hard delete |
-| **Touch Target** | Clickable area size for fingers | Minimum 44x44 pixels |
-| **Workflow-First** | Navigation follows work steps, not software | "Receive→Plan→Ship" vs "Tables→Details" |
-| **XAI** | Explainable AI - must show why it decided | "Why?" button shows reasoning |
+**Auto-FAIL Count:** X/7 (≥1 auto-fail = REJECT)
+
+## Recommendation
+
+**[APPROVE / NEEDS REVISION / REJECT]**
+
+**Next Steps:**
+1. [Action item 1]
+2. [Action item 2]
+
+**Re-Audit Date:** [If NEEDS REVISION/REJECT]
+```
 
 ---
 
-**Version:** 3.0 (Ultra-Compressed Edition)
-**Compression:** 748 lines → 518 lines (31% reduction), 3,052 → 2,156 words (29% reduction)
-**Author:** Phúc SA (via Quang compression techniques)
-**Last Updated:** 2026-03-17
+## Success Targets
+
+| Metric | Target | Baseline | Improvement |
+|--------|--------|----------|-------------|
+| First Success | <10 min | 30-45 min | 70-80% faster |
+| Task Completion | <3 clicks | 10-15 clicks | 70-80% reduction |
+| Decision Speed | 30-50% faster | Manual planning | AI-assisted |
+| Support Tickets | <5/user/30d | 8-12/user/30d | 40-60% reduction |
+| Training Time | <4 hours | 2-3 days | 75-85% reduction |
+| NPS | >30 | N/A | Industry benchmark |
+| DAU/MAU | >40% | N/A | SaaS benchmark |
+| Churn | <10%/year | N/A | B2B benchmark |
+
+*See `references/heart-metrics.md` for HEART Framework implementation and quarterly measurement*
 
 ---
 
-**Living Document:** Update quarterly based on user research and HEART metrics.
+## Implementation Roadmap (4 Phases, 20 Weeks)
+
+| Phase | Duration | Deliverables | Gate |
+|-------|----------|--------------|------|
+| **0: Foundation** | Week 1-3 | Design tokens, Shared components, Audit baseline | Component library published |
+| **1: Core Principles** | Week 4-10 | Workflow nav, Exception dashboard, Colors, Error recovery | A/B test shows ≥20% improvement |
+| **2: Patterns & Ecosystem** | Week 11-20 | 10 patterns, Onboarding, AI governance, Security, Edge cases | All patterns in ≥1 platform |
+| **3: Measurement** | Week 20+ | HEART metrics, Ops metrics, Anti-pattern audit (quarterly) | Metrics tracked ≥1 month |
+
+*See `references/implementation-roadmap.md` for detailed phase breakdown, bottlenecks (Theory of Constraints), and gate requirements*
+
+---
+
+## Getting Started
+
+1. **Audit request?** → Use the **Audit Checklist** (6 categories, 18 items)
+2. **Navigation issue?** → Read `references/navigation.md`
+3. **Dashboard/patterns?** → Read `references/dashboard-patterns.md`
+4. **AI feature?** → Read `references/ai-ux.md`
+5. **Forms/errors?** → Read `references/error-recovery.md`
+6. **Colors/tokens?** → Read `references/design-tokens.md` (always start here for components)
+7. **Compliance report?** → Use **Compliance Report Format** above
+8. **Not sure?** → Check **Anti-Patterns** table. If code matches any, REJECT.
+
+---
+
+## Reference Files (10 Modules)
+
+- `references/design-tokens.md` - Color system, typography, spacing, dark mode
+- `references/navigation.md` - Workflow-first patterns, breadcrumb, Cmd+K
+- `references/dashboard-patterns.md` - Control Tower, Planning Board, Map-Centric
+- `references/ai-ux.md` - AI governance, risk levels, XAI, Recommendation Card
+- `references/error-recovery.md` - Inline validation, auto-save, Undo/Soft Delete
+- `references/onboarding.md` - 10-min first success, 5-step flow, sandbox
+- `references/mobile-offline.md` - Touch targets, optimistic UI, conflict resolution
+- `references/security-privacy.md` - RBAC, data masking, MFA, audit trail
+- `references/patterns.md` - 10 design patterns library
+- `references/accessibility-perf.md` - WCAG 2.1 AA, tools (axe-core, Lighthouse)
+- `references/implementation-roadmap.md` - 4 phases, gates, bottlenecks
+- `references/heart-metrics.md` - HEART Framework, operational metrics
+- `references/ux-theory.md` - Systems Thinking, Gestalt, UX laws
+- `references/edge-cases.md` - Timezone, currency, conflict, migration
+- `references/modern-practices.md` - Dark mode, sustainability, micro-interactions
+
+---
+
+**Audit Smartlog UI against v2.3 standards. Zero tolerance for anti-patterns.** ⚡
+
+**Version:** 3.0 (March 2026) — Ultra-compressed workflow skeleton
