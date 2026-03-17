@@ -94,37 +94,54 @@ async function search(query, opts = {}) {
   const totalDocs = Number(db.exec("SELECT value FROM meta WHERE key='total_docs'")[0].values[0][0]);
   const avgDl = Number(db.exec("SELECT value FROM meta WHERE key='avg_dl'")[0].values[0][0]);
 
+  // Preload lookup maps (sql.js exec() ignores bind params — use prepare/bind instead)
+  // term → {id, df}
+  const termMap = Object.create(null);
+  const termStmt = db.prepare('SELECT id, term FROM terms');
+  while (termStmt.step()) {
+    const row = termStmt.getAsObject();
+    termMap[row.term] = { id: row.id, df: 0 };
+  }
+  termStmt.free();
+
+  // Count df per term
+  const dfStmt = db.prepare('SELECT term_id, COUNT(*) as df FROM postings GROUP BY term_id');
+  while (dfStmt.step()) {
+    const row = dfStmt.getAsObject();
+    for (const term of Object.keys(termMap)) {
+      if (termMap[term].id === row.term_id) {
+        termMap[term].df = row.df;
+        break;
+      }
+    }
+  }
+  dfStmt.free();
+
   // Score each chunk using BM25
-  const scores = {}; // chunkId → score
+  const scores = Object.create(null); // chunkId → score
 
   for (const token of queryTokens) {
-    // Get term ID
-    const termResult = db.exec('SELECT id FROM terms WHERE term = ?', [token]);
-    if (termResult.length === 0) continue;
-    const termId = termResult[0].values[0][0];
+    const termInfo = termMap[token];
+    if (!termInfo) continue;
 
-    // Get document frequency (how many chunks contain this term)
-    const dfResult = db.exec('SELECT COUNT(*) FROM postings WHERE term_id = ?', [termId]);
-    const df = dfResult[0].values[0][0];
-
-    // IDF component: log((N - df + 0.5) / (df + 0.5) + 1)
+    const df = termInfo.df;
     const idf = Math.log((totalDocs - df + 0.5) / (df + 0.5) + 1);
 
-    // Get all postings for this term
-    const postings = db.exec(
+    // Get all postings for this term (use prepare/bind for parameterized query)
+    const postStmt = db.prepare(
       `SELECT p.chunk_id, p.tf, c.token_count
        FROM postings p JOIN chunks c ON p.chunk_id = c.id
-       WHERE p.term_id = ?`, [termId]
+       WHERE p.term_id = ?`
     );
+    postStmt.bind([termInfo.id]);
 
-    if (postings.length === 0) continue;
-
-    for (const [chunkId, tf, docLen] of postings[0].values) {
-      // BM25 score: IDF * (tf * (k1 + 1)) / (tf + k1 * (1 - b + b * dl/avgdl))
-      const tfNorm = tf * docLen; // denormalize TF back to raw count
+    while (postStmt.step()) {
+      const [chunkId, tf, docLen] = postStmt.get();
+      const tfNorm = tf * docLen;
       const score = idf * (tfNorm * (K1 + 1)) / (tfNorm + K1 * (1 - B + B * docLen / avgDl));
       scores[chunkId] = (scores[chunkId] || 0) + score;
     }
+    postStmt.free();
   }
 
   // Rank and return top results
@@ -134,14 +151,13 @@ async function search(query, opts = {}) {
 
   const results = [];
   for (const [chunkId, score] of ranked) {
-    const row = db.exec(
-      'SELECT file, section, text, line_start, line_end FROM chunks WHERE id = ?',
-      [Number(chunkId)]
-    );
-    if (row.length > 0) {
-      const [file, section, text, lineStart, lineEnd] = row[0].values[0];
+    const chunkStmt = db.prepare('SELECT file, section, text, line_start, line_end FROM chunks WHERE id = ?');
+    chunkStmt.bind([Number(chunkId)]);
+    if (chunkStmt.step()) {
+      const [file, section, text, lineStart, lineEnd] = chunkStmt.get();
       results.push({ file, section, text, score, lineStart, lineEnd });
     }
+    chunkStmt.free();
   }
 
   return results;

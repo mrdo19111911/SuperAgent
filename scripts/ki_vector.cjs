@@ -202,8 +202,8 @@ async function main() {
 
       const chunkId = db.exec('SELECT last_insert_rowid()')[0].values[0][0];
 
-      // Compute term frequencies
-      const tf = {};
+      // Compute term frequencies (null prototype prevents prototype pollution)
+      const tf = Object.create(null);
       for (const t of tokens) {
         tf[t] = (tf[t] || 0) + 1;
       }
@@ -215,11 +215,26 @@ async function main() {
   }
 
   // Insert terms and postings
+  // First: insert all unique terms
+  for (const { tf } of allChunkData) {
+    for (const term of Object.keys(tf)) {
+      db.run('INSERT OR IGNORE INTO terms (term) VALUES (?)', [term]);
+    }
+  }
+
+  // Build term→id lookup in one bulk query (sql.js exec() ignores bind params)
+  const termIdMap = Object.create(null);
+  const termRows = db.exec('SELECT id, term FROM terms');
+  if (termRows.length) {
+    for (const [id, term] of termRows[0].values) {
+      termIdMap[term] = Number(id);
+    }
+  }
+
+  // Now insert postings using the lookup map
   for (const { chunkId, tf, tokenCount } of allChunkData) {
     for (const [term, count] of Object.entries(tf)) {
-      db.run('INSERT OR IGNORE INTO terms (term) VALUES (?)', [term]);
-      const termRow = db.exec('SELECT id FROM terms WHERE term = ?', [term]);
-      const termId = termRow[0].values[0][0];
+      const termId = termIdMap[term];
       const termFreq = count / tokenCount; // normalized TF
       db.run('INSERT OR REPLACE INTO postings (term_id, chunk_id, tf) VALUES (?, ?, ?)', [termId, chunkId, termFreq]);
     }
