@@ -296,7 +296,7 @@ These features meet **all 3 criteria** (mạnh + tiết kiệm + scale):
   - Usage count per skill
   - Success rate per skill
   - Token cost per skill
-- [ ] Document skill creation guide in `skill_factory/`
+- [ ] Document skill creation guide in `factories/skill/`
 
 **Success criteria:**
 - All gstack skills migrated

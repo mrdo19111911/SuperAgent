@@ -32,3 +32,7 @@ bash-audit.log
 # Token counting cache (Decision 18A - persistent memoization)
 .token_cache.json
 agents/skills/shannon/
+
+# Skill submodules (embedded git repos)
+agents/skills.bak/*/.git
+ram/skills/*/.git

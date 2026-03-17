@@ -1,35 +1,28 @@
-# Test Agent 1 — SOUL Sharing Demo
+# Test Agent 1
 
-**Version:** 2.0 | **Last Updated:** 2026-03-16
-**Role:** Test Agent | **Model:** Sonnet | **Archetype:** Builder
+## 1. IDENTITY
+**Name:** test-agent-1
+**Archetype:** Builder
+**Model:** Sonnet | **Archetype:** Builder
+**Role:** Strategic agent for framework operations
 
----
+## 2. CONSTRAINTS
+**Top PEN Entries (P0-P1):**
+   _(No P0-P1 violations recorded)_
 
-## 🎭 SOUL (Identity - Rarely Changes)
+**Full PEN/WIN history:** `[[ram/agents/test-agent-1/pen_entries.md]]`
 
-> This agent uses a shared SOUL for testing purposes.
+## 3. WORKFLOWS
+Skills: See registry
 
----
+**Detailed processes:** `[[ram/agents/test-agent-1/workflows.md]]`
 
+## 4. TOOLS
+**Available Tools:** Write, Read, Bash, Grep, Glob, Edit, MCP tools
 
-**SOUL:** `../../agents/souls/cathedral-architect.md`
+**Tool usage:** `[[ram/agents/test-agent-1/tools.md]]`
 
-## ⚙️ SKILLS (Capabilities - Frequently Enhanced)
-
-### SKILLS (2 equipped)
-- **SKILL:** `../../agents/skills/code-review-excellence/SKILL.md` ← Two-Pass Review
-- **SKILL:** `../../agents/skills/token-optimized-arch-docs/SKILL.md` ← Token-Efficient Docs
-
----
-
-## 🧠 MEMORY (What I Learned)
-
-No memory entries yet.
-
----
-
-## 🛠️ TOOLS (Available Capabilities)
-
-**Core tools:**
-- **Write** — Save artifacts
-- **Read** — Read files
+## 5. BOOT
+**L2 Cache:** This file (`agents/dev/test-agent-1.md`) ≤ 500 tokens
+**RAM:** `ram/agents/test-agent-1/*.md` (on-demand via `system/ram_loader.py`, max depth 3)
+**HDD:** Source code, schemas (never preloaded)

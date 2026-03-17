@@ -1,0 +1,600 @@
+{
+  "registry_version": "2.0",
+  "last_updated": "2026-03-16T12:00:00.000Z",
+  "skills": [
+    {
+      "id": "code-review-excellence",
+      "desc": "Two-pass code review (CRITICAL \u2192 INFORMATIONAL) with suppression lists.",
+      "tags": [
+        "review",
+        "qa"
+      ],
+      "path": "agents/skills/code-review-excellence/",
+      "used_by": [
+        "phuc-sa",
+        "moc",
+        "xuan",
+        "son-qa"
+      ]
+    },
+    {
+      "id": "deployment-excellence",
+      "desc": "Deployment Excellence \u2014 [Add detailed description here]",
+      "tags": [
+        "deployment",
+        "ci-cd"
+      ],
+      "path": "agents/skills/deployment-excellence/",
+      "used_by": []
+    },
+    {
+      "id": "postgresql-rls-architecture",
+      "desc": "NOBYPASSRLS role setup, RLS policies, SET LOCAL middleware.",
+      "tags": [
+        "rls",
+        "nobypassrls"
+      ],
+      "path": "agents/skills/postgresql-rls-architecture/",
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal"
+      ]
+    },
+    {
+      "id": "contract-draft-template",
+      "desc": "Complete interface contract specification for Pipeline 2.",
+      "tags": [
+        "architecture",
+        "contract"
+      ],
+      "path": "agents/skills/contract-draft-template/",
+      "used_by": [
+        "phuc-sa",
+        "xuan-spec-rev",
+        "moc-arch-chal"
+      ]
+    },
+    {
+      "id": "multi-tenant-schema-design",
+      "desc": "Comprehensive patterns for multi-tenant SaaS database schemas: standard entities, time-series partit",
+      "tags": [
+        "database",
+        "schema-design"
+      ],
+      "path": "agents/skills/multi-tenant-schema-design/",
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal"
+      ]
+    },
+    {
+      "id": "arch-challenge-response",
+      "desc": "Nash Triad response workflow for Ph\u00fac SA when M\u1ed9c challenges architecture.",
+      "tags": [
+        "architecture",
+        "nash-triad"
+      ],
+      "path": "agents/skills/arch-challenge-response/",
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal",
+        "dung-manager"
+      ]
+    },
+    {
+      "id": "token-optimized-arch-docs",
+      "desc": "Create ARCHITECTURE_ABSTRACT.md (~150 lines) to complement full ARCHITECTURE.md.",
+      "tags": [
+        "documentation",
+        "architecture"
+      ],
+      "path": "agents/skills/token-optimized-arch-docs/",
+      "used_by": [
+        "phuc-sa",
+        "xuan-spec-rev",
+        "dung-manager",
+        "moc-arch-chal"
+      ]
+    },
+    {
+      "id": "architecture-decision-framework",
+      "desc": "CTO-level decision framework with trade-off analysis.",
+      "tags": [
+        "architecture",
+        "decision-making"
+      ],
+      "path": "agents/skills/architecture-decision-framework/",
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal"
+      ]
+    },
+    {
+      "id": "module-decomposition-strategy",
+      "desc": "Break complex systems into manageable modules.",
+      "tags": [
+        "architecture",
+        "module-design"
+      ],
+      "path": "agents/skills/module-decomposition-strategy/",
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal"
+      ]
+    },
+    {
+      "id": "design-pattern-selection",
+      "desc": "Tactical design patterns with selection criteria and progression path.",
+      "tags": [
+        "design-patterns",
+        "ddd"
+      ],
+      "path": "agents/skills/design-pattern-selection/",
+      "used_by": [
+        "phuc-sa",
+        "moc-arch-chal"
+      ]
+    },
+    {
+      "id": "react-vite-patterns",
+      "desc": "Type-safe React patterns with TanStack Query, Zustand, and STMAI API envelope integration.",
+      "tags": [
+        "react",
+        "vite"
+      ],
+      "path": "agents/skills/react-vite-patterns/",
+      "used_by": [
+        "lan-dev-fe",
+        "huyen-fe-qa",
+        "trinh-fe-tester"
+      ]
+    },
+    {
+      "id": "tdd-best-practices",
+      "desc": "Test-Driven Development patterns for RED \u2192 GREEN \u2192 REFACTOR cycles.",
+      "tags": [
+        "tdd",
+        "testing"
+      ],
+      "path": "agents/skills/tdd-best-practices/",
+      "used_by": [
+        "thuc-dev-ts",
+        "tuan-dev-go",
+        "hoang-dev-net"
+      ]
+    },
+    {
+      "id": "api-chaos-testing",
+      "desc": "Systematic chaos testing for APIs, auth, RLS, and edge cases.",
+      "tags": [
+        "testing",
+        "qa"
+      ],
+      "path": "agents/skills/api-chaos-testing/",
+      "used_by": [
+        "son-qa",
+        "huyen-fe-qa",
+        "moc-arch-chal"
+      ]
+    },
+    {
+      "id": "data-flow-tracing",
+      "desc": "End-to-end data flow verification for code reviews (DB \u2192 API \u2192 State \u2192 UI).",
+      "tags": [
+        "code-review",
+        "data-flow"
+      ],
+      "path": "agents/skills/data-flow-tracing/",
+      "used_by": [
+        "moc-arch-chal",
+        "phuc-sa"
+      ]
+    },
+    {
+      "id": "ux-audit-checklist",
+      "desc": "Structured UX audit for Visual Hierarchy, Visual Style, and Accessibility.",
+      "tags": [
+        "ux",
+        "design"
+      ],
+      "path": "agents/skills/ux-audit-checklist/",
+      "used_by": [
+        "quang-designer"
+      ]
+    },
+    {
+      "id": "frontend-security-coder",
+      "desc": "Expert frontend security coding.",
+      "tags": [
+        "frontend",
+        "security"
+      ],
+      "path": "agents/skills/frontend-security-coder/",
+      "used_by": [
+        "lan-dev-fe"
+      ]
+    },
+    {
+      "id": "react-best-practices-vercel",
+      "desc": "Vercel's 45 performance optimization rules for React and Next.js.",
+      "tags": [
+        "react",
+        "nextjs"
+      ],
+      "path": "agents/skills/react-best-practices-vercel/",
+      "used_by": [
+        "lan-dev-fe"
+      ]
+    },
+    {
+      "id": "systematic-debugging",
+      "desc": "4-phase root cause investigation protocol (Root Cause \u2192 Pattern Analysis \u2192 Hypothesis \u2192 Implementati",
+      "tags": [
+        "debugging",
+        "root-cause-analysis"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/systematic-debugging/",
+      "used_by": [
+        "son-qa",
+        "moc-arch-chal"
+      ]
+    },
+    {
+      "id": "e2e-testing",
+      "desc": "End-to-end testing workflow with Playwright for browser automation, visual regression, cross-browser",
+      "tags": [
+        "testing",
+        "e2e"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/e2e-testing/",
+      "used_by": [
+        "son-qa",
+        "huyen-fe-qa"
+      ]
+    },
+    {
+      "id": "api-security-testing",
+      "desc": "API security testing workflow for REST and GraphQL APIs covering authentication, authorization, rate",
+      "tags": [
+        "security",
+        "api-testing"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/api-security-testing/",
+      "used_by": [
+        "son-qa",
+        "ngu-security"
+      ]
+    },
+    {
+      "id": "testing-patterns",
+      "desc": "Jest testing patterns, factory functions, mocking strategies, and TDD workflow.",
+      "tags": [
+        "testing",
+        "jest"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/testing-patterns/",
+      "used_by": [
+        "son-qa",
+        "thuc-dev-ts",
+        "lan-dev-fe"
+      ]
+    },
+    {
+      "id": "testing-qa-bundle",
+      "desc": "Comprehensive testing and quality assurance workflow covering unit testing, integration testing, E2E",
+      "tags": [
+        "testing",
+        "qa"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/testing-qa/",
+      "used_by": [
+        "son-qa",
+        "huyen-fe-qa"
+      ]
+    },
+    {
+      "id": "test-automator",
+      "desc": "Master AI-powered test automation with modern frameworks, self-healing tests, and comprehensive qual",
+      "tags": [
+        "testing",
+        "automation"
+      ],
+      "path": "agents/skills/antigravity-awesome-skills/skills/test-automator/",
+      "used_by": [
+        "son-qa"
+      ]
+    },
+    {
+      "id": "ln-522-manual-tester",
+      "desc": "Performs manual testing of Story AC via executable bash scripts saved to tests/manual/.",
+      "tags": [
+        "testing",
+        "manual-testing"
+      ],
+      "path": "agents/skills/claude-code-skills/ln-522-manual-tester/",
+      "used_by": [
+        "son-qa"
+      ]
+    },
+    {
+      "id": "ln-630-test-auditor",
+      "desc": "Coordinates comprehensive test suite audit across 8 quality categories using 7 specialized workers.",
+      "tags": [
+        "testing",
+        "test-audit"
+      ],
+      "path": "agents/skills/claude-code-skills/ln-630-test-auditor/",
+      "used_by": [
+        "son-qa"
+      ]
+    },
+    {
+      "id": "ln-631-test-business-logic-auditor",
+      "desc": "Detects tests that validate framework/library behavior (Prisma, Express, bcrypt, JWT, axios, React h",
+      "tags": [
+        "testing",
+        "test-audit"
+      ],
+      "path": "agents/skills/claude-code-skills/ln-631-test-business-logic-auditor/",
+      "used_by": [
+        "son-qa",
+        "ln-630-test-auditor"
+      ]
+    },
+    {
+      "id": "ln-633-test-value-auditor",
+      "desc": "Calculates Usefulness Score = Impact (1-5) \u00d7 Probability (1-5) for each test.",
+      "tags": [
+        "testing",
+        "test-audit"
+      ],
+      "path": "agents/skills/claude-code-skills/ln-633-test-value-auditor/",
+      "used_by": [
+        "son-qa",
+        "ln-630-test-auditor"
+      ]
+    },
+    {
+      "id": "fastapi-async-patterns",
+      "desc": "Production-ready FastAPI patterns with async/await, dependency injection, Pydantic validation, and S",
+      "tags": [
+        "python",
+        "fastapi"
+      ],
+      "path": "agents/skills/fastapi-async-patterns/",
+      "used_by": [
+        "huyen-dev-py"
+      ]
+    },
+    {
+      "id": "sqlalchemy-async-patterns",
+      "desc": "Production-ready SQLAlchemy 2.0 async patterns with multi-tenant isolation, eager loading, and N+1 p",
+      "tags": [
+        "python",
+        "sqlalchemy"
+      ],
+      "path": "agents/skills/sqlalchemy-async-patterns/",
+      "used_by": [
+        "huyen-dev-py"
+      ]
+    },
+    {
+      "id": "pytest-fastapi-patterns",
+      "desc": "TDD patterns for FastAPI with pytest, pytest-asyncio, async fixtures, and coverage targets (\u226580%).",
+      "tags": [
+        "python",
+        "pytest"
+      ],
+      "path": "agents/skills/pytest-fastapi-patterns/",
+      "used_by": [
+        "huyen-dev-py"
+      ]
+    },
+    {
+      "id": "performance-load-testing",
+      "desc": "Load testing with k6/Gatling for production readiness validation.",
+      "tags": [
+        "performance",
+        "load-testing"
+      ],
+      "path": "agents/skills/performance-load-testing/",
+      "used_by": [
+        "son-qa",
+        "huyen-fe-qa",
+        "hung",
+        "phuc-sa"
+      ]
+    },
+    {
+      "id": "requirements-engineering",
+      "desc": "Systematic requirements elicitation with SMART criteria, acceptance tests, MoSCoW prioritization.",
+      "tags": [
+        "requirements",
+        "user-stories"
+      ],
+      "path": "agents/skills/requirements-engineering/",
+      "used_by": [
+        "conan-req-aud",
+        "dung-manager",
+        "chau-pana-ux",
+        "xuan-spec-rev"
+      ]
+    },
+    {
+      "id": "database-migration",
+      "desc": "Zero-downtime schema migrations with Expand-Contract pattern, rollback plans, and multi-tenant RLS s",
+      "tags": [
+        "database",
+        "migration"
+      ],
+      "path": "agents/skills/database-migration/",
+      "used_by": [
+        "phuc-sa",
+        "thuc-dev-ts",
+        "tuan-dev-go",
+        "huyen-dev-py",
+        "hoang-dev-net"
+      ]
+    },
+    {
+      "id": "test-data-management",
+      "desc": "Hermetic test data factories with multi-tenant isolation and deterministic faker seeding.",
+      "tags": [
+        "testing",
+        "test-data"
+      ],
+      "path": "agents/skills/test-data-management/",
+      "used_by": [
+        "son-qa",
+        "thuc-dev-ts",
+        "lan-dev-fe",
+        "tuan-dev-go",
+        "huyen-dev-py",
+        "hoang-dev-net",
+        "huyen-fe-qa"
+      ]
+    },
+    {
+      "id": "secrets-config-management",
+      "desc": "Security-first secrets management with AWS Secrets Manager, rotation, and leak prevention.",
+      "tags": [
+        "secrets",
+        "aws-secrets-manager"
+      ],
+      "path": "agents/skills/secrets-config-management/",
+      "used_by": [
+        "thanh-lai",
+        "hung",
+        "thuc-dev-ts",
+        "tuan-dev-go",
+        "huyen-dev-py",
+        "hoang-dev-net"
+      ]
+    },
+    {
+      "id": "infrastructure-as-code",
+      "desc": "Security-first IaC with Terraform/Pulumi.",
+      "tags": [
+        "infrastructure",
+        "terraform"
+      ],
+      "path": "agents/skills/infrastructure-as-code/",
+      "used_by": [
+        "hung",
+        "phuc-sa"
+      ]
+    },
+    {
+      "id": "container-orchestration",
+      "desc": "Security-first container & Kubernetes engineering.",
+      "tags": [
+        "docker",
+        "kubernetes"
+      ],
+      "path": "agents/skills/container-orchestration/",
+      "used_by": [
+        "hung",
+        "thanh-lai",
+        "phuc-sa"
+      ]
+    },
+    {
+      "id": "observability-monitoring",
+      "desc": "Enterprise observability stack with Prometheus, Grafana, OpenTelemetry, Loki.",
+      "tags": [
+        "observability",
+        "monitoring"
+      ],
+      "path": "agents/skills/observability-monitoring/",
+      "used_by": [
+        "nam-observability",
+        "hung",
+        "thanh-lai",
+        "tung-diag"
+      ]
+    },
+    {
+      "id": "regression-test-suite",
+      "desc": "Regression test management with risk-based selection, flaky test detection, and test retirement stra",
+      "tags": [
+        "regression-testing",
+        "flaky-tests"
+      ],
+      "path": "agents/skills/regression-test-suite/",
+      "used_by": [
+        "son-qa",
+        "huyen-fe-qa",
+        "thuc-dev-ts",
+        "lan-dev-fe",
+        "tuan-dev-go",
+        "huyen-dev-py",
+        "hoang-dev-net",
+        "trinh-fe-tester"
+      ]
+    },
+    {
+      "id": "high-level-design",
+      "desc": "System architecture design with C4 model, ADRs, and scalability patterns.",
+      "tags": [
+        "hld",
+        "architecture"
+      ],
+      "path": "agents/skills/high-level-design/",
+      "used_by": [
+        "phuc-sa",
+        "hieu-arch-r",
+        "moc-arch-chal",
+        "nghia-stack-r"
+      ]
+    },
+    {
+      "id": "technical-debt-management",
+      "desc": "Technical debt tracking with compound interest calculation (P0=10%/day, P1=5%/day, P2=2%/day) and re",
+      "tags": [
+        "technical-debt",
+        "compound-interest"
+      ],
+      "path": "agents/skills/technical-debt-management/",
+      "used_by": [
+        "phuc-sa",
+        "dung-manager",
+        "moc-arch-chal",
+        "hieu-arch-r"
+      ]
+    },
+    {
+      "id": "git-workflow-branching",
+      "desc": "Version control architect skill for maintaining sacred git history\u2014clean, deployable, and auditable.",
+      "tags": [
+        "git",
+        "branching"
+      ],
+      "path": "agents/skills/git-workflow-branching/",
+      "used_by": [
+        "hung",
+        "thuc-dev-ts",
+        "lan-dev-fe",
+        "tuan-dev-go",
+        "huyen-dev-py",
+        "hoang-dev-net",
+        "trinh-fe-tester"
+      ]
+    },
+    {
+      "id": "project-planning-estimation",
+      "desc": "Chess grandmaster planning 10 moves ahead.",
+      "tags": [
+        "planning",
+        "estimation"
+      ],
+      "path": "agents/skills/project-planning-estimation/",
+      "used_by": [
+        "dung-manager",
+        "conan-req-aud",
+        "phuc-sa",
+        "chau-pana-ux"
+      ]
+    }
+  ],
+  "_note": "Compressed registry. Full details in _registry_full.json"
+}

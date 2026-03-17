@@ -1,0 +1,358 @@
+# Nash Agent Framework - Consolidated Metadata
+# Generated: 2026-03-17
+# Schema Version: 2.0
+# Replaces: MIXTURE_OF_EXPERTS_ROUTER.md, SCORING_RULES.md, pipeline agent assignments
+
+schema_version: "2.0"
+
+# ============================================================================
+# ROUTING TABLE - MoE Pipeline Selection Logic
+# ============================================================================
+routing_table:
+  - audit_signal: "C1=empty,C2=empty"
+    description: "Business requirements empty, Docs empty"
+    pipeline: "01_requirements"
+    priority: "P1"
+    thesis_agents: ["dung-pm", "chau-ux"]
+    anti_thesis_agents: ["conan"]
+    synthesis_agent: "user"
+
+  - audit_signal: "C4=spaghetti,C8=missing_schema"
+    description: "Architecture spaghetti, DB schema missing"
+    pipeline: "02_architecture"
+    priority: "P0"
+    thesis_agents: ["phuc-sa", "quang"]
+    anti_thesis_agents: ["moc", "lan"]
+    synthesis_agent: "dung-pm"
+
+  - audit_signal: "C11=incomplete,C12=incomplete"
+    description: "Backend/Frontend code incomplete"
+    pipeline: "03_coding"
+    priority: "P1"
+    thesis_agents: ["thuc", "lan", "quang", "hoang", "huyen-py", "tuan"]
+    anti_thesis_agents: ["eslint", "moc"]
+    synthesis_agent: "phuc-sa"
+
+  - audit_signal: "C6=empty_tests,C10=bugs"
+    description: "Test coverage empty, multiple bugs"
+    pipeline: "04_testing"
+    priority: "P1"
+    thesis_agents: ["son-qa", "huyen-fe-qa"]
+    anti_thesis_agents: ["lan"]
+    synthesis_agent: "dung-pm"
+
+  - audit_signal: "C7=no_cicd,C5=security_warnings"
+    description: "No CI/CD config, security warnings"
+    pipeline: "05_security"
+    priority: "P0"
+    thesis_agents: ["ci-cd", "thanh-lai"]
+    anti_thesis_agents: ["ngu"]
+    synthesis_agent: "user"
+
+  - audit_signal: "C1=prod_bug,C10=crash"
+    description: "Production bug, server crash"
+    pipeline: "06_hotfix"
+    priority: "P0"
+    thesis_agents: ["tung", "lan"]
+    anti_thesis_agents: ["moc"]
+    synthesis_agent: "dung-pm"
+
+# ============================================================================
+# SCORING MATRIX - Zero-Sum Game Points (P0-P4)
+# ============================================================================
+scoring_matrix:
+  - event: "collusion"
+    description: "Agents A+B fake pass, bypass Synthesis"
+    severity: "P0"
+    points: 30
+    multiplier: "M3"
+    evidence_required: "LEDGER_entry"
+
+  - event: "lazy_review"
+    description: "Review finds 0 bugs when code is broken (M1)"
+    severity: "P0"
+    points: 30
+    multiplier: "M1"
+    evidence_required: "code_diff"
+
+  - event: "fabrication"
+    description: "False positive bug report (M3)"
+    severity: "P0"
+    points: 30
+    multiplier: "M3"
+    evidence_required: "commit_hash"
+
+  - event: "prod_bug"
+    description: "Bug leaked to production"
+    severity: "P0"
+    points: 30
+    multiplier: "M1"
+    evidence_required: "incident_log"
+
+  - event: "bug_leaks_to_qa"
+    description: "Bug leaked past coding gate to QA"
+    severity: "P1"
+    points: 20
+    multiplier: "M2"
+    evidence_required: "test_failure_log"
+
+  - event: "contract_drift"
+    description: "Breaking API contract change"
+    severity: "P2"
+    points: 15
+    multiplier: "M1"
+    evidence_required: "diff_output"
+
+  - event: "spec_gap"
+    description: "Gap between contract and requirements"
+    severity: "P2"
+    points: 15
+    multiplier: "none"
+    evidence_required: "review_comment"
+
+  - event: "wrong_root_cause"
+    description: "Tung Diag incorrect diagnosis"
+    severity: "P2"
+    points: 15
+    multiplier: "none"
+    evidence_required: "audit_log"
+
+  - event: "todo_at_validate"
+    description: "TODO/FIXME/mock left in code at gate"
+    severity: "P3"
+    points: 10
+    multiplier: "none"
+    evidence_required: "gate_script_output"
+
+  - event: "missing_unit_test"
+    description: "Unit test missing for critical function"
+    severity: "P3"
+    points: 10
+    multiplier: "none"
+    evidence_required: "coverage_report"
+
+  - event: "slo_violation"
+    description: "Violate SLO/budget in WORKFLOW.md"
+    severity: "P3"
+    points: 10
+    multiplier: "none"
+    evidence_required: "metric_log"
+
+  - event: "nitpick"
+    description: "Low-priority design/bug feedback"
+    severity: "P4"
+    points: 5
+    multiplier: "none"
+    evidence_required: "review_comment"
+    max_per_review: 2
+
+# ============================================================================
+# MULTIPLIERS - M1/M2/M3 Penalty Modifiers
+# ============================================================================
+multipliers:
+  M1:
+    name: "Missed Bug"
+    factor: 2
+    description: "Challenger missed bug that Synthesis caught"
+
+  M2:
+    name: "Second Catch Beats First"
+    factor: 2
+    description: "Anti-Thesis caught bug that Thesis missed"
+
+  M3:
+    name: "Fabrication"
+    factor: "always_-30"
+    description: "False positive, ignore base points"
+
+# ============================================================================
+# PIPELINE REGISTRY - 8 Pipelines (6 SDLC + 2 Custom)
+# ============================================================================
+pipeline_registry:
+  - id: "01_requirements"
+    name: "Requirements & Research"
+    file: "pipelines/01_REQUIREMENTS_AND_RESEARCH.md"
+    thesis_agents: ["dung-pm", "chau-ux"]
+    anti_thesis_agents: ["conan"]
+    synthesis_agent: "user"
+    phases: ["A", "B", "C", "D"]
+    gates: []
+    trigger_conditions: ["C1=empty", "C2=empty"]
+
+  - id: "02_architecture"
+    name: "Architecture & DB Design"
+    file: "pipelines/02_ARCHITECTURE_AND_DB.md"
+    thesis_agents: ["phuc-sa", "quang"]
+    anti_thesis_agents: ["moc", "lan"]
+    synthesis_agent: "dung-pm"
+    phases: ["A", "B", "C", "D", "E"]
+    gates: ["validate.sh"]
+    trigger_conditions: ["C4=spaghetti", "C8=missing_schema"]
+
+  - id: "03_coding"
+    name: "Coding & Development"
+    file: "pipelines/03_CODING_AND_DEV.md"
+    thesis_agents: ["thuc", "lan", "quang", "hoang", "huyen-py", "tuan"]
+    anti_thesis_agents: ["eslint", "moc"]
+    synthesis_agent: "phuc-sa"
+    phases: ["A", "B", "C", "D", "E"]
+    gates: ["validate.sh", "integrity.sh"]
+    trigger_conditions: ["C11=incomplete", "C12=incomplete"]
+
+  - id: "04_testing"
+    name: "Testing & QA"
+    file: "pipelines/04_TESTING_AND_QA.md"
+    thesis_agents: ["son-qa", "huyen-fe-qa"]
+    anti_thesis_agents: ["lan"]
+    synthesis_agent: "dung-pm"
+    phases: ["A", "B", "C", "D", "E"]
+    gates: ["validate.sh", "qa.sh"]
+    trigger_conditions: ["C6=empty_tests", "C10=bugs"]
+
+  - id: "05_security"
+    name: "Security & Deployment"
+    file: "pipelines/05_SECURITY_AND_DEPLOYMENT.md"
+    thesis_agents: ["ci-cd", "thanh-lai"]
+    anti_thesis_agents: ["ngu"]
+    synthesis_agent: "user"
+    phases: ["A", "B", "C", "D", "E", "F"]
+    gates: ["security.sh", "qa.sh"]
+    trigger_conditions: ["C7=no_cicd", "C5=security_warnings"]
+
+  - id: "06_hotfix"
+    name: "Emergency Hotfix"
+    file: "pipelines/06_EMERGENCY_HOTFIX.md"
+    thesis_agents: ["tung", "lan"]
+    anti_thesis_agents: ["moc"]
+    synthesis_agent: "dung-pm"
+    phases: ["A", "C", "D"]
+    gates: ["validate.sh", "security.sh"]
+    trigger_conditions: ["C1=prod_bug", "C10=crash"]
+
+  - id: "design_flow"
+    name: "Design Flow (FE Wireframes)"
+    file: "pipelines/DESIGN_FLOW.md"
+    custom: true
+    thesis_agents: ["quang", "chau-ux"]
+    anti_thesis_agents: ["lan"]
+    synthesis_agent: "user"
+    phases: ["custom_6_stages"]
+    gates: []
+    trigger_conditions: ["C9=no_wireframes"]
+
+  - id: "fe_implementation"
+    name: "FE Implementation from Wireframes"
+    file: "pipelines/FE_IMPLEMENTATION.md"
+    custom: true
+    thesis_agents: ["lan", "quang"]
+    anti_thesis_agents: ["son-qa"]
+    synthesis_agent: "dung-pm"
+    phases: ["custom_fe_flow"]
+    gates: ["validate.sh", "qa.sh"]
+    trigger_conditions: ["C12=incomplete", "wireframes_approved"]
+
+# ============================================================================
+# AGENT REGISTRY - 27 Agents (9 core + 10 dev + 5 research + 3 user)
+# ============================================================================
+# NOTE: Full agent registry will be auto-generated from scanning agents/**/*.md
+# This section lists core metadata only
+agent_registry:
+  - id: "dung-pm"
+    name: "Dũng - Product Manager"
+    archetype: "Strategist"
+    layer: "core"
+    l2_path: "agents/core/dung-manager.md"
+    ram_path: "ram/agents/dung-pm/"
+    token_budget: 500
+
+  - id: "phuc-sa"
+    name: "Phúc - Solutions Architect"
+    archetype: "Strategist"
+    layer: "core"
+    l2_path: "agents/core/phuc-sa.md"
+    ram_path: "ram/agents/phuc-sa/"
+    token_budget: 500
+
+  - id: "moc"
+    name: "Mộc - Architecture Challenger"
+    archetype: "Critic"
+    layer: "core"
+    l2_path: "agents/core/moc-arch-chal.md"
+    ram_path: "ram/agents/moc/"
+    token_budget: 500
+
+  - id: "tung"
+    name: "Tùng - Diagnostics Expert"
+    archetype: "Analyst"
+    layer: "core"
+    l2_path: "agents/core/tung-diag.md"
+    ram_path: "ram/agents/tung/"
+    token_budget: 500
+
+  - id: "conan"
+    name: "Conan - Requirements Auditor"
+    archetype: "Analyst"
+    layer: "core"
+    l2_path: "agents/core/conan-req-aud.md"
+    ram_path: "ram/agents/conan/"
+    token_budget: 500
+
+  - id: "son-qa"
+    name: "Sơn - QA Lead"
+    archetype: "Critic"
+    layer: "core"
+    l2_path: "agents/core/son-qa.md"
+    ram_path: "ram/agents/son-qa/"
+    token_budget: 500
+
+  - id: "nhien"
+    name: "Nhiên - Memory Janitor"
+    archetype: "Operator"
+    layer: "core"
+    l2_path: "agents/core/nhien-janitor.md"
+    ram_path: "ram/agents/nhien/"
+    token_budget: 500
+
+  - id: "thuc"
+    name: "Thực - TypeScript Developer"
+    archetype: "Builder"
+    layer: "dev"
+    l2_path: "agents/dev/thuc-dev-ts.md"
+    ram_path: "ram/agents/thuc/"
+    token_budget: 500
+
+  - id: "lan"
+    name: "Lan - Frontend Developer"
+    archetype: "Builder"
+    layer: "dev"
+    l2_path: "agents/dev/lan-dev-fe.md"
+    ram_path: "ram/agents/lan/"
+    token_budget: 500
+
+  - id: "quang"
+    name: "Quang - UI/UX Designer"
+    archetype: "Builder"
+    layer: "dev"
+    l2_path: "agents/dev/quang-designer.md"
+    ram_path: "ram/agents/quang/"
+    token_budget: 500
+
+  # NOTE: Add remaining 17 agents here (auto-generated in Phase 1)
+  # Total: 27 agents
+
+# ============================================================================
+# AUDIT DIMENSIONS - 12-Dimension TDD Audit Spec
+# ============================================================================
+audit_dimensions:
+  C1: "Business & Requirements"
+  C2: "Documentation"
+  C3: "Team & Collaboration"
+  C4: "Architecture"
+  C5: "Security"
+  C6: "Testing"
+  C7: "Operations & DevOps"
+  C8: "Database"
+  C9: "UX/UI"
+  C10: "Bugs & Issues"
+  C11: "Backend Code"
+  C12: "Frontend Code"

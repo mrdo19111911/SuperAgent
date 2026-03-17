@@ -1,0 +1,50 @@
+{
+  "skill_id": "project-planning-estimation",
+  "version": "1.0.0",
+  "semantic_version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "author": {
+    "name": "Nash Framework",
+    "created_by_agent": "dung-manager",
+    "created_date": "2026-03-16"
+  },
+  "description": {
+    "short": "Project Planning & Estimation",
+    "long": "Story points, velocity tracking, sprint planning, and burndown charts. Includes Fibonacci estimation, Planning Poker, capacity calculation, and sprint goal framework for Agile teams."
+  },
+  "tags": ["agile", "scrum", "story-points", "velocity", "sprint-planning", "estimation", "burndown"],
+  "archetype_fit": ["Analyst", "Strategist"],
+  "triggers": [
+    "Estimating user stories or epics",
+    "Planning sprint capacity",
+    "Tracking team velocity",
+    "Creating burndown charts"
+  ],
+  "dependencies": {
+    "tools": ["Bash", "Read", "Write"],
+    "mcp_servers": [],
+    "other_skills": []
+  },
+  "compatible_agents": ["dung-manager", "conan-pm-anti", "xuan-spec-rev"],
+  "test_suite": {
+    "path": "tests/evals.json",
+    "test_count": 0,
+    "coverage": "0%",
+    "last_run": null,
+    "pass_rate": null
+  },
+  "performance": {
+    "avg_tokens": 2400,
+    "avg_duration_seconds": 10,
+    "complexity": "medium"
+  },
+  "maintenance": {
+    "status": "active",
+    "last_updated": "2026-03-16",
+    "changelog": "README.md",
+    "known_issues": []
+  }
+}
