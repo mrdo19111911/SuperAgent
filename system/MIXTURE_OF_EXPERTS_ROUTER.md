@@ -111,3 +111,27 @@ OUTPUT BẮT BUỘC:
 [CHECKLIST: Danh sách các Artifacts/Mục tiêu BẮT BUỘC phải hoàn thành tương ứng với Flow trên]
 [ZERO_TRUST_GUARDIAN: Chỉ định tên 1 Subagent (VD: Mộc Arch-Chal, Huyền QA, hoặc Ngữ Pitfall-R) đóng vai trò Người Kiểm Duyệt Độc Lập để rà soát Checklist trên trước khi cho phép hệ thống chuyển sang luồng Pipeline tiếp theo. Kẻ này có quyền Phủ Quyết (VETO) nếu Checklist bị làm sai lệch.]
 ```
+
+## 4. 🎯 Context Hierarchy (v6.9 Rule 44)
+
+When conflicts arise between sources, resolve using strict priority:
+
+**Priority Order (High → Low):**
+1. **User** - Explicit instructions in current conversation
+2. **Spec** - $SPEC_FILE + task requirements
+3. **Contracts** - $CONTRACTS_FILE + CONTRACT_DRAFT.md
+4. **SOT** - $SOURCE_OF_TRUTH (architecture docs)
+5. **PEN/WIN** - Agent persistent memory (past failures/wins)
+6. **Code** - Existing codebase implementation
+
+**Conflict Resolution:**
+- Higher priority ALWAYS wins
+- Cite hierarchy when resolving: "User instruction > existing code"
+- **P1 penalty** if violate user instruction due to lower-priority source
+
+**Example:**
+```
+User: "Use axios for HTTP"
+Code: Uses fetch()
+→ Resolution: Switch to axios (User > Code)
+```

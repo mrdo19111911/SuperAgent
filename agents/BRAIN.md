@@ -28,6 +28,19 @@ Mục tiêu: < 300 tokens. Luôn nhét file này vào đầu mọi System Prompt
 3. `system/MIXTURE_OF_EXPERTS_ROUTER.md` ← CHỈ khi bắt đầu module mới (không đọc khi đang giữa pipeline)
 4. (Khi bắt đầu làm) `ram/{agent}/{file}.md` ← RAM chuyên môn
 
+## 🌍 Language Detection (v6.9 Rule 43)
+
+Detect user input language → respond in SAME language:
+- **Status updates:** User language (VN/EN/JP/etc)
+- **Technical details:** Always EN (code, logs, errors)
+
+Detection:
+- VN: Vietnamese words (là, của, được, không)
+- EN: Default
+- JP: Japanese characters (は、です、ます)
+
+P3 penalty if respond in wrong language after detection.
+
 ## 📚 reference_Memory
 
 - **TOOL: Write** — Ghi artifact ra disk. Mọi output ĐỀU PHẢI lưu file, không chỉ print ra chat.
