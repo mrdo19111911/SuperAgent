@@ -80,23 +80,27 @@ Scope exceeds pipeline → **upgrade immediately**.
 
 B=completeness, B2=correctness (B and B2 both review A's output independently), D=functional, E=non-functional (perf, security, a11y, observability, resource cleanup, concurrency), F=cross-cutting+root-cause.
 
-### Critical (A,B,B2,C,D,E,F)
+### Critical (A,B,B2,APPROVAL,C,D,E,F)
 ```
 -- Tier 1: Criteria --
 S1:A  Define criteria ($CRITERIA_VERB)          THESIS
 S2:B  Audit completeness. FAIL→S1              AT#1
 S3:B2 Audit correctness. FAIL→S1               AT#2
 S4:Main → PASS/FAIL
+S5:APPROVAL Main asks user: "Proceed with execution?" + criteria summary (3-5 bullets). User: APPROVE/REVISE/REJECT.
+  - APPROVE → S6
+  - REVISE → S1 with feedback
+  - REJECT → task cancelled
 -- Tier 2: Execute --
-S5:C  Execute ($DELIVERABLE_VERB) + verify      THESIS
-S6:D  Verify functional. FAIL→S5               AT#1
-S7:E  Verify non-functional. FAIL→S5           AT#2
-S8:F  Cross-cutting + root cause. FAIL→S5      AT#3
-S9:Main → PASS/FAIL
+S6:C  Execute ($DELIVERABLE_VERB) + verify      THESIS
+S7:D  Verify functional. FAIL→S6               AT#1
+S8:E  Verify non-functional. FAIL→S6           AT#2
+S9:F  Cross-cutting + root cause. FAIL→S6      AT#3
+S10:Main → PASS/FAIL
 ```
 
-### Complex (A,B,B2,C,D,E)
-S1-S7 same as Critical. No F — E covers NF + cross-cutting. S8:Main → PASS/FAIL.
+### Complex (A,B,B2,APPROVAL,C,D,E)
+S1-S5 same as Critical (includes APPROVAL gate). S6-S8: execute + verify. No F — E covers NF + cross-cutting. S9:Main → PASS/FAIL.
 
 ### Simple (A,B,C,D)
 ```

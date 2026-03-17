@@ -32,9 +32,9 @@ fi
 echo "COMMIT: Module found at $MODULE_DIR"
 
 # ── 2. Pre-validate (build + test must pass before commit) ──
-echo "COMMIT: Running pre-commit validation..."
+echo "COMMIT: Running pre-commit validation (parallel mode)..."
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-bash "$SCRIPT_DIR/validate.sh" "$MODULE_DIR" || {
+bash "$SCRIPT_DIR/parallel_validate.sh" "$MODULE_DIR" || {
   echo "COMMIT: FAIL — pre-commit validation failed. Fix issues before committing."
   exit 1
 }

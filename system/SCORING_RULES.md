@@ -40,6 +40,8 @@ Nguyên tắc cốt lõi: **Kẻ phát hiện được cộng điểm (+), kẻ 
 | **[v6.4] Thiếu tool summary ≥3 lần trong 1 task** | **P3** (Low) |
 | Bắt lỗi thiết kế/bug ở mức MEDIUM/LOW | **P4** (Trivial) |
 | **[v6.4] Thiếu tool summary (lần đầu tiên trong task)** | **P4** (Trivial) |
+| **[v6.5] Agent skip Approval Gate khi chạy Complex/Critical pipeline** | **P1** (High) |
+| **[v6.5] Agent chạy gates sequential khi parallel_validate.sh available** | **P3** (Low) |
 
 ## Quick Resolution Rules
 
