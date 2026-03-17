@@ -34,7 +34,6 @@ bash-audit.log
 agents/skills/shannon/
 
 # Skill submodules (embedded git repos)
-agents/skills.bak/*/.git
 ram/skills/*/.git
 
 # Node modules (not committed)

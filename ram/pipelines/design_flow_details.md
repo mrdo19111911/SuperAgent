@@ -15,7 +15,7 @@ Step 2: Dũng PM (Synthesis)
         ├── Read both drafts
         ├── Merge into official CONTRACT_DRAFT.md
         ├── Resolve conflicts (Phúc says endpoint X, Mộc says not needed → Dũng decides)
-        └── Ensure 8 sections per Agent_v3 standard
+        └── Ensure 8 sections per AGENT_TEMPLATE_V3 standard
 
 Step 3: Gate — CONTRACT_DRAFT.md exists + 8 sections + Sign-off
         → PASS: Continue DESIGN_FLOW Stage 1

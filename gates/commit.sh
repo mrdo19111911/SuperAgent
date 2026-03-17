@@ -64,7 +64,7 @@ git add "$MODULE_DIR" -- \
 echo "COMMIT: Staged $MODULE_DIR"
 
 # Stage related artifacts if they exist
-for related in "contracts/$MODULE" "Agent_v3/artifacts/$MODULE"; do
+for related in "contracts/$MODULE" "artifacts/$MODULE"; do
   if [ -d "$related" ]; then
     git add "$related" 2>/dev/null && echo "COMMIT: Staged $related" || true
   fi

@@ -102,7 +102,7 @@ CONCLUSION FOR ROUTER:
 
 ## Output Location Convention
 
-All audit outputs go into the **module being audited**, not Agent_v3:
+All audit outputs go into the **module being audited**, not the framework root:
 
 ```
 modules/{path}/{module}/docs/

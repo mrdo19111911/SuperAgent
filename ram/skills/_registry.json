@@ -9,7 +9,7 @@
         "review",
         "qa"
       ],
-      "path": "agents/skills/code-review-excellence/",
+      "path": "ram/skills/code-review-excellence/",
       "used_by": [
         "phuc-sa",
         "moc",
@@ -24,7 +24,7 @@
         "deployment",
         "ci-cd"
       ],
-      "path": "agents/skills/deployment-excellence/",
+      "path": "ram/skills/deployment-excellence/",
       "used_by": []
     },
     {
@@ -34,7 +34,7 @@
         "rls",
         "nobypassrls"
       ],
-      "path": "agents/skills/postgresql-rls-architecture/",
+      "path": "ram/skills/postgresql-rls-architecture/",
       "used_by": [
         "phuc-sa",
         "moc-arch-chal"
@@ -47,7 +47,7 @@
         "architecture",
         "contract"
       ],
-      "path": "agents/skills/contract-draft-template/",
+      "path": "ram/skills/contract-draft-template/",
       "used_by": [
         "phuc-sa",
         "xuan-spec-rev",
@@ -61,7 +61,7 @@
         "database",
         "schema-design"
       ],
-      "path": "agents/skills/multi-tenant-schema-design/",
+      "path": "ram/skills/multi-tenant-schema-design/",
       "used_by": [
         "phuc-sa",
         "moc-arch-chal"
@@ -74,7 +74,7 @@
         "architecture",
         "nash-triad"
       ],
-      "path": "agents/skills/arch-challenge-response/",
+      "path": "ram/skills/arch-challenge-response/",
       "used_by": [
         "phuc-sa",
         "moc-arch-chal",
@@ -88,7 +88,7 @@
         "documentation",
         "architecture"
       ],
-      "path": "agents/skills/token-optimized-arch-docs/",
+      "path": "ram/skills/token-optimized-arch-docs/",
       "used_by": [
         "phuc-sa",
         "xuan-spec-rev",
@@ -103,7 +103,7 @@
         "architecture",
         "decision-making"
       ],
-      "path": "agents/skills/architecture-decision-framework/",
+      "path": "ram/skills/architecture-decision-framework/",
       "used_by": [
         "phuc-sa",
         "moc-arch-chal"
@@ -116,7 +116,7 @@
         "architecture",
         "module-design"
       ],
-      "path": "agents/skills/module-decomposition-strategy/",
+      "path": "ram/skills/module-decomposition-strategy/",
       "used_by": [
         "phuc-sa",
         "moc-arch-chal"
@@ -129,7 +129,7 @@
         "design-patterns",
         "ddd"
       ],
-      "path": "agents/skills/design-pattern-selection/",
+      "path": "ram/skills/design-pattern-selection/",
       "used_by": [
         "phuc-sa",
         "moc-arch-chal"
@@ -142,7 +142,7 @@
         "react",
         "vite"
       ],
-      "path": "agents/skills/react-vite-patterns/",
+      "path": "ram/skills/react-vite-patterns/",
       "used_by": [
         "lan-dev-fe",
         "huyen-fe-qa",
@@ -156,7 +156,7 @@
         "tdd",
         "testing"
       ],
-      "path": "agents/skills/tdd-best-practices/",
+      "path": "ram/skills/tdd-best-practices/",
       "used_by": [
         "thuc-dev-ts",
         "tuan-dev-go",
@@ -170,7 +170,7 @@
         "testing",
         "qa"
       ],
-      "path": "agents/skills/api-chaos-testing/",
+      "path": "ram/skills/api-chaos-testing/",
       "used_by": [
         "son-qa",
         "huyen-fe-qa",
@@ -184,7 +184,7 @@
         "code-review",
         "data-flow"
       ],
-      "path": "agents/skills/data-flow-tracing/",
+      "path": "ram/skills/data-flow-tracing/",
       "used_by": [
         "moc-arch-chal",
         "phuc-sa"
@@ -197,7 +197,7 @@
         "ux",
         "design"
       ],
-      "path": "agents/skills/ux-audit-checklist/",
+      "path": "ram/skills/ux-audit-checklist/",
       "used_by": [
         "quang-designer"
       ]
@@ -209,7 +209,7 @@
         "frontend",
         "security"
       ],
-      "path": "agents/skills/frontend-security-coder/",
+      "path": "ram/skills/frontend-security-coder/",
       "used_by": [
         "lan-dev-fe"
       ]
@@ -221,7 +221,7 @@
         "react",
         "nextjs"
       ],
-      "path": "agents/skills/react-best-practices-vercel/",
+      "path": "ram/skills/react-best-practices-vercel/",
       "used_by": [
         "lan-dev-fe"
       ]
@@ -233,7 +233,7 @@
         "debugging",
         "root-cause-analysis"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/systematic-debugging/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/systematic-debugging/",
       "used_by": [
         "son-qa",
         "moc-arch-chal"
@@ -246,7 +246,7 @@
         "testing",
         "e2e"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/e2e-testing/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/e2e-testing/",
       "used_by": [
         "son-qa",
         "huyen-fe-qa"
@@ -259,7 +259,7 @@
         "security",
         "api-testing"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/api-security-testing/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/api-security-testing/",
       "used_by": [
         "son-qa",
         "ngu-security"
@@ -272,7 +272,7 @@
         "testing",
         "jest"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/testing-patterns/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/testing-patterns/",
       "used_by": [
         "son-qa",
         "thuc-dev-ts",
@@ -286,7 +286,7 @@
         "testing",
         "qa"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/testing-qa/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/testing-qa/",
       "used_by": [
         "son-qa",
         "huyen-fe-qa"
@@ -299,7 +299,7 @@
         "testing",
         "automation"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/test-automator/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/test-automator/",
       "used_by": [
         "son-qa"
       ]
@@ -311,7 +311,7 @@
         "testing",
         "manual-testing"
       ],
-      "path": "agents/skills/claude-code-skills/ln-522-manual-tester/",
+      "path": "ram/skills/claude-code-skills/ln-522-manual-tester/",
       "used_by": [
         "son-qa"
       ]
@@ -323,7 +323,7 @@
         "testing",
         "test-audit"
       ],
-      "path": "agents/skills/claude-code-skills/ln-630-test-auditor/",
+      "path": "ram/skills/claude-code-skills/ln-630-test-auditor/",
       "used_by": [
         "son-qa"
       ]
@@ -335,7 +335,7 @@
         "testing",
         "test-audit"
       ],
-      "path": "agents/skills/claude-code-skills/ln-631-test-business-logic-auditor/",
+      "path": "ram/skills/claude-code-skills/ln-631-test-business-logic-auditor/",
       "used_by": [
         "son-qa",
         "ln-630-test-auditor"
@@ -348,7 +348,7 @@
         "testing",
         "test-audit"
       ],
-      "path": "agents/skills/claude-code-skills/ln-633-test-value-auditor/",
+      "path": "ram/skills/claude-code-skills/ln-633-test-value-auditor/",
       "used_by": [
         "son-qa",
         "ln-630-test-auditor"
@@ -361,7 +361,7 @@
         "python",
         "fastapi"
       ],
-      "path": "agents/skills/fastapi-async-patterns/",
+      "path": "ram/skills/fastapi-async-patterns/",
       "used_by": [
         "huyen-dev-py"
       ]
@@ -373,7 +373,7 @@
         "python",
         "sqlalchemy"
       ],
-      "path": "agents/skills/sqlalchemy-async-patterns/",
+      "path": "ram/skills/sqlalchemy-async-patterns/",
       "used_by": [
         "huyen-dev-py"
       ]
@@ -385,7 +385,7 @@
         "python",
         "pytest"
       ],
-      "path": "agents/skills/pytest-fastapi-patterns/",
+      "path": "ram/skills/pytest-fastapi-patterns/",
       "used_by": [
         "huyen-dev-py"
       ]
@@ -397,7 +397,7 @@
         "performance",
         "load-testing"
       ],
-      "path": "agents/skills/performance-load-testing/",
+      "path": "ram/skills/performance-load-testing/",
       "used_by": [
         "son-qa",
         "huyen-fe-qa",
@@ -412,7 +412,7 @@
         "requirements",
         "user-stories"
       ],
-      "path": "agents/skills/requirements-engineering/",
+      "path": "ram/skills/requirements-engineering/",
       "used_by": [
         "conan-req-aud",
         "dung-manager",
@@ -427,7 +427,7 @@
         "database",
         "migration"
       ],
-      "path": "agents/skills/database-migration/",
+      "path": "ram/skills/database-migration/",
       "used_by": [
         "phuc-sa",
         "thuc-dev-ts",
@@ -443,7 +443,7 @@
         "testing",
         "test-data"
       ],
-      "path": "agents/skills/test-data-management/",
+      "path": "ram/skills/test-data-management/",
       "used_by": [
         "son-qa",
         "thuc-dev-ts",
@@ -461,7 +461,7 @@
         "secrets",
         "aws-secrets-manager"
       ],
-      "path": "agents/skills/secrets-config-management/",
+      "path": "ram/skills/secrets-config-management/",
       "used_by": [
         "thanh-lai",
         "hung",
@@ -478,7 +478,7 @@
         "infrastructure",
         "terraform"
       ],
-      "path": "agents/skills/infrastructure-as-code/",
+      "path": "ram/skills/infrastructure-as-code/",
       "used_by": [
         "hung",
         "phuc-sa"
@@ -491,7 +491,7 @@
         "docker",
         "kubernetes"
       ],
-      "path": "agents/skills/container-orchestration/",
+      "path": "ram/skills/container-orchestration/",
       "used_by": [
         "hung",
         "thanh-lai",
@@ -505,7 +505,7 @@
         "observability",
         "monitoring"
       ],
-      "path": "agents/skills/observability-monitoring/",
+      "path": "ram/skills/observability-monitoring/",
       "used_by": [
         "nam-observability",
         "hung",
@@ -520,7 +520,7 @@
         "regression-testing",
         "flaky-tests"
       ],
-      "path": "agents/skills/regression-test-suite/",
+      "path": "ram/skills/regression-test-suite/",
       "used_by": [
         "son-qa",
         "huyen-fe-qa",
@@ -539,7 +539,7 @@
         "hld",
         "architecture"
       ],
-      "path": "agents/skills/high-level-design/",
+      "path": "ram/skills/high-level-design/",
       "used_by": [
         "phuc-sa",
         "hieu-arch-r",
@@ -554,7 +554,7 @@
         "technical-debt",
         "compound-interest"
       ],
-      "path": "agents/skills/technical-debt-management/",
+      "path": "ram/skills/technical-debt-management/",
       "used_by": [
         "phuc-sa",
         "dung-manager",
@@ -569,7 +569,7 @@
         "git",
         "branching"
       ],
-      "path": "agents/skills/git-workflow-branching/",
+      "path": "ram/skills/git-workflow-branching/",
       "used_by": [
         "hung",
         "thuc-dev-ts",
@@ -587,7 +587,7 @@
         "planning",
         "estimation"
       ],
-      "path": "agents/skills/project-planning-estimation/",
+      "path": "ram/skills/project-planning-estimation/",
       "used_by": [
         "dung-manager",
         "conan-req-aud",

@@ -151,7 +151,7 @@ Read [QUICK_START.md](QUICK_START.md) - it's the same 1-command prompt.
 ```
 sharpener_reactive/        # PEN/WIN-based debugging
 sharpener_proactive/       # 2026 industry standards
-(+ any from skills.bak/)   # Optional additional skills
+(+ any from ram/skills/)   # Optional additional skills
 ```
 
 ### Agent Modifications

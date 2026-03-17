@@ -35,96 +35,67 @@ ls CLAUDE.md main.md bin/nash agents/ gates/ system/ observability/
 ### Step 1.2: Check Skills Source Exists
 
 ```bash
-ls deprecated/agent_factory_OLD/3_AGENT_SHARPENING/sharpener_reactive/SKILL.md
-ls deprecated/agent_factory_OLD/3_AGENT_SHARPENING/sharpener_proactive/SKILL.md
+ls ram/skills/_registry.json
+ls ram/skills/_registry_full.json
 ```
 
-**Expected:** Both SKILL.md files exist
+**Expected:** Both registry files exist. `ram/skills/` is the source of truth (~62 skills).
 
-**If missing:** STOP - Tell user deprecated/ folder is required.
+**If missing:** STOP - Tell user `ram/skills/` folder is required.
 
 ---
 
-## Phase 2: Install Skills (Auto-Copy)
+## Phase 2: Verify Skills Registry
 
-### Step 2.1: Create agents/skills/ Directory
+> **Note:** Skills already live in `ram/skills/`. No copy step needed.
+> Agent factories are in `factories/agent/`.
 
-```bash
-mkdir -p agents/skills
-```
-
-### Step 2.2: Copy Sharpener Skills
-
-**Use Bash tool to copy:**
+### Step 2.1: Verify Skills Structure
 
 ```bash
-cp -r deprecated/agent_factory_OLD/3_AGENT_SHARPENING/sharpener_reactive agents/skills/
-cp -r deprecated/agent_factory_OLD/3_AGENT_SHARPENING/sharpener_proactive agents/skills/
+ls ram/skills/ | wc -l
 ```
 
-**Verify:**
+**Expected:** ~62+ skill directories
 
-```bash
-ls agents/skills/sharpener_reactive/SKILL.md
-ls agents/skills/sharpener_proactive/SKILL.md
-```
+**Each skill has:**
+- `SKILL.md` — Workflow definition (required)
+- `metadata.json` — Machine-readable metadata (optional, required for Nash CLI)
 
-**Expected:** Both files exist
+### Step 2.2: Verify metadata.json Schema
 
----
-
-### Step 2.3: Create Skills Registry
-
-**Use Write tool to create `agents/skills/_registry.json`:**
+**Skills with `metadata.json` must follow this schema:**
 
 ```json
 {
-  "registry_version": "2.0",
-  "last_updated": "2026-03-17T12:00:00.000Z",
-  "skills": [
-    {
-      "id": "sharpener_reactive",
-      "name": "Agent Skill Sharpener (Reactive)",
-      "version": "1.0.0",
-      "author": "Nash Framework",
-      "description": "Automatically sharpen agent skills by mining PEN/WIN entries from agent files, converting past failures into regression tests, and iteratively improving agent capabilities.",
-      "tags": ["agent-factory", "sharpening", "pen-win", "testing", "reactive"],
-      "archetype_fit": ["Critic", "Analyst"],
-      "path": "agents/skills/sharpener_reactive/",
-      "dependencies": [],
-      "used_by": [],
-      "maintenance_status": "active",
-      "last_modified": "2026-03-17",
-      "test_coverage": "0%",
-      "documentation_url": "agents/skills/sharpener_reactive/README.md"
-    },
-    {
-      "id": "sharpener_proactive",
-      "name": "Agent Sharpening 2026 (Proactive)",
-      "version": "2.0.0",
-      "author": "Nash Framework",
-      "description": "Apply 2026 industry best practices to sharpen Nash agents using patterns from OpenAI Agents SDK, LangGraph, CrewAI. Reduce tokens by 60-80% while increasing quality.",
-      "tags": ["agent-factory", "sharpening", "token-optimization", "best-practices", "2026-patterns", "proactive"],
-      "archetype_fit": ["Strategist", "Analyst"],
-      "path": "agents/skills/sharpener_proactive/",
-      "dependencies": [],
-      "used_by": [],
-      "maintenance_status": "active",
-      "last_modified": "2026-03-17",
-      "test_coverage": "0%",
-      "documentation_url": "agents/skills/sharpener_proactive/README.md"
-    }
-  ]
+  "skill_id": "example-skill",
+  "version": "1.0.0",
+  "description": {
+    "short": "One-line summary",
+    "long": "Detailed description of what the skill does"
+  },
+  "tags": ["category1", "category2"],
+  "archetype_fit": ["Builder", "Critic"],
+  "maintenance": {
+    "status": "active",
+    "last_updated": "2026-03-17"
+  },
+  "test_suite": {
+    "coverage": "0%",
+    "test_count": 0
+  }
 }
 ```
 
-**Verify:**
+**Required fields:** `description.short`, `description.long`, `maintenance.status`, `test_suite.coverage`
+
+### Step 2.3: Verify Registry
 
 ```bash
 node bin/nash list-skills
 ```
 
-**Expected:** `2 skill(s) registered`
+**Expected:** Registry at `ram/skills/_registry.json` lists all registered skills with correct `ram/skills/` paths.
 
 ---
 
@@ -149,7 +120,7 @@ allowedTools: ["*"]
 You are running the `/sharpen` workflow to automatically fix agent bugs based on PEN (Penalty) entries.
 
 **Load the complete workflow from:**
-`agents/skills/sharpener_reactive/SKILL.md`
+`factories/agent/3_AGENT_SHARPENING/sharpener_reactive/SKILL.md`
 
 **Your mission:**
 Mine PEN entries from agent file → Auto-generate regression tests → Sharpen skills until all tests pass → Update agent file.
@@ -172,7 +143,7 @@ allowedTools: ["*"]
 You are running the `/upgrade-agent` workflow to apply 2026 best practices to Nash agents.
 
 **Load the complete workflow from:**
-`agents/skills/sharpener_proactive/SKILL.md`
+`factories/agent/3_AGENT_SHARPENING/sharpener_proactive/SKILL.md`
 
 **Your mission:**
 Audit agent against 5 core principles + 9 workflow patterns → Identify gaps → Apply industry patterns → Reduce tokens 60-80% → Document improvements.
@@ -206,8 +177,8 @@ You are helping user create a new skill for Nash Framework.
    ```
 
 3. Tell user to edit:
-   - `agents/skills/<id>/SKILL.md` - Workflow steps
-   - `agents/skills/<id>/metadata.json` - Tags, archetype_fit, etc.
+   - `ram/skills/<id>/SKILL.md` - Workflow steps
+   - `ram/skills/<id>/metadata.json` - Tags, archetype_fit, etc.
 
 4. Register skill:
    ```bash
@@ -262,41 +233,32 @@ Target agents:
 
 ### Step 3.7: Install Skills into Core Agents
 
-**Use Bash tool to install skills based on agent roles:**
+**Install skills from `ram/skills/` based on agent roles:**
 
 **Dung PM (Project Manager):**
 ```bash
-# Install from skills.bak if available, otherwise skip
-if [ -f "agents/skills.bak/bug-triage/SKILL.md" ]; then
-  cp -r agents/skills.bak/bug-triage agents/skills/
-  node bin/nash register-skill bug-triage
-  node bin/nash install-skill bug-triage --agent dung-manager
-fi
-
-if [ -f "agents/skills.bak/deployment-excellence/SKILL.md" ]; then
-  cp -r agents/skills.bak/deployment-excellence agents/skills/
-  node bin/nash register-skill deployment-excellence
-  node bin/nash install-skill deployment-excellence --agent dung-manager
-fi
+node bin/nash install-skill bug-triage --agent dung-manager
+node bin/nash install-skill deployment-excellence --agent dung-manager
+node bin/nash install-skill project-planning-estimation --agent dung-manager
+node bin/nash install-skill requirements-engineering --agent dung-manager
 ```
 
 **Phuc SA (Solution Architect):**
 ```bash
-# Install architecture skills
-if [ -f "agents/skills.bak/contract-draft-template/SKILL.md" ]; then
-  cp -r agents/skills.bak/contract-draft-template agents/skills/
-  node bin/nash register-skill contract-draft-template
-  node bin/nash install-skill contract-draft-template --agent phuc-sa
-fi
-
-if [ -f "agents/skills.bak/arch-challenge-response/SKILL.md" ]; then
-  cp -r agents/skills.bak/arch-challenge-response agents/skills/
-  node bin/nash register-skill arch-challenge-response
-  node bin/nash install-skill arch-challenge-response --agent phuc-sa
-fi
+node bin/nash install-skill contract-draft-template --agent phuc-sa
+node bin/nash install-skill arch-challenge-response --agent phuc-sa
+node bin/nash install-skill architecture-decision-framework --agent phuc-sa
+node bin/nash install-skill high-level-design --agent phuc-sa
 ```
 
-**Note:** Only install if skills.bak/ exists. If not, skip this step.
+**Son QA (Quality Assurance):**
+```bash
+node bin/nash install-skill api-chaos-testing --agent son-qa
+node bin/nash install-skill regression-test-suite --agent son-qa
+node bin/nash install-skill performance-load-testing --agent son-qa
+```
+
+**Note:** All skills live in `ram/skills/`. Registry at `ram/skills/_registry.json`.
 
 ---
 
@@ -547,7 +509,7 @@ allowedTools: ["*"]
 - **Agent Registry:** `node bin/nash list-souls`
 - **Skill Registry:** `node bin/nash list-skills`
 - **Dispatch Template:** `system/templates/NASH_SUBAGENT_PROMPTS.md` v6.2
-- **Memory Tiers:** L2 Cache (agents/*.md) + RAM (tmp/ram/) + HDD (source)
+- **Memory Tiers:** L2 Cache (agents/*.md) + RAM (ram/) + HDD (source)
 - **Pipelines:** 6 SDLC pipelines + Design Flow + FE Implementation
 - **Quality Gates:** 5 gate scripts (validate, integrity, qa, security, commit)
 
@@ -611,11 +573,13 @@ node bin/nash list-skills
 ```
 📚 Nash Skill Registry
 
-ID                   | Name                        | Ver   | Tags
-sharpener_reactive   | Agent Skill Sharpener       | 1.0.0 | agent-factory, sharpening
-sharpener_proactive  | Agent Sharpening 2026       | 2.0.0 | agent-factory, sharpening
+ID                              | Name                              | Ver   | Tags
+code-review-excellence          | Two-pass code review              | 1.0.0 | review, qa
+deployment-excellence           | Deployment Excellence             | 1.0.0 | deployment, ci-cd
+contract-draft-template         | Interface contract spec           | 1.0.0 | architecture, contract
+...
 
-2 skill(s) registered
+~40+ skill(s) registered
 ```
 
 ---
@@ -657,10 +621,10 @@ ls observability/data.js
    - Gates: 5 quality scripts ✓
    - System: Pipelines & templates ✓
 
-✅ Phase 2: Skills Installation - COMPLETED
-   - Copied: sharpener_reactive ✓
-   - Copied: sharpener_proactive ✓
-   - Registry: 2 skills registered ✓
+✅ Phase 2: Skills Verification - COMPLETED
+   - Source: ram/skills/ (~62 skills) ✓
+   - Registry: ram/skills/_registry.json ✓
+   - metadata.json schema validated ✓
 
 ✅ Phase 3: Slash Commands - CREATED
    - /sharpen ✓
@@ -675,10 +639,10 @@ ls observability/data.js
    - /plan-eng-review ✓ (if gstack-main exists)
    - /retro ✓ (if gstack-main exists)
    - Core agents: SKILLS section added ✓
-   - Skills installed into agents ✓ (if skills.bak exists)
+   - Skills installed into agents ✓ (from ram/skills/)
 
 ✅ Phase 4: Verification - PASSED
-   - Nash CLI: 2 skills listed ✓
+   - Nash CLI: ~40+ skills listed ✓
    - Gate scripts: Executable ✓
    - Dashboard: Files ready ✓
 
@@ -699,8 +663,8 @@ ls observability/data.js
 4. **Read documentation:**
    - Framework overview: CLAUDE.md
    - Workflow guide: main.md
-   - Agent factory: deprecated/agent_factory_OLD/README.md
-   - Skill factory: deprecated/skill_factory_OLD/README.md
+   - Agent factory: factories/agent/README.md
+   - Skills: ram/skills/_registry.json
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -755,12 +719,12 @@ Dashboard:
 
 ## 🔧 Troubleshooting (If Errors Occur)
 
-### Error: "deprecated/ folder not found"
+### Error: "ram/skills/ not found"
 
-**Solution:** Tell user to copy entire SuperAgent folder including deprecated/
+**Solution:** Tell user to copy entire SuperAgent folder including ram/
 
 ```
-❌ ERROR: deprecated/agent_factory_OLD/ not found
+❌ ERROR: ram/skills/ not found
 
 Nash Framework requires the full directory structure.
 
@@ -798,9 +762,9 @@ chmod +x gates/*.sh
 
 After running this setup, verify:
 
-- [ ] `node bin/nash list-skills` → Shows 2 skills
-- [ ] `ls .claude/commands/` → Shows 3 .md files
-- [ ] `cat agents/skills/_registry.json` → Valid JSON with 2 skills
+- [ ] `node bin/nash list-skills` → Shows ~40+ skills
+- [ ] `ls .claude/commands/` → Shows slash command .md files
+- [ ] `cat ram/skills/_registry.json` → Valid JSON with skill entries
 - [ ] `bash gates/validate.sh --help` → Shows usage (no error)
 - [ ] Files created programmatically (not copied by user)
 
@@ -811,7 +775,7 @@ After running this setup, verify:
 ## 🎯 IMPORTANT NOTES FOR AGENT
 
 1. **Use Write tool** to create slash command files - do NOT tell user to copy-paste
-2. **Use Bash tool** to copy skills from deprecated/ - do NOT tell user to run commands manually
+2. **Verify** skills exist in `ram/skills/` - no copy needed
 3. **Track progress** with TodoWrite tool
 4. **Report status** after each phase (Phase 1 ✅, Phase 2 ✅, etc.)
 5. **Final summary** using the template above

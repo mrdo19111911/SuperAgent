@@ -135,7 +135,7 @@ See full specification: [system/FAST_BYPASS_ROUTER.md](system/FAST_BYPASS_ROUTER
 
 Vào thời điểm bắt đầu (Phase -1), thay vì lập tức đoán mò và gọi 1 Pipeline dựa trên đuổi file, **MoE Analyzer BẮT BUỘC phải mở và tuân thủ tuyệt đối quy trình trong file `AUDIT.md`**.
 
-- **Tham chiếu:** Xem chi tiết tại `Agent_v3/AUDIT.md` (Phiên bản Enterprise 12 Chiều TDD).
+- **Tham chiếu:** Xem chi tiết tại `system/audit/AUDIT_SPEC.md` (Phiên bản Enterprise 12 Chiều TDD).
 - **Mục đích:** Không bỏ sót bất kỳ điểm mù nào từ Business, Docs, Security, Tech Debt, Ops, đến Database và Frontend.
 
 Dữ liệu khám nghiệm thu về từ `AUDIT.md` sẽ là tham số SỐNG CÒN để Router gạt cần gạt ở Bước 2.

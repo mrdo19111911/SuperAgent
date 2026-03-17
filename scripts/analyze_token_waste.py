@@ -37,12 +37,12 @@ skills_tokens = count_tokens('ram/skills/_registry.json')
 print(f"  ram/skills/_registry.json {skills_tokens:29d} tokens")
 print(f"  WASTE: {int(skills_tokens * 0.5)} tokens avg (50% tasks don't need)")
 
-# Active Agents (exclude .bak and skills.bak/)
+# Active Agents (exclude .bak directories)
 print("\n[4] ACTIVE AGENTS (core/dev/research/user - excluding backups):")
 agents = []
 for root, dirs, files in os.walk('agents'):
     # Skip backup directories
-    if 'skills.bak' in root or 'skills' in root:
+    if '.bak' in root:
         continue
     for f in files:
         if f.endswith('.md') and not f.endswith('.bak'):

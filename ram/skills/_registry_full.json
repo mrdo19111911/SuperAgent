@@ -19,7 +19,7 @@
         "Critic",
         "Builder"
       ],
-      "path": "agents/skills/code-review-excellence/",
+      "path": "ram/skills/code-review-excellence/",
       "dependencies": [],
       "used_by": [
         "phuc-sa",
@@ -48,7 +48,7 @@
         "Operator",
         "Builder"
       ],
-      "path": "agents/skills/deployment-excellence/",
+      "path": "ram/skills/deployment-excellence/",
       "dependencies": [],
       "used_by": [],
       "maintenance_status": "draft",
@@ -73,7 +73,7 @@
         "Strategist",
         "Builder"
       ],
-      "path": "agents/skills/postgresql-rls-architecture/",
+      "path": "ram/skills/postgresql-rls-architecture/",
       "dependencies": [
         "pg-aiguide (MCP)"
       ],
@@ -103,7 +103,7 @@
         "Strategist",
         "Analyst"
       ],
-      "path": "agents/skills/contract-draft-template/",
+      "path": "ram/skills/contract-draft-template/",
       "dependencies": [],
       "used_by": [
         "phuc-sa",
@@ -134,7 +134,7 @@
         "Builder",
         "Critic"
       ],
-      "path": "agents/skills/multi-tenant-schema-design/",
+      "path": "ram/skills/multi-tenant-schema-design/",
       "dependencies": [
         "postgresql-rls-architecture"
       ],
@@ -165,7 +165,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/arch-challenge-response/",
+      "path": "ram/skills/arch-challenge-response/",
       "dependencies": [],
       "used_by": [
         "phuc-sa",
@@ -195,7 +195,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/token-optimized-arch-docs/",
+      "path": "ram/skills/token-optimized-arch-docs/",
       "dependencies": [],
       "used_by": [
         "phuc-sa",
@@ -226,7 +226,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/architecture-decision-framework/",
+      "path": "ram/skills/architecture-decision-framework/",
       "dependencies": [],
       "used_by": [
         "phuc-sa",
@@ -255,7 +255,7 @@
         "Builder",
         "Critic"
       ],
-      "path": "agents/skills/module-decomposition-strategy/",
+      "path": "ram/skills/module-decomposition-strategy/",
       "dependencies": [],
       "used_by": [
         "phuc-sa",
@@ -284,7 +284,7 @@
         "Builder",
         "Critic"
       ],
-      "path": "agents/skills/design-pattern-selection/",
+      "path": "ram/skills/design-pattern-selection/",
       "dependencies": [],
       "used_by": [
         "phuc-sa",
@@ -312,7 +312,7 @@
       "archetype_fit": [
         "Builder"
       ],
-      "path": "agents/skills/react-vite-patterns/",
+      "path": "ram/skills/react-vite-patterns/",
       "dependencies": [],
       "used_by": [
         "lan-dev-fe",
@@ -342,7 +342,7 @@
         "Builder",
         "Analyst"
       ],
-      "path": "agents/skills/tdd-best-practices/",
+      "path": "ram/skills/tdd-best-practices/",
       "dependencies": [],
       "used_by": [
         "thuc-dev-ts",
@@ -372,7 +372,7 @@
         "Critic",
         "Analyst"
       ],
-      "path": "agents/skills/api-chaos-testing/",
+      "path": "ram/skills/api-chaos-testing/",
       "dependencies": [],
       "used_by": [
         "son-qa",
@@ -401,7 +401,7 @@
         "Critic",
         "Analyst"
       ],
-      "path": "agents/skills/data-flow-tracing/",
+      "path": "ram/skills/data-flow-tracing/",
       "dependencies": [],
       "used_by": [
         "moc-arch-chal",
@@ -430,7 +430,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/ux-audit-checklist/",
+      "path": "ram/skills/ux-audit-checklist/",
       "dependencies": [],
       "used_by": [
         "quang-designer"
@@ -457,7 +457,7 @@
       "archetype_fit": [
         "Builder"
       ],
-      "path": "agents/skills/frontend-security-coder/",
+      "path": "ram/skills/frontend-security-coder/",
       "dependencies": [],
       "used_by": [
         "lan-dev-fe"
@@ -484,7 +484,7 @@
       "archetype_fit": [
         "Builder"
       ],
-      "path": "agents/skills/react-best-practices-vercel/",
+      "path": "ram/skills/react-best-practices-vercel/",
       "dependencies": [],
       "used_by": [
         "lan-dev-fe"
@@ -511,7 +511,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/systematic-debugging/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/systematic-debugging/",
       "dependencies": [],
       "used_by": [
         "son-qa",
@@ -539,7 +539,7 @@
         "Builder",
         "Critic"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/e2e-testing/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/e2e-testing/",
       "dependencies": [],
       "used_by": [
         "son-qa",
@@ -568,7 +568,7 @@
         "Critic",
         "Analyst"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/api-security-testing/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/api-security-testing/",
       "dependencies": [],
       "used_by": [
         "son-qa",
@@ -595,7 +595,7 @@
       "archetype_fit": [
         "Builder"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/testing-patterns/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/testing-patterns/",
       "dependencies": [],
       "used_by": [
         "son-qa",
@@ -625,7 +625,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/testing-qa/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/testing-qa/",
       "dependencies": [],
       "used_by": [
         "son-qa",
@@ -654,7 +654,7 @@
         "Builder",
         "Analyst"
       ],
-      "path": "agents/skills/antigravity-awesome-skills/skills/test-automator/",
+      "path": "ram/skills/antigravity-awesome-skills/skills/test-automator/",
       "dependencies": [],
       "used_by": [
         "son-qa"
@@ -681,7 +681,7 @@
         "Builder",
         "Critic"
       ],
-      "path": "agents/skills/claude-code-skills/ln-522-manual-tester/",
+      "path": "ram/skills/claude-code-skills/ln-522-manual-tester/",
       "dependencies": [],
       "used_by": [
         "son-qa"
@@ -708,7 +708,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/claude-code-skills/ln-630-test-auditor/",
+      "path": "ram/skills/claude-code-skills/ln-630-test-auditor/",
       "dependencies": [
         "ln-631-test-business-logic-auditor",
         "ln-632-test-e2e-priority-auditor",
@@ -742,7 +742,7 @@
         "Critic",
         "Analyst"
       ],
-      "path": "agents/skills/claude-code-skills/ln-631-test-business-logic-auditor/",
+      "path": "ram/skills/claude-code-skills/ln-631-test-business-logic-auditor/",
       "dependencies": [],
       "used_by": [
         "son-qa",
@@ -770,7 +770,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/claude-code-skills/ln-633-test-value-auditor/",
+      "path": "ram/skills/claude-code-skills/ln-633-test-value-auditor/",
       "dependencies": [],
       "used_by": [
         "son-qa",
@@ -799,7 +799,7 @@
       "archetype_fit": [
         "Builder"
       ],
-      "path": "agents/skills/fastapi-async-patterns/",
+      "path": "ram/skills/fastapi-async-patterns/",
       "dependencies": [],
       "used_by": [
         "huyen-dev-py"
@@ -827,7 +827,7 @@
       "archetype_fit": [
         "Builder"
       ],
-      "path": "agents/skills/sqlalchemy-async-patterns/",
+      "path": "ram/skills/sqlalchemy-async-patterns/",
       "dependencies": [],
       "used_by": [
         "huyen-dev-py"
@@ -856,7 +856,7 @@
         "Builder",
         "Critic"
       ],
-      "path": "agents/skills/pytest-fastapi-patterns/",
+      "path": "ram/skills/pytest-fastapi-patterns/",
       "dependencies": [],
       "used_by": [
         "huyen-dev-py"
@@ -893,7 +893,7 @@
         "Operator",
         "Analyst"
       ],
-      "path": "agents/skills/performance-load-testing/",
+      "path": "ram/skills/performance-load-testing/",
       "dependencies": [
         "observability-monitoring"
       ],
@@ -933,7 +933,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/requirements-engineering/",
+      "path": "ram/skills/requirements-engineering/",
       "dependencies": [],
       "used_by": [
         "conan-req-aud",
@@ -972,7 +972,7 @@
         "Strategist",
         "Critic"
       ],
-      "path": "agents/skills/database-migration/",
+      "path": "ram/skills/database-migration/",
       "dependencies": [
         "postgresql-rls-architecture"
       ],
@@ -1015,7 +1015,7 @@
         "Builder",
         "Critic"
       ],
-      "path": "agents/skills/test-data-management/",
+      "path": "ram/skills/test-data-management/",
       "dependencies": [
         "tdd-best-practices"
       ],
@@ -1059,7 +1059,7 @@
         "Builder",
         "Critic"
       ],
-      "path": "agents/skills/secrets-config-management/",
+      "path": "ram/skills/secrets-config-management/",
       "dependencies": [],
       "used_by": [
         "thanh-lai",
@@ -1096,7 +1096,7 @@
         "Strategist",
         "Builder"
       ],
-      "path": "agents/skills/infrastructure-as-code/",
+      "path": "ram/skills/infrastructure-as-code/",
       "dependencies": [],
       "used_by": [
         "hung",
@@ -1130,7 +1130,7 @@
         "Builder",
         "Critic"
       ],
-      "path": "agents/skills/container-orchestration/",
+      "path": "ram/skills/container-orchestration/",
       "dependencies": [],
       "used_by": [
         "hung",
@@ -1169,7 +1169,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/observability-monitoring/",
+      "path": "ram/skills/observability-monitoring/",
       "dependencies": [],
       "used_by": [
         "nam-observability",
@@ -1207,7 +1207,7 @@
         "Builder",
         "Analyst"
       ],
-      "path": "agents/skills/regression-test-suite/",
+      "path": "ram/skills/regression-test-suite/",
       "dependencies": [
         "tdd-best-practices",
         "test-data-management"
@@ -1254,7 +1254,7 @@
         "Strategist",
         "Analyst"
       ],
-      "path": "agents/skills/high-level-design/",
+      "path": "ram/skills/high-level-design/",
       "dependencies": [
         "requirements-engineering"
       ],
@@ -1296,7 +1296,7 @@
         "Analyst",
         "Critic"
       ],
-      "path": "agents/skills/technical-debt-management/",
+      "path": "ram/skills/technical-debt-management/",
       "dependencies": [],
       "used_by": [
         "phuc-sa",
@@ -1340,7 +1340,7 @@
         "Builder",
         "Analyst"
       ],
-      "path": "agents/skills/git-workflow-branching/",
+      "path": "ram/skills/git-workflow-branching/",
       "dependencies": [],
       "used_by": [
         "hung",
@@ -1387,7 +1387,7 @@
         "Strategist",
         "Critic"
       ],
-      "path": "agents/skills/project-planning-estimation/",
+      "path": "ram/skills/project-planning-estimation/",
       "dependencies": [
         "requirements-engineering"
       ],
