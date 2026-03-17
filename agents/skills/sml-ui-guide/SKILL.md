@@ -2,6 +2,8 @@
 
 **Role:** UX auditor for TMS/WMS/OMS (B2B logistics, 60% users 45+, vision issues)
 
+**Philosophy:** 5 Systems Thinking principles — (1) Emergence: flow > parts, (2) Feedback: instant response, (3) Interconnectedness: drill-down cross-system, (4) Leverage: Planning Board + Exception Dashboard + Control Tower, (5) Mental Models: role-specific UX.
+
 ---
 
 ## Checklist (18 items)
@@ -81,6 +83,88 @@
 
 ---
 
+## 10 Design Patterns
+
+1. **Planning Board** - Kanban: New→Allocated→In Progress→Completed (drag-drop)
+2. **Fleet View** - Real-time GPS map (center, NOT sidebar) + driver status
+3. **Exception Feed** - Auto-refresh delayed/stuck items, resolve in <3 clicks
+4. **Bulk Operations** - Multi-select (cross-page), preview changes, atomic commit
+5. **Search & Filter** - Cmd+K global, saved filters, search history
+6. **Collaboration** - Real-time presence (avatars), inline comments, @mentions
+7. **Notification Center** - Grouped by priority, actionable buttons, snooze
+8. **Analytics Dashboard** - KPIs secondary to exceptions, drill-down to raw data
+9. **Import/Export** - Wizard auto-detect CSV columns, validation preview, rollback
+10. **Settings Management** - Progressive disclosure (Basic/Advanced), diff before save
+
+---
+
+## Onboarding (10-Min First Success)
+
+| Step | Action | Output |
+|------|--------|--------|
+| 1. Intent | "What do you want to do?" → role detection | Personalized path |
+| 2. Role | Select: Planner / Dispatcher / Manager / Admin | Feature unlocks |
+| 3. Guided Task | First shipment/order/pick with tooltips | Success state |
+| 4. Value | Show impact: "Saved 2 hours vs manual" | Aha moment |
+| 5. Progress | Checklist: 5 key tasks to master | Gamification |
+
+**Sandbox:** 50 demo shipments, 10 carriers, 5 warehouses (always available).
+
+---
+
+## AI Governance (3 Risk Levels)
+
+| Level | Type | UX Rule | Example |
+|-------|------|---------|---------|
+| **Low** | Suggestion | Auto-apply, notify after | Smart sort, email subject |
+| **Medium** | Recommendation | Show confidence, 1-click approve | Route, carrier, forecast |
+| **High** | Decision | Must explain + require approval | Price change, order cancel |
+
+**XAI:** "Tại sao?" button always present → show data + logic.
+
+---
+
+## Security & Privacy UX
+
+- **RBAC:** Hide (not disable) unauthorized features
+- **Data Mask:** Price visible to authorized roles only, customer info masked for drivers
+- **Session:** Auto-logout 30 min, MFA for sensitive ops
+- **Audit Trail:** Log: who, when, old/new value (destructive actions)
+- **Privacy:** Data minimization, GPS consent, GDPR export/delete
+- **Destructive Actions:** Undo OR soft delete (30-day recovery)
+
+---
+
+## Implementation Phases (4 stages, 20 weeks)
+
+| Phase | Duration | Deliverables | Bottleneck |
+|-------|----------|--------------|------------|
+| **0: Foundation** | Week 1-3 | Design tokens (6 colors × 2 modes), Shared components (10 core), Audit baseline | Component library (Theory of Constraints #1) |
+| **1: Core Principles** | Week 4-10 | Workflow nav, Exception dashboard, Color system, Error recovery (3 layers), Progressive complexity (3 tiers) | Navigation restructure + A/B test |
+| **2: Patterns & Ecosystem** | Week 11-20 | 10 patterns, Onboarding (5 steps), AI governance, Security UX, Edge cases | Cross-platform consistency |
+| **3: Measurement** | Week 20+ | HEART metrics, Ops metrics (Time to Resolution, Adoption Rate), Anti-pattern audit (quarterly) | Data instrumentation |
+
+**Gate:** Each phase requires review before next.
+
+---
+
+## HEART Framework Metrics
+
+| Metric | Definition | Target | Measure |
+|--------|------------|--------|---------|
+| **Happiness** | User satisfaction (NPS, CSAT) | NPS >30 | Quarterly survey |
+| **Engagement** | Active users, feature usage | DAU/MAU >40% | Analytics |
+| **Adoption** | New user activation | 10-min success >80% | Onboarding funnel |
+| **Retention** | Churn rate | <10%/year | Cohort analysis |
+| **Task Success** | Completion rate, time | >90%, <3 min | Session recording |
+
+**Operational:**
+- Time to Resolution: <5 min (exceptions)
+- Click Depth: <3 clicks (core tasks)
+- Support Ticket Rate: <5/user/30d
+
+---
+
 ## Targets
 
 | Metric | Target |
@@ -89,3 +173,6 @@
 | Task clicks | <3 |
 | Support tickets | <5/user/30d |
 | Training | <4 hours |
+| NPS | >30 |
+| DAU/MAU | >40% |
+| Churn | <10%/year |
