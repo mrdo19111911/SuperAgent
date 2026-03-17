@@ -1,4 +1,4 @@
-# Nash SubAgent Dispatch — v6.4
+# Nash SubAgent Dispatch — v6.6
 
 > **Roles:** THESIS = primary executor. AT (Anti-Thesis) = reviewer/auditor (#1/#2/#3 = parallel). Main = orchestrator (dispatches, scores, writes LEDGER). Letters A-F are phase labels — each pipeline uses a subset.
 > **Structure:** Standard pipelines (Simple, Complex, Critical) have two tiers: Tier 1 defines acceptance criteria, Tier 2 builds and verifies. Trivial collapses both tiers. NASH/Urgent have their own flow.
