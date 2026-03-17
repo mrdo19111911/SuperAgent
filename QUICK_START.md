@@ -9,17 +9,14 @@
 Paste lệnh này vào Claude Code chat:
 
 ```
-Đọc file AUTO_SETUP.md và thực hiện TẤT CẢ các bước setup để kích hoạt Nash Framework.
+Đọc file AUTO_SETUP.md và thực hiện TẤT CẢ các bước setup.
 
-Chạy từng bước theo thứ tự:
-1. Verify framework structure (Bước 1)
-2. Activate Nash Factories (Bước 2)
-3. Create slash commands (Bước 3)
-4. Test everything works (Bước 4)
+Sử dụng Write tool để TẠO slash commands.
+Sử dụng Bash tool để COPY skills.
+KHÔNG yêu cầu tôi copy-paste commands thủ công.
 
-SAU MỖI BƯỚC: Báo cáo kết quả (PASS/FAIL).
-
-CUỐI CÙNG: Hiển thị summary checklist.
+Track progress với TodoWrite.
+Báo cáo kết quả sau mỗi Phase.
 ```
 
 **Thời gian:** 2-5 phút (agent tự động làm hết)

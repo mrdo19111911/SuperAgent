@@ -1,65 +1,146 @@
-# AUTO_SETUP.md - Nash Framework Portable Installation
+# AUTO_SETUP.md - Nash Framework Auto-Installer
 
-> **Copy framework này sang máy khác? Đọc file này và chạy lệnh bên dưới.**
+> **Prompt này khi copy framework sang máy mới.**
 >
-> Agent sẽ tự động cài đặt toàn bộ: Nash CLI, Skills, Slash Commands, Factories.
+> Agent sẽ TỰ ĐỘNG tạo slash commands, install skills, setup registry - KHÔNG cần copy thủ công.
 
 ---
 
-## 🚀 QUICK START (Copy & Paste)
+## 🤖 AGENT INSTRUCTIONS - READ AND EXECUTE
 
-### Bước 1: Verify Framework Structure (5 giây)
+**You are setting up Nash Framework on a new machine. Follow these steps EXACTLY.**
+
+**IMPORTANT:**
+- Create ALL files programmatically (use Write tool)
+- Do NOT ask user to copy-paste bash commands
+- Track progress with TodoWrite
+- Report completion status after each phase
+
+---
+
+## Phase 1: Verify Framework Structure
+
+### Step 1.1: Check Core Files Exist
 
 ```bash
-# Kiểm tra các file/folder quan trọng tồn tại
-ls CLAUDE.md main.md bin/nash agents/skills/ gates/ system/ observability/
-
-# Kết quả mong đợi: Tất cả files/folders hiển thị, không có lỗi "No such file"
+ls CLAUDE.md main.md bin/nash agents/ gates/ system/ observability/
 ```
 
-**Nếu thiếu gì → framework chưa copy đầy đủ.**
+**Expected:** All files/folders exist
+
+**If missing:** STOP - Framework not copied completely. Tell user to copy entire SuperAgent folder.
 
 ---
 
-### Bước 2: Activate Nash Factories (30 giây)
+### Step 1.2: Check Skills Source Exists
 
 ```bash
-# 2.1. Verify skills copied
+ls deprecated/agent_factory_OLD/3_AGENT_SHARPENING/sharpener_reactive/SKILL.md
+ls deprecated/agent_factory_OLD/3_AGENT_SHARPENING/sharpener_proactive/SKILL.md
+```
+
+**Expected:** Both SKILL.md files exist
+
+**If missing:** STOP - Tell user deprecated/ folder is required.
+
+---
+
+## Phase 2: Install Skills (Auto-Copy)
+
+### Step 2.1: Create agents/skills/ Directory
+
+```bash
+mkdir -p agents/skills
+```
+
+### Step 2.2: Copy Sharpener Skills
+
+**Use Bash tool to copy:**
+
+```bash
+cp -r deprecated/agent_factory_OLD/3_AGENT_SHARPENING/sharpener_reactive agents/skills/
+cp -r deprecated/agent_factory_OLD/3_AGENT_SHARPENING/sharpener_proactive agents/skills/
+```
+
+**Verify:**
+
+```bash
 ls agents/skills/sharpener_reactive/SKILL.md
 ls agents/skills/sharpener_proactive/SKILL.md
-
-# Nếu thiếu → copy từ deprecated:
-# cp -r deprecated/agent_factory_OLD/3_AGENT_SHARPENING/sharpener_reactive agents/skills/
-# cp -r deprecated/agent_factory_OLD/3_AGENT_SHARPENING/sharpener_proactive agents/skills/
-
-# 2.2. Verify registry exists
-cat agents/skills/_registry.json
-
-# Nếu thiếu → tạo registry:
-# cat > agents/skills/_registry.json <<'EOF'
-# {
-#   "registry_version": "2.0",
-#   "last_updated": "2026-03-17T12:00:00.000Z",
-#   "skills": []
-# }
-# EOF
-
-# 2.3. Test Nash CLI
-node bin/nash list-skills
-
-# Kết quả mong đợi: 2 skill(s) registered (sharpener_reactive, sharpener_proactive)
 ```
+
+**Expected:** Both files exist
 
 ---
 
-### Bước 3: Create Slash Commands (1 phút)
+### Step 2.3: Create Skills Registry
+
+**Use Write tool to create `agents/skills/_registry.json`:**
+
+```json
+{
+  "registry_version": "2.0",
+  "last_updated": "2026-03-17T12:00:00.000Z",
+  "skills": [
+    {
+      "id": "sharpener_reactive",
+      "name": "Agent Skill Sharpener (Reactive)",
+      "version": "1.0.0",
+      "author": "Nash Framework",
+      "description": "Automatically sharpen agent skills by mining PEN/WIN entries from agent files, converting past failures into regression tests, and iteratively improving agent capabilities.",
+      "tags": ["agent-factory", "sharpening", "pen-win", "testing", "reactive"],
+      "archetype_fit": ["Critic", "Analyst"],
+      "path": "agents/skills/sharpener_reactive/",
+      "dependencies": [],
+      "used_by": [],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-17",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/sharpener_reactive/README.md"
+    },
+    {
+      "id": "sharpener_proactive",
+      "name": "Agent Sharpening 2026 (Proactive)",
+      "version": "2.0.0",
+      "author": "Nash Framework",
+      "description": "Apply 2026 industry best practices to sharpen Nash agents using patterns from OpenAI Agents SDK, LangGraph, CrewAI. Reduce tokens by 60-80% while increasing quality.",
+      "tags": ["agent-factory", "sharpening", "token-optimization", "best-practices", "2026-patterns", "proactive"],
+      "archetype_fit": ["Strategist", "Analyst"],
+      "path": "agents/skills/sharpener_proactive/",
+      "dependencies": [],
+      "used_by": [],
+      "maintenance_status": "active",
+      "last_modified": "2026-03-17",
+      "test_coverage": "0%",
+      "documentation_url": "agents/skills/sharpener_proactive/README.md"
+    }
+  ]
+}
+```
+
+**Verify:**
 
 ```bash
-# 3.1. Create .claude/commands directory
-mkdir -p .claude/commands
+node bin/nash list-skills
+```
 
-# 3.2. Create /sharpen command
-cat > .claude/commands/sharpen.md <<'EOF'
+**Expected:** `2 skill(s) registered`
+
+---
+
+## Phase 3: Create Slash Commands
+
+### Step 3.1: Create .claude/commands/ Directory
+
+```bash
+mkdir -p .claude/commands
+```
+
+### Step 3.2: Create /sharpen Command
+
+**Use Write tool to create `.claude/commands/sharpen.md`:**
+
+```markdown
 ---
 description: Fix agent bugs using PEN/WIN-based reactive sharpening
 allowedTools: ["*"]
@@ -74,10 +155,15 @@ You are running the `/sharpen` workflow to automatically fix agent bugs based on
 Mine PEN entries from agent file → Auto-generate regression tests → Sharpen skills until all tests pass → Update agent file.
 
 **Follow the workflow EXACTLY as documented in SKILL.md. Track progress with TodoWrite.**
-EOF
+```
 
-# 3.3. Create /upgrade-agent command
-cat > .claude/commands/upgrade-agent.md <<'EOF'
+---
+
+### Step 3.3: Create /upgrade-agent Command
+
+**Use Write tool to create `.claude/commands/upgrade-agent.md`:**
+
+```markdown
 ---
 description: Upgrade agent to 2026 industry standards using proactive sharpening
 allowedTools: ["*"]
@@ -92,288 +178,299 @@ You are running the `/upgrade-agent` workflow to apply 2026 best practices to Na
 Audit agent against 5 core principles + 9 workflow patterns → Identify gaps → Apply industry patterns → Reduce tokens 60-80% → Document improvements.
 
 **Follow the workflow EXACTLY as documented in SKILL.md. Track progress with TodoWrite.**
-EOF
-
-# 3.4. Verify slash commands
-ls .claude/commands/sharpen.md .claude/commands/upgrade-agent.md
-
-# Kết quả mong đợi: 2 files exist
 ```
 
 ---
 
-### Bước 4: Test Everything Works (30 giây)
+### Step 3.4: Create /create-skill Command (Bonus)
 
-```bash
-# 4.1. Test Nash CLI
-node bin/nash list-skills
-node bin/nash list-souls
+**Use Write tool to create `.claude/commands/create-skill.md`:**
 
-# 4.2. Test gate scripts
-bash gates/validate.sh --help 2>&1 | head -5
+```markdown
+---
+description: Create new skill using Nash CLI
+allowedTools: ["*"]
+---
 
-# 4.3. Test dashboard (open in browser)
-# Windows: start observability/dashboard-simple.html
-# Mac/Linux: open observability/dashboard-simple.html
+You are helping user create a new skill for Nash Framework.
 
-# 4.4. Reload VSCode to activate slash commands
-# → File > Reload Window
-# → Then type "/" in chat to see /sharpen and /upgrade-agent
+**Workflow:**
+
+1. Ask user:
+   - Skill name (e.g., "My Workflow")
+   - Skill ID (kebab-case, e.g., "my-workflow")
+
+2. Create skill scaffold:
+   ```bash
+   node bin/nash create-skill --name "<name>" --id "<id>"
+   ```
+
+3. Tell user to edit:
+   - `agents/skills/<id>/SKILL.md` - Workflow steps
+   - `agents/skills/<id>/metadata.json` - Tags, archetype_fit, etc.
+
+4. Register skill:
+   ```bash
+   node bin/nash register-skill <id>
+   ```
+
+5. Test:
+   ```bash
+   node bin/nash list-skills | grep <id>
+   ```
 ```
 
 ---
 
-## ✅ SUCCESS CRITERIA
+### Step 3.5: Verify Slash Commands Created
 
-After completing setup, you should have:
-
-- ✅ Nash CLI works: `node bin/nash list-skills` shows 2+ skills
-- ✅ Slash commands: `/sharpen` and `/upgrade-agent` appear in autocomplete
-- ✅ Gate scripts executable: `bash gates/validate.sh` runs
-- ✅ Dashboard opens: `observability/dashboard-simple.html` loads
-- ✅ Agent profiles readable: `cat agents/core/dung-manager.md` shows content
-
----
-
-## 📋 WHAT GETS INSTALLED
-
-### 1. Nash CLI (Skill & Agent Manager)
-
-**Location:** `bin/nash`
-
-**Commands:**
 ```bash
-node bin/nash list-skills         # List all registered skills
-node bin/nash list-souls          # List available agent personalities
-node bin/nash create-skill --name "X" --id x    # Scaffold new skill
-node bin/nash install-skill <id> --agent <name> # Add skill to agent
-```
-
----
-
-### 2. Agent Factories (2 Sharpeners)
-
-**Location:** `agents/skills/sharpener_reactive/`, `agents/skills/sharpener_proactive/`
-
-**Slash Commands:**
-- `/sharpen <agent-file>` - Fix bugs based on PEN entries (reactive)
-- `/upgrade-agent <agent-file>` - Apply 2026 standards (proactive)
-
-**Use Cases:**
-- Agent has 3+ PEN entries → `/sharpen agents/core/phuc-sa.md`
-- Quarterly upgrade → `/upgrade-agent agents/core/phuc-sa.md`
-- Token bloat (>500 L2 Cache) → `/upgrade-agent --mode token-optimization`
-
----
-
-### 3. Quality Gates (5 Scripts)
-
-**Location:** `gates/`
-
-**Scripts:**
-```bash
-bash gates/validate.sh <module>   # Build + tsc + tests + no TODO/FIXME
-bash gates/integrity.sh <module>  # Detect mocks in integration tests
-bash gates/qa.sh <module>         # SAST + test distribution + smoke
-bash gates/security.sh <module>   # Secrets scan + dependency audit
-bash gates/commit.sh <module>     # Pre-validate → safe git commit
-```
-
-**Auto-detects:** TypeScript, Go, .NET, Python projects
-
----
-
-### 4. Dashboard (Real-time Observability)
-
-**Location:** `observability/dashboard-simple.html`
-
-**Features:**
-- Static HTML (no React, no npm)
-- JSONP data loading (no CORS, no server)
-- Auto-refresh every 3s when `data.js` changes
-- Track tasks, agents, token usage
-
-**Usage:**
-```bash
-# Open dashboard
-open observability/dashboard-simple.html
-
-# Update data (auto-refreshes UI)
-vim observability/data.js
-# → Save → Dashboard updates within 3s
-```
-
----
-
-## 🔧 TROUBLESHOOTING
-
-### Problem: "nash list-skills" shows 0 skills
-
-**Fix:**
-```bash
-# Check registry exists
-cat agents/skills/_registry.json
-
-# If missing → create it
-cat > agents/skills/_registry.json <<'EOF'
-{
-  "registry_version": "2.0",
-  "last_updated": "2026-03-17T12:00:00.000Z",
-  "skills": []
-}
-EOF
-
-# Register sharpeners
-node bin/nash register-skill sharpener_reactive
-node bin/nash register-skill sharpener_proactive
-```
-
----
-
-### Problem: Slash commands not appearing
-
-**Fix:**
-```bash
-# 1. Verify files exist
 ls .claude/commands/sharpen.md
 ls .claude/commands/upgrade-agent.md
-
-# 2. Reload VSCode
-# File > Reload Window (or Ctrl+R)
-
-# 3. Type "/" in chat to see commands
+ls .claude/commands/create-skill.md
 ```
+
+**Expected:** All 3 files exist
 
 ---
 
-### Problem: Gate scripts fail with "permission denied"
+## Phase 4: Test Everything Works
 
-**Fix:**
-```bash
-# Make scripts executable
-chmod +x gates/*.sh
-
-# Test again
-bash gates/validate.sh /tmp/test-dir
-```
-
----
-
-### Problem: Dashboard shows "Access to fetch blocked by CORS"
-
-**Fix:** Don't use `fetch()` - framework already uses JSONP (`<script src="data.js">`) which bypasses CORS. This error means you're using old dashboard version.
+### Step 4.1: Test Nash CLI
 
 ```bash
-# Verify correct dashboard
-grep "script src.*data.js" observability/dashboard-simple.html
+node bin/nash list-skills
+```
 
-# Should see: <script src="./data.js"></script>
+**Expected Output:**
+```
+📚 Nash Skill Registry
+
+ID                   | Name                        | Ver   | Tags
+sharpener_reactive   | Agent Skill Sharpener       | 1.0.0 | agent-factory, sharpening
+sharpener_proactive  | Agent Sharpening 2026       | 2.0.0 | agent-factory, sharpening
+
+2 skill(s) registered
 ```
 
 ---
 
-## 🎯 NEXT STEPS
+### Step 4.2: Test Gate Scripts
 
-### After Installation
+```bash
+bash gates/validate.sh --help 2>&1 | head -5
+```
 
-1. **Read main.md** - Workflow orchestration guide
-   ```bash
-   cat main.md | head -100
-   ```
+**Expected:** Usage instructions displayed (not error)
 
-2. **Test a simple pipeline**
-   ```bash
-   # Example: Validate a module
-   mkdir -p test-module/src
-   echo "// TODO: test" > test-module/src/index.ts
-   bash gates/validate.sh test-module
-   # Should detect TODO and fail
-   ```
+---
 
-3. **Try agent sharpening**
-   ```bash
-   # If any agent has PEN entries
+### Step 4.3: Verify Dashboard Files
+
+```bash
+ls observability/dashboard-simple.html
+ls observability/data.js
+```
+
+**Expected:** Both files exist
+
+---
+
+## Phase 5: Report Installation Summary
+
+**Use this template to report to user:**
+
+```
+✅ NASH FRAMEWORK INSTALLATION COMPLETE
+
+📊 Installation Summary:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Phase 1: Framework Structure - VERIFIED
+   - Core files: CLAUDE.md, main.md, bin/nash ✓
+   - Agents: 9 core agents ✓
+   - Gates: 5 quality scripts ✓
+   - System: Pipelines & templates ✓
+
+✅ Phase 2: Skills Installation - COMPLETED
+   - Copied: sharpener_reactive ✓
+   - Copied: sharpener_proactive ✓
+   - Registry: 2 skills registered ✓
+
+✅ Phase 3: Slash Commands - CREATED
+   - /sharpen ✓
+   - /upgrade-agent ✓
+   - /create-skill ✓
+
+✅ Phase 4: Verification - PASSED
+   - Nash CLI: 2 skills listed ✓
+   - Gate scripts: Executable ✓
+   - Dashboard: Files ready ✓
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 Next Steps:
+
+1. **Reload VSCode** to activate slash commands:
+   - Windows/Linux: Ctrl+Shift+P → "Developer: Reload Window"
+   - Mac: Cmd+Shift+P → "Developer: Reload Window"
+
+2. **Test slash commands:**
+   Type "/" in chat → Should see /sharpen, /upgrade-agent, /create-skill
+
+3. **Try agent sharpening:**
    /sharpen agents/core/dung-manager.md
 
-   # Or proactive upgrade
-   /upgrade-agent agents/core/phuc-sa.md
-   ```
+4. **Read documentation:**
+   - Framework overview: CLAUDE.md
+   - Workflow guide: main.md
+   - Agent factory: deprecated/agent_factory_OLD/README.md
+   - Skill factory: deprecated/skill_factory_OLD/README.md
 
-4. **Create your first skill**
-   ```bash
-   node bin/nash create-skill --name "My Workflow" --id my-workflow
-   # → Edit agents/skills/my-workflow/SKILL.md
-   # → Register: node bin/nash register-skill my-workflow
-   ```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
----
+📚 Quick Reference:
 
-## 📖 DOCUMENTATION QUICK REFERENCE
+Nash CLI:
+  node bin/nash list-skills         # List all skills
+  node bin/nash list-souls          # List agent personalities
+  node bin/nash create-skill --name X --id x
 
-| I want to... | Read this file |
-|--------------|----------------|
-| Understand Nash Framework | [CLAUDE.md](CLAUDE.md) |
-| Learn workflow orchestration | [main.md](main.md) |
-| Create agents | [deprecated/agent_factory_OLD/README.md](deprecated/agent_factory_OLD/README.md) |
-| Create skills | [deprecated/skill_factory_OLD/README.md](deprecated/skill_factory_OLD/README.md) |
-| Understand pipelines | [system/pipelines/](system/pipelines/) |
-| Learn Nash Triad | [system/NASH.md](system/NASH.md) |
-| Scoring rules | [system/SCORING_RULES.md](system/SCORING_RULES.md) |
-| Memory system | [system/MEMORY_EVICTION_PROTOCOL.md](system/MEMORY_EVICTION_PROTOCOL.md) |
+Slash Commands:
+  /sharpen <agent-file>             # Fix PEN entry bugs
+  /upgrade-agent <agent-file>       # Apply 2026 standards
+  /create-skill                     # Scaffold new skill
 
----
+Quality Gates:
+  bash gates/validate.sh <module>   # Build + tests + hygiene
+  bash gates/qa.sh <module>         # SAST + smoke tests
+  bash gates/security.sh <module>   # Secrets + dep audit
 
-## 🚨 IMPORTANT NOTES
+Dashboard:
+  Open: observability/dashboard-simple.html
+  Edit data: observability/data.js (auto-refresh 3s)
 
-### What's Active vs Deprecated
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**ACTIVE (Use These):**
-- ✅ `agents/skills/` - Active skills (sharpeners)
-- ✅ `bin/nash` - Nash CLI
-- ✅ `gates/` - Quality gate scripts
-- ✅ `system/pipelines/` - SDLC workflows
-- ✅ `.claude/commands/` - Slash commands
+🏭 Factories Now Active:
 
-**DEPRECATED (Reference Only):**
-- ⚠️ `deprecated/agent_factory_OLD/` - Documentation + templates (tools moved to agents/skills/)
-- ⚠️ `deprecated/skill_factory_OLD/` - Documentation + templates (tools moved to agents/skills/)
-- ⚠️ `agents/skills.bak/` - Backup of 60+ skills (optional - activate if needed)
+✅ Agent Factory (Sharpening)
+   - Reactive: Fix bugs from PEN entries
+   - Proactive: Upgrade to 2026 standards
 
-**BACKUP (Optional):**
-- 📦 `agents/skills.bak/` - Contains 60+ additional skills
-- 📦 `ram/skills/` - Skills reference documentation
+✅ Skill Factory (Creation)
+   - Use /create-skill to scaffold new skills
+   - Registry management via nash CLI
 
-**To activate backup skills:**
-```bash
-# Copy specific skill from backup
-cp -r agents/skills.bak/code-review-excellence agents/skills/
-node bin/nash register-skill code-review-excellence
+✅ Quality Gates (Validation)
+   - Auto-detect: TS, Go, .NET, Python
+   - Polyglot validation scripts
 
-# Or activate all (symlink)
-rm -rf agents/skills
-ln -s skills.bak agents/skills
+✅ Dashboard (Observability)
+   - Static HTML (no React, no npm)
+   - JSONP auto-refresh (no CORS)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚡ Installation completed in X seconds
+🎉 Nash Framework is ready to use!
 ```
 
 ---
 
-## ✅ FINAL CHECKLIST
+## 🔧 Troubleshooting (If Errors Occur)
 
-Before using framework, verify:
+### Error: "deprecated/ folder not found"
 
-- [ ] Nash CLI works: `node bin/nash list-skills`
-- [ ] Sharpeners registered: Output shows 2 skills
-- [ ] Slash commands exist: `ls .claude/commands/sharpen.md`
-- [ ] Gate scripts executable: `bash gates/validate.sh --help`
-- [ ] Dashboard opens: `observability/dashboard-simple.html`
-- [ ] Main docs readable: `cat CLAUDE.md main.md`
+**Solution:** Tell user to copy entire SuperAgent folder including deprecated/
+
+```
+❌ ERROR: deprecated/agent_factory_OLD/ not found
+
+Nash Framework requires the full directory structure.
+
+Please copy the ENTIRE SuperAgent folder:
+- cp -r SuperAgent /path/to/new/location/
+
+Then run this setup again.
+```
+
+---
+
+### Error: "node bin/nash command not found"
+
+**Solution:** Check Node.js installed
+
+```bash
+node --version
+```
+
+**If not installed:** Tell user to install Node.js 18+
+
+---
+
+### Error: "bash gates/validate.sh permission denied"
+
+**Solution:** Make scripts executable
+
+```bash
+chmod +x gates/*.sh
+```
+
+---
+
+## 📋 SUCCESS CRITERIA CHECKLIST
+
+After running this setup, verify:
+
+- [ ] `node bin/nash list-skills` → Shows 2 skills
+- [ ] `ls .claude/commands/` → Shows 3 .md files
+- [ ] `cat agents/skills/_registry.json` → Valid JSON with 2 skills
+- [ ] `bash gates/validate.sh --help` → Shows usage (no error)
+- [ ] Files created programmatically (not copied by user)
+
+**If ALL checked → Installation successful!** ✅
+
+---
+
+## 🎯 IMPORTANT NOTES FOR AGENT
+
+1. **Use Write tool** to create slash command files - do NOT tell user to copy-paste
+2. **Use Bash tool** to copy skills from deprecated/ - do NOT tell user to run commands manually
+3. **Track progress** with TodoWrite tool
+4. **Report status** after each phase (Phase 1 ✅, Phase 2 ✅, etc.)
+5. **Final summary** using the template above
+
+**Goal:** User should only need to:
+1. Copy SuperAgent folder
+2. Say "Đọc AUTO_SETUP.md và setup"
+3. Wait 2-5 minutes
+4. Reload VSCode
+5. Done!
+
+---
+
+## 🚀 QUICK START PROMPT FOR USER
+
+Copy SuperAgent folder to new machine, then paste this into Claude Code:
+
+```
+Đọc file AUTO_SETUP.md và thực hiện TẤT CẢ các bước setup.
+
+Sử dụng Write tool để TẠO slash commands.
+Sử dụng Bash tool để COPY skills.
+KHÔNG yêu cầu tôi copy-paste commands thủ công.
+
+Track progress với TodoWrite.
+Báo cáo kết quả sau mỗi Phase.
+```
 
 ---
 
 **Framework Version:** Nash Anti_propost_0.1
-**Last Updated:** 2026-03-17
-**Minimum Setup Time:** 2 minutes
-**Full Setup Time:** 5 minutes
+**Setup Time:** 2-5 minutes (fully automated)
+**Agent Action Required:** Read this file → Execute all phases → Report completion
 
 ---
 
-*Nash Agent Framework | See [CLAUDE.md](CLAUDE.md) for architecture | [main.md](main.md) for orchestration*
+*Auto-generated setup for Nash Framework | Zero manual intervention required*
